@@ -123,4 +123,9 @@ export const publicationVenueColors: Record<string, { bg: (dk: boolean) => strin
     fg: dk => dk ? '#a3be8c' : '#36805a',
     label: 'PREPRINT',
   },
+  journal: {
+    bg: dk => dk ? 'rgba(235, 203, 139, 0.15)' : 'rgba(199, 116, 54, 0.1)',
+    fg: dk => dk ? '#ebcb8b' : '#c77436',
+    label: 'JOURNAL',
+  },
 }
