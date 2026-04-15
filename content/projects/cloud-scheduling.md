@@ -1,0 +1,24 @@
+---
+title: Cloud Node Resource Scheduling System
+category: tooling
+date: 2024-07
+tags: [Reinforcement Learning, DNN, Linear Programming, Optimization]
+link: "https://github.com/asckaya/CacheFlux"
+isOpenSource: false
+badge: "Internship Project"
+---
+
+A cloud service resource scheduling system based on reinforcement learning and DNN neural network combined with linear programming. Cooperated with Guizhou Baishan Cloud Technology, implementing core algorithm to improve resource scheduling efficiency and system stability.
+
+## Tech Stack
+
+- Reinforcement Learning
+- DNN Neural Network
+- Linear Programming
+- Combinatorial Optimization
+
+## Highlights
+
+- Core algorithm implementation
+- Resource scheduling efficiency improvement
+- System stability enhancement

@@ -1,0 +1,23 @@
+---
+title: LLM Multi-Agent Boundary Cognition and Reasoning Optimization via Adversarial Game
+category: nlp
+date: 2025-05
+tags: [LLM, Multi-Agent, PyTorch, Knowledge Graph]
+link: "#"
+isOpenSource: false
+badge: "In Progress"
+---
+
+Built a Stackelberg game-based LLM multi-agent adversarial framework, achieving dynamic knowledge boundary awareness and reasoning enhancement through "question-answering" agent collaborative gaming. Supports multimodal information processing and efficient multi-tool integration.
+
+## Tech Stack
+
+- PyTorch, Transformers
+- Knowledge Graph (Neo4j)
+- LangChain
+
+## Highlights
+
+- Stackelberg game framework for multi-agent adversarial
+- Dynamic knowledge boundary awareness
+- Multimodal information processing support

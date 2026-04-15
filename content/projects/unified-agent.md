@@ -1,0 +1,31 @@
+---
+title: Unified Multi-Role Agent Training Framework
+category: nlp
+date: 2025-10
+tags: [LLM, Multi-Agent, Reinforcement Learning, Verl, GLM, DiDi]
+link: "#"
+isOpenSource: false
+badge: "In Progress"
+---
+
+**Background**: Built at DiDi LLM Lab to power AI assistant "小滴" - users describe travel needs in one sentence and AI matches the right ride. Existing DeepSeek-V3.1 (671B) model had issues: slow inference, high resource consumption, hallucinations, and tool misuse.
+
+**Solution**: Implemented shared-weight Agent RL framework with Agent-as-Tool mechanism. Served as both infra and algorithm lead. All roles share the same model parameters via different contexts, trained together with trajectory-level reward backpropagation.
+
+**Results**: Achieves better accuracy than DeepSeek V3.1 (671B) on GLM4-Flash (30B MoE) with 10x less compute, faster inference, and higher accuracy.
+
+## Tech Stack
+
+- Verl (Volcano Engine Reinforcement Learning for LLMs - ByteDance)
+- Reinforcement Learning
+- LLM Multi-Agent
+- GLM4-Flash (30B MoE)
+- Pytorch
+
+## Highlights
+
+- Powers DiDi AI assistant "小滴"
+- Shared-weight multi-agent framework
+- Agent-as-Tool mechanism
+- Unified policy space optimization
+- Better accuracy with 10x less compute

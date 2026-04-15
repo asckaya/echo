@@ -1,0 +1,23 @@
+---
+title: 基于对抗博弈的大模型多智能体边界认知与推理优化
+category: nlp
+date: 2025-05
+tags: [LLM, Multi-Agent, PyTorch, 知识图谱]
+link: "#"
+isOpenSource: false
+badge: "进行中"
+---
+
+构建基于Stackelberg博弈的大语言模型多智能体对抗框架，通过"提问-应答"智能体协同博弈实现知识边界动态感知与推理能力增强。支持多模态信息处理与多工具高效接入。
+
+## 技术栈
+
+- PyTorch, Transformers
+- 知识图谱 (Neo4j)
+- LangChain
+
+## 亮点
+
+- Stackelberg博弈框架实现多智能体对抗
+- 知识边界动态感知
+- 多模态信息处理支持

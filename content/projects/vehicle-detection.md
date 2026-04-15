@@ -1,0 +1,25 @@
+---
+title: Non-Motorized Vehicle Reverse Detection Algorithm
+category: robotics
+date: 2023-05
+tags: [Computer Vision, YOLO, mmYOLO, Object Detection]
+link: "#"
+isOpenSource: false
+badge: "National Level"
+---
+
+National Innovation and Entrepreneurship Training Program project. Core developer focusing on computer vision, combining angle detection algorithm with mmYOLO for efficient object detection and direction judgment pipeline.
+
+## Tech Stack
+
+- Computer Vision
+- mmYOLO
+- Object Detection
+- Angle Detection Algorithm
+
+## Highlights
+
+- National-level innovation training program
+- Angle detection + mmYOLO combination
+- Object detection and direction judgment pipeline
+- Data processing optimization

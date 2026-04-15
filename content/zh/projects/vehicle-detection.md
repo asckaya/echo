@@ -1,0 +1,25 @@
+---
+title: 非机动车逆向检测算法
+category: robotics
+date: 2023-05
+tags: [计算机视觉, YOLO, mmYOLO, 目标检测]
+link: "#"
+isOpenSource: false
+badge: "国家级立项"
+---
+
+大学生创新创业训练计划项目。参与核心开发，主攻计算机视觉方向，结合角度检测算法和mmYOLO实现高效的目标检测和方向判断pipeline。
+
+## 技术栈
+
+- 计算机视觉
+- mmYOLO
+- 目标检测
+- 角度检测算法
+
+## 亮点
+
+- 国家级大学生创新创业训练计划项目
+- 角度检测算法+mmYOLO组合
+- 目标检测与方向判断pipeline
+- 数据处理流程优化

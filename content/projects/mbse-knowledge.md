@@ -1,0 +1,24 @@
+---
+title: LLM-Driven Knowledge-Enhanced MBSE Intelligent Modeling System
+category: nlp
+date: 2025-04
+tags: [LLM, Knowledge Graph, Neo4j, FastAPI, SysML]
+link: "https://github.com/asckaya/ai4mbse"
+isOpenSource: false
+badge: "Completed"
+---
+
+Combined LLM with knowledge graph (Neo4j) to automatically extract requirements, functions, and structure triplets from MBSE technical documents and SysML models. Supports CLI and Web (FastAPI) interactions with semantic search, subgraph query, vector search, and intelligent Q&A.
+
+## Tech Stack
+
+- LLM, Knowledge Graph
+- Neo4j
+- FastAPI
+- SysML
+
+## Highlights
+
+- Automatic triplet extraction from MBSE documents
+- CLI and Web multi-end interaction
+- Semantic search, vector search, and intelligent Q&A

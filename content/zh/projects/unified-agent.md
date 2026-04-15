@@ -1,0 +1,31 @@
+---
+title: 统一策略多角色Agent训练框架
+category: nlp
+date: 2025-10
+tags: [LLM, Multi-Agent, 强化学习, Verl, GLM, 滴滴]
+link: "#"
+isOpenSource: false
+badge: "进行中"
+---
+
+**背景**: 在滴滴LLM Lab为AI出行助手"小滴"构建。用户只需一句话描述出行需求，AI就能精准拆解诉求并匹配"对的车"。线上DeepSeek-V3.1 (671B)模型存在推理速度慢、资源消耗大、幻觉及工具调用不当等问题。
+
+**方案**: 实现基于Verl的共享权重Agent强化学习框架，构建Agent-as-Tool机制。同时负责infra和算法工作。所有角色通过不同上下文共享同一套模型参数，进行轨迹级奖励回传统一训练。
+
+**成果**: 在GLM4-Flash (30B MoE)上实现了比DeepSeek V3.1 (671B)更好的效果，算力需求减少10倍，推理速度更快，准确率更高。
+
+## 技术栈
+
+- Verl (字节跳动火山引擎强化学习框架)
+- 强化学习
+- LLM多智能体
+- GLM4-Flash (30B MoE)
+- PyTorch
+
+## 亮点
+
+- 支撑滴滴AI出行助手"小滴"
+- 共享权重多Agent框架
+- Agent-as-Tool机制
+- 统一策略空间优化
+- 更少算力达到更好效果

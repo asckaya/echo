@@ -1,61 +1,43 @@
 {
   "_comment": "中文版站点配置",
 
-  "template": "terminal",
-  "components": {},
-  "sections": [
-    "hero", "bio", "newsDisplay", "selectedPublications",
-    "journey", "skills", "mentorship", "talks", "teaching",
-    "accomplishments", "contact", "footer"
-  ],
-
   "name": {
-    "full": "Cookie",
-    "first": "Cookie",
-    "nickname": "Cookie",
-    "last": "",
-    "display": "Cookie",
-    "authorVariants": ["Cookie"]
+    "full": "任笙",
+    "first": "笙",
+    "nickname": "Ascka",
+    "last": "任",
+    "display": "任笙",
+    "authorVariants": ["任笙"]
   },
 
-  "title": "汪！我是 Cookie",
-  "tagline": "一只毛茸茸的博美，靠赖在主人身边写代码，一次握手换一块零食。",
-  "avatar": "cookie.jpg",
+  "title": "你好，我是任笙",
+  "tagline": "大模型与多智能体研究 | Linux 玩家",
+  "avatar": "avatar.svg",
 
   "terminal": {
-    "username": "cookie",
+    "username": "Ascka",
     "rotatingSubtitles": [
-      "赖在主人身边",
-      "和弟弟 Lucas 玩耍",
-      "握手要零食",
-      "趴下装可怜",
-      "在主人腿上打盹"
+      "想做Linux极客",
+      "和LLM玩耍",
+      "学习新东西",
+      "努力成为更好的自己"
     ],
-    "skills": [
-      { "name": "握手", "icon": "FaHandshake" },
-      { "name": "趴下", "icon": "FaBed" },
-      { "name": "撒娇", "icon": "FaHeart" },
-      { "name": "跟着主人", "icon": "FaWalking" },
-      { "name": "午睡", "icon": "FaMoon" },
-      { "name": "零食谈判", "icon": "FaCookie" },
-      { "name": "和 Lucas 玩", "icon": "FaCat" },
-      { "name": "卖萌", "icon": "FaStar" }
-    ],
-    "timezone": "America/Los_Angeles"
+    "skills": ["Python", "PyTorch", "Transformers", "Linux", "Git"],
+    "timezone": "Asia/Shanghai"
   },
 
   "contact": {
-    "email": "limyoonaxi@gmail.com",
-    "academicEmail": "limyoonaxi@gmail.com",
-    "hiringEmail": "limyoonaxi@gmail.com",
-    "location": "Yaoyao 在哪我在哪"
+    "email": "rensheng@nuaa.edu.cn",
+    "academicEmail": "rensheng@nuaa.edu.cn",
+    "hiringEmail": "rensheng@nuaa.edu.cn",
+    "location": "江苏南京"
   },
 
   "social": {
-    "github": "https://github.com/H-Freax/TermHub",
-    "linkedin": "",
+    "github": "https://github.com/ashengstd",
+    "linkedin": "https://www.linkedin.cn/incareer/in/%E7%AC%99-%E4%BB%BB-b64651403/",
     "medium": "",
-    "googleScholar": "",
+    "googleScholar": "https://scholar.google.com/citations?user=Tg0bKZoAAAAJ",
     "twitter": "",
     "youtube": "",
     "bilibili": "",
@@ -64,30 +46,38 @@
     "blog": ""
   },
 
-  "pets": [
-    {
-      "name": "Lucas (Lulu)",
-      "emoji": "🐱",
-      "image": "/images/lulu.jpg",
-      "title": "最佳伙伴 & 弟弟",
-      "description": "Cookie 的布偶猫弟弟。他们一起午睡、满屋追逐，还会抢窗边那块阳光最好的位置。"
-    }
-  ],
+  "pets": [],
 
   "features": {
     "publications": true,
     "projects": true,
-    "articles": true,
+    "articles": false,
     "experience": true,
-    "news": true,
-    "pets": true,
-    "guide": true
+    "news": false,
+    "pets": false,
+    "guide": false
   },
 
   "heroSocialIcons": [
-    { "platform": "twitter", "icon": "SiX", "label": "X", "color": "#000" },
-    { "platform": "youtube", "icon": "FaYoutube", "label": "YouTube", "color": "#FF0000" }
+    {
+      "platform": "github",
+      "icon": "FaGithub",
+      "label": "GitHub",
+      "color": "#000"
+    },
+    {
+      "platform": "linkedin",
+      "icon": "FaLinkedin",
+      "label": "LinkedIn",
+      "color": "#0077B5"
+    },
+    {
+      "platform": "googleScholar",
+      "icon": "SiGooglescholar",
+      "label": "Google Scholar",
+      "color": "#4285F4"
+    }
   ],
 
-  "selectedPublicationIds": ["napcon2025-cuddle-optimization", "fetchml2024-warmth-seeking", "arxiv2025-cross-species-play"]
+  "selectedPublicationIds": []
 }

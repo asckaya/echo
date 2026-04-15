@@ -4,38 +4,36 @@
     "badge": "论文发表",
     "icon": "FaFileAlt",
     "iconColor": "blue.400",
-    "title": "撒娇优化论文被 CozyCon 2025 录用",
-    "description": "Cookie 的论文《取暖型博美的最优膝盖占领位置》已被 CozyCon 2025 录用。",
-    "date": "Dec 2025",
-    "sortDate": "2025-12-01",
+    "title": "论文发表于IEEE T-ITS",
+    "description": "我们的逆行骑行检测论文已发表于IEEE智能交通系统汇刊。",
+    "date": "2025",
+    "sortDate": "2025-01-01",
     "links": [
-      { "text": "论文", "url": "#", "icon": "FaFilePdf" }
+      { "text": "论文", "url": "https://ieeexplore.ieee.org/abstract/document/11306249/", "icon": "FaExternalLinkAlt" }
     ]
   },
   {
-    "type": "talk",
-    "badge": "受邀报告",
-    "icon": "FaMicrophone",
-    "iconColor": "purple.400",
-    "title": "在国际跨物种玩耍研讨会上受邀演讲",
-    "description": "报告了博美与布偶猫之间的合作玩耍动力学研究成果，以与弟弟 Lucas 的案例为主。",
-    "date": "Mar 2025",
-    "sortDate": "2025-03-10",
+    "type": "publication",
+    "badge": "预印本",
+    "icon": "FaFileAlt",
+    "iconColor": "cyan.400",
+    "title": "CEEH论文在arXiv发布",
+    "description": "我们关于难度感知熵正则化的高效LLM推理工作已在arXiv发布。",
+    "date": "2026-02",
+    "sortDate": "2026-02-01",
     "links": [
-      { "text": "幻灯片", "url": "#", "icon": "FaDesktop" }
+      { "text": "论文", "url": "https://arxiv.org/abs/2602.22642", "icon": "FaExternalLinkAlt" }
     ]
   },
   {
-    "type": "release",
-    "badge": "发布",
-    "icon": "FaRocket",
+    "type": "project",
+    "badge": "新项目",
+    "icon": "FaCode",
     "iconColor": "green.400",
-    "title": "PawShake.js v1.0 发布",
-    "description": "发布了 PawShake.js，一个通过握手协议建模零食获取策略的开源库。",
-    "date": "Jul 2024",
-    "sortDate": "2024-07-01",
-    "links": [
-      { "text": "GitHub", "url": "#", "icon": "FaGithub" }
-    ]
+    "title": "统一Agent训练框架 @ 滴滴",
+    "description": "在滴滴LLM Lab构建共享权重多智能体训练框架，同时负责infra和算法工作。在GLM4-Flash (30B MoE)上实现了比DeepSeek V3.1 (671B)更好的效果，算力需求大幅减少，推理速度更快，准确率更高。",
+    "date": "2025-10",
+    "sortDate": "2025-10-01",
+    "links": []
   }
 ]

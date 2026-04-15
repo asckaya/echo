@@ -4,38 +4,36 @@
     "badge": "Publication",
     "icon": "FaFileAlt",
     "iconColor": "blue.400",
-    "title": "Paper on cuddle optimization accepted at CozyCon 2025",
-    "description": "Cookie's paper \"Optimal Lap Positioning for Warmth-Seeking Pomeranians\" has been accepted at CozyCon 2025.",
-    "date": "Dec 2025",
-    "sortDate": "2025-12-01",
+    "title": "Paper accepted at IEEE T-ITS",
+    "description": "Our paper on wrong-way cycling detection has been published in IEEE Transactions on Intelligent Transportation Systems.",
+    "date": "2025",
+    "sortDate": "2025-01-01",
     "links": [
-      { "text": "Paper", "url": "#", "icon": "FaFilePdf" }
+      { "text": "Paper", "url": "https://ieeexplore.ieee.org/abstract/document/11306249/", "icon": "FaExternalLinkAlt" }
     ]
   },
   {
-    "type": "talk",
-    "badge": "Talk",
-    "icon": "FaMicrophone",
-    "iconColor": "purple.400",
-    "title": "Invited bark at International Cross-Species Play Workshop",
-    "description": "Presented findings on cooperative play dynamics between Pomeranians and Ragdoll cats, featuring case study with brother Lucas.",
-    "date": "Mar 2025",
-    "sortDate": "2025-03-10",
+    "type": "publication",
+    "badge": "Preprint",
+    "icon": "FaFileAlt",
+    "iconColor": "cyan.400",
+    "title": "CEEH paper released on arXiv",
+    "description": "Our work on difficulty-aware entropy regularization for efficient LLM reasoning is now available on arXiv.",
+    "date": "2026-02",
+    "sortDate": "2026-02-01",
     "links": [
-      { "text": "Slides", "url": "#", "icon": "FaDesktop" }
+      { "text": "Paper", "url": "https://arxiv.org/abs/2602.22642", "icon": "FaExternalLinkAlt" }
     ]
   },
   {
-    "type": "release",
-    "badge": "Release",
-    "icon": "FaRocket",
+    "type": "project",
+    "badge": "New Project",
+    "icon": "FaCode",
     "iconColor": "green.400",
-    "title": "PawShake.js v1.0 released",
-    "description": "Released PawShake.js, an open-source library for modeling treat-acquisition strategies through handshake protocols.",
-    "date": "Jul 2024",
-    "sortDate": "2024-07-01",
-    "links": [
-      { "text": "GitHub", "url": "#", "icon": "FaGithub" }
-    ]
+    "title": "Unified Agent Training Framework @ DiDi",
+    "description": "Built shared-weight multi-agent training framework at DiDi LLM Lab. Served as both infra and algorithm lead. Achieved better results than DeepSeek V3.1 (671B) on GLM4-Flash (30B MoE) with significantly lower compute and faster inference.",
+    "date": "2025-10",
+    "sortDate": "2025-10-01",
+    "links": []
   }
 ]

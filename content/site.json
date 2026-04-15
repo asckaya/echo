@@ -1,61 +1,38 @@
 {
-  "_comment": "Your basic info. Edit the values below, then run: npm run dev",
-
-  "template": "terminal",
-  "components": {},
-  "sections": [
-    "hero", "bio", "newsDisplay", "selectedPublications",
-    "journey", "skills", "mentorship", "talks", "teaching",
-    "accomplishments", "contact", "footer"
-  ],
-
+  "_comment": "Your basic info. Edit the values below, then run: bun run dev",
   "name": {
-    "full": "Cookie",
-    "first": "Cookie",
-    "nickname": "Cookie",
-    "last": "",
-    "display": "Cookie",
-    "authorVariants": ["Cookie"]
+    "full": "Sheng Ren",
+    "first": "Sheng",
+    "nickname": "Ascka",
+    "last": "Ren",
+    "display": "Sheng Ren",
+    "authorVariants": ["Sheng Ren"]
   },
-
-  "title": "Woof! I'm Cookie",
-  "tagline": "A fluffy Pomeranian who codes by staying glued to her human, one paw shake at a time.",
-  "avatar": "cookie.jpg",
-
+  "title": "Hi there, I'm Sheng Ren",
+  "tagline": "LLM & Multi-Agent Research | Linux Enthusiast",
+  "avatar": "avatar.svg",
   "terminal": {
-    "username": "cookie",
+    "username": "Ascka",
     "rotatingSubtitles": [
-      "cuddle with hooman",
-      "shake paws politely",
-      "lie down dramatically",
-      "play with brother Lucas",
-      "nap on hooman's lap"
+      "want to be a Linux Geeker",
+      "play with LLMs",
+      "learn new things",
+      "try to be a better me"
     ],
-    "skills": [
-      { "name": "Shake Hands", "icon": "FaHandshake" },
-      { "name": "Lie Down", "icon": "FaBed" },
-      { "name": "Cuddling", "icon": "FaHeart" },
-      { "name": "Following Hooman", "icon": "FaWalking" },
-      { "name": "Napping", "icon": "FaMoon" },
-      { "name": "Treat Negotiation", "icon": "FaCookie" },
-      { "name": "Playing with Lucas", "icon": "FaCat" },
-      { "name": "Being Fluffy", "icon": "FaStar" }
-    ],
-    "timezone": "America/Los_Angeles"
+    "skills": ["Python", "PyTorch", "Transformers", "Linux", "Git"],
+    "timezone": "Asia/Shanghai"
   },
-
   "contact": {
-    "email": "limyoonaxi@gmail.com",
-    "academicEmail": "limyoonaxi@gmail.com",
-    "hiringEmail": "limyoonaxi@gmail.com",
-    "location": "Wherever Yaoyao Is"
+    "email": "rensheng0410@gmail.com",
+    "academicEmail": "rensheng@nuaa.edu.cn",
+    "hiringEmail": "rensheng0410@outlook.com",
+    "location": "Nanjing, Jiangsu, China"
   },
-
   "social": {
-    "github": "https://github.com/H-Freax/TermHub",
-    "linkedin": "",
+    "github": "https://github.com/asckaya",
+    "linkedin": "https://www.linkedin.cn/incareer/in/%E7%AC%99-%E4%BB%BB-b64651403/",
     "medium": "",
-    "googleScholar": "",
+    "googleScholar": "https://scholar.google.com/citations?user=Tg0bKZoAAAAJ",
     "twitter": "",
     "youtube": "",
     "bilibili": "",
@@ -77,17 +54,31 @@
   "features": {
     "publications": true,
     "projects": true,
-    "articles": true,
+    "articles": false,
     "experience": true,
-    "news": true,
-    "pets": true,
-    "guide": true
+    "news": false,
+    "pets": false,
+    "guide": false
   },
-
   "heroSocialIcons": [
-    { "platform": "twitter", "icon": "SiX", "label": "X", "color": "#000" },
-    { "platform": "youtube", "icon": "FaYoutube", "label": "YouTube", "color": "#FF0000" }
+    {
+      "platform": "github",
+      "icon": "FaGithub",
+      "label": "GitHub",
+      "color": "#000"
+    },
+    {
+      "platform": "linkedin",
+      "icon": "FaLinkedin",
+      "label": "LinkedIn",
+      "color": "#0077B5"
+    },
+    {
+      "platform": "googleScholar",
+      "icon": "SiGooglescholar",
+      "label": "Google Scholar",
+      "color": "#4285F4"
+    }
   ],
-
-  "selectedPublicationIds": ["napcon2025-cuddle-optimization", "fetchml2024-warmth-seeking", "arxiv2025-cross-species-play"]
+  "selectedPublicationIds": []
 }
