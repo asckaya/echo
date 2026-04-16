@@ -13,26 +13,59 @@
 // ============================================================
 
 import type {
-  Research, Experience, NewsItem, About, Publication,
-  ProjectItem, Award, ExperienceEntry, Talk, TeachingEntry,
+  Research,
+  Experience,
+  NewsItem,
+  About,
+  Publication,
+  ProjectItem,
+  Award,
+  ExperienceEntry,
+  Talk,
+  TeachingEntry,
 } from '../types'
 
 // ── Markdown glob imports (each .md → { frontmatter..., body: html }) ──
 
 // English (default)
-const projectMdsEn = import.meta.glob('/content/projects/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const articleMdsEn = import.meta.glob('/content/articles/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const publicationMdsEn = import.meta.glob('/content/publications/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const aboutMdEn = import.meta.glob('/content/about.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
+const projectMdsEn = import.meta.glob('/content/projects/*.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
+const articleMdsEn = import.meta.glob('/content/articles/*.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
+const publicationMdsEn = import.meta.glob('/content/publications/*.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
+const aboutMdEn = import.meta.glob('/content/about.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
 
 // Chinese
-const projectMdsZh = import.meta.glob('/content/zh/projects/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const articleMdsZh = import.meta.glob('/content/zh/articles/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const publicationMdsZh = import.meta.glob('/content/zh/publications/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const aboutMdZh = import.meta.glob('/content/zh/about.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
+const projectMdsZh = import.meta.glob('/content/zh/projects/*.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
+const articleMdsZh = import.meta.glob('/content/zh/articles/*.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
+const publicationMdsZh = import.meta.glob('/content/zh/publications/*.md', {
+  eager: true,
+}) as Record<string, { default: Record<string, unknown> }>
+const aboutMdZh = import.meta.glob('/content/zh/about.md', { eager: true }) as Record<
+  string,
+  { default: Record<string, unknown> }
+>
 
-function collectMd(modules: Record<string, { default: Record<string, unknown> }>): Record<string, unknown>[] {
-  return Object.values(modules).map(m => {
+function collectMd(
+  modules: Record<string, { default: Record<string, unknown> }>,
+): Record<string, unknown>[] {
+  return Object.values(modules).map((m) => {
     const { body, ...frontmatter } = m.default
     return { ...frontmatter, _body: body }
   })
@@ -51,8 +84,8 @@ function mdToProject(raw: Record<string, unknown>): ProjectItem {
   }
 
   const summary = lines
-    .filter(l => l.trim() && !l.match(/^[-*#]/) && !l.match(/^</))
-    .map(l => l.trim())
+    .filter((l) => l.trim() && !l.match(/^[-*#]/) && !l.match(/^</))
+    .map((l) => l.trim())
     .join(' ')
 
   return {
@@ -155,13 +188,12 @@ export const institutionLogos = enData.institutionLogos
 // ── Helper functions ──
 
 export const getPublicationsByYear = (year: number) =>
-  publications.filter(pub => pub.year === year)
+  publications.filter((pub) => pub.year === year)
 
 export const getPublicationsByVenue = (venueType: string) =>
-  publications.filter(pub => pub.venueType === venueType)
+  publications.filter((pub) => pub.venueType === venueType)
 
-export const getFirstAuthorPublications = () =>
-  publications.filter(pub => pub.isFirstAuthor)
+export const getFirstAuthorPublications = () => publications.filter((pub) => pub.isFirstAuthor)
 
 export const getPublicationStats = () => {
   const stats = {
@@ -173,7 +205,7 @@ export const getPublicationStats = () => {
     withCode: 0,
     withDataset: 0,
   }
-  publications.forEach(pub => {
+  publications.forEach((pub) => {
     stats.byYear[pub.year] = (stats.byYear[pub.year] || 0) + 1
     stats.byVenue[pub.venueType] = (stats.byVenue[pub.venueType] || 0) + 1
     if (pub.isFirstAuthor) stats.firstAuthor++

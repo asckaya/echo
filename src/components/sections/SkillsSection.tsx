@@ -15,15 +15,17 @@ const SkillsSection: React.FC = () => {
 
   if (skills.length === 0) return null
 
-  const getName = (s: SkillItem) => typeof s === 'string' ? s : s.name
-  const getIcon = (s: SkillItem) => typeof s === 'string' ? undefined : s.icon
+  const getName = (s: SkillItem) => (typeof s === 'string' ? s : s.name)
+  const getIcon = (s: SkillItem) => (typeof s === 'string' ? undefined : s.icon)
 
   return (
     <Box w="full">
-      <Container maxW={["full", "full", "7xl"]} px={[2, 4, 8]}>
+      <Container maxW={['full', 'full', '7xl']} px={[2, 4, 8]}>
         <Flex align="center" gap={3} mb={4}>
           <Box h="2px" w="20px" bg="cyan.400" borderRadius="full" flexShrink={0} />
-          <Heading size="md" fontWeight="semibold">{t('about.skills', 'Skills')}</Heading>
+          <Heading size="md" fontWeight="semibold">
+            {t('about.skills', 'Skills')}
+          </Heading>
           <Box flex="1" h="1px" bg={useColorModeValue('gray.200', 'gray.700')} />
         </Flex>
         <HStack spacing={2} flexWrap="wrap">

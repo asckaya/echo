@@ -13,11 +13,7 @@ const ResearchInterests: React.FC<ResearchInterestsProps> = ({ interests }) => {
   const bg = useColorModeValue('white', 'gray.800')
 
   return (
-    <SimpleGrid 
-      columns={[2, 2, 3, 4]} 
-      spacing={[2, 3]}
-      w="full"
-    >
+    <SimpleGrid columns={[2, 2, 3, 4]} spacing={[2, 3]} w="full">
       {interests.map((interest, index) => (
         <MotionBox
           key={index}
@@ -31,13 +27,10 @@ const ResearchInterests: React.FC<ResearchInterestsProps> = ({ interests }) => {
             bg={bg}
             borderRadius="md"
             shadow="sm"
-            fontSize={["xs", "sm"]}
+            fontSize={['xs', 'sm']}
             textAlign="center"
           >
-            <Text 
-              color={textColor}
-              fontWeight="medium"
-            >
+            <Text color={textColor} fontWeight="medium">
               {interest}
             </Text>
           </Box>
@@ -47,4 +40,4 @@ const ResearchInterests: React.FC<ResearchInterestsProps> = ({ interests }) => {
   )
 }
 
-export default ResearchInterests 
+export default ResearchInterests

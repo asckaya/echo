@@ -58,11 +58,15 @@ function About() {
       case 'newsDisplay':
         return (
           <Box key={key} w="full">
-            <Container maxW={["full", "full", "7xl"]} px={[2, 4, 8]}>
+            <Container maxW={['full', 'full', '7xl']} px={[2, 4, 8]}>
               <Flex align="center" gap={3} mb={4}>
                 <Box h="2px" w="20px" bg="cyan.400" borderRadius="full" flexShrink={0} />
-                <Heading size="md" fontWeight="semibold">{t('about.recentUpdates')}</Heading>
-                <Badge colorScheme="green" variant="subtle" fontSize="2xs" fontFamily="mono">{t('about.news')}</Badge>
+                <Heading size="md" fontWeight="semibold">
+                  {t('about.recentUpdates')}
+                </Heading>
+                <Badge colorScheme="green" variant="subtle" fontSize="2xs" fontFamily="mono">
+                  {t('about.news')}
+                </Badge>
                 <Box flex="1" h="1px" bg={lineColor} />
               </Flex>
               <NewsDisplay news={sortedNews} showHeader={false} />

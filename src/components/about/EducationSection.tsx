@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, HStack, VStack, SimpleGrid, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  HStack,
+  VStack,
+  SimpleGrid,
+  Heading,
+  Text,
+  Image,
+  useColorModeValue,
+} from '@chakra-ui/react'
 
 interface Course {
   course: string
@@ -36,8 +45,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ courses, logos = {}
                 <Image
                   src={logo}
                   alt={course.institution}
-                  w={["36px", "44px"]}
-                  h={["36px", "44px"]}
+                  w={['36px', '44px']}
+                  h={['36px', '44px']}
                   borderRadius="md"
                   objectFit="contain"
                   flexShrink={0}
@@ -45,8 +54,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ courses, logos = {}
                 />
               ) : (
                 <Box
-                  w={["36px", "44px"]}
-                  h={["36px", "44px"]}
+                  w={['36px', '44px']}
+                  h={['36px', '44px']}
                   borderRadius="md"
                   bg={accentBg}
                   display="flex"
@@ -55,26 +64,19 @@ const EducationSection: React.FC<EducationSectionProps> = ({ courses, logos = {}
                   flexShrink={0}
                   mt={0.5}
                 >
-                  <Text fontSize={["md", "lg"]} fontWeight="bold" color="blue.500">
+                  <Text fontSize={['md', 'lg']} fontWeight="bold" color="blue.500">
                     {course.institution.charAt(0)}
                   </Text>
                 </Box>
               )}
               <VStack align="start" spacing={1} flex={1}>
-                <Text
-                  color="blue.500"
-                  fontSize={["2xs", "xs", "sm"]}
-                  fontWeight="medium"
-                >
+                <Text color="blue.500" fontSize={['2xs', 'xs', 'sm']} fontWeight="medium">
                   {course.year}
                 </Text>
-                <Heading size={["xs", "sm"]} lineHeight="short">
+                <Heading size={['xs', 'sm']} lineHeight="short">
                   {course.course}
                 </Heading>
-                <Text
-                  fontSize={["2xs", "xs", "sm"]}
-                  color={textColor}
-                >
+                <Text fontSize={['2xs', 'xs', 'sm']} color={textColor}>
                   {course.institution}
                 </Text>
               </VStack>

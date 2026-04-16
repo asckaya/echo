@@ -84,7 +84,16 @@ export const DEFAULT_SECTIONS: SlotName[] = [
 
 /** Sections that are rendered as home page sections (not layout-level) */
 export const SECTION_SLOTS: SlotName[] = [
-  'hero', 'bio', 'skills', 'newsDisplay', 'selectedPublications',
-  'journey', 'mentorship', 'talks', 'teaching', 'accomplishments',
-  'contact', 'footer',
+  'hero',
+  'bio',
+  'skills',
+  'newsDisplay',
+  'selectedPublications',
+  'journey',
+  'mentorship',
+  'talks',
+  'teaching',
+  'accomplishments',
+  'contact',
+  'footer',
 ]

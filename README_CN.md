@@ -198,23 +198,23 @@ cd mcp-server && npm install    # 1. 安装
 
 <br/>
 
-| 工具 | 说明 |
-|------|------|
-| `get_schema` | 获取所有数据类型 — AI 首先调用此工具 |
-| `parse_pdf` | 从简历 PDF 中提取文本 |
-| `generate_from_resume` | 从简历文本生成结构化蓝图 |
-| `update_site_config` | 设置姓名、邮箱、社交链接 |
-| `add_publication` | 添加论文及完整元数据 |
-| `add_project` | 添加项目，包含标签和亮点 |
-| `add_experience` | 添加工作/研究经历 |
-| `add_education` | 添加教育经历 |
-| `add_news` / `add_award` | 添加动态和获奖 |
-| `write_markdown_content` | 写入任意 Markdown 内容文件 |
-| `write_json_content` | 写入任意 JSON 内容文件 |
-| `manage_assets` | 复制图片到 public 目录 |
-| `preview_site` | 启动开发服务器或生产构建 |
-| `get_site_status` | 查看当前作品集内容概览 |
-| `reset_content` | 清除所有内容，重新开始 |
+| 工具                     | 说明                                 |
+| ------------------------ | ------------------------------------ |
+| `get_schema`             | 获取所有数据类型 — AI 首先调用此工具 |
+| `parse_pdf`              | 从简历 PDF 中提取文本                |
+| `generate_from_resume`   | 从简历文本生成结构化蓝图             |
+| `update_site_config`     | 设置姓名、邮箱、社交链接             |
+| `add_publication`        | 添加论文及完整元数据                 |
+| `add_project`            | 添加项目，包含标签和亮点             |
+| `add_experience`         | 添加工作/研究经历                    |
+| `add_education`          | 添加教育经历                         |
+| `add_news` / `add_award` | 添加动态和获奖                       |
+| `write_markdown_content` | 写入任意 Markdown 内容文件           |
+| `write_json_content`     | 写入任意 JSON 内容文件               |
+| `manage_assets`          | 复制图片到 public 目录               |
+| `preview_site`           | 启动开发服务器或生产构建             |
+| `get_site_status`        | 查看当前作品集内容概览               |
+| `reset_content`          | 清除所有内容，重新开始               |
 
 </details>
 

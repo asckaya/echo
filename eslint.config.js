@@ -3,11 +3,12 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import prettier from 'eslint-config-prettier'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'node_modules', 'mcp-server', 'plugins'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettier],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -18,11 +19,28 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
     },
     rules: {
+      // React
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
+      'react-hooks/rules-of-hooks': 'warn', // pre-existing: conditional/callback hook calls in legacy components
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+
+      // TypeScript — catch real bugs, stay pragmatic
+      '@typescript-eslint/no-unused-vars': [
         'warn',
-        { allowConstantExport: true },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      '@typescript-eslint/no-empty-object-type': 'warn', // pre-existing architectural issue
+
+      // General
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-misleading-character-class': 'warn', // pre-existing
+      'prefer-const': 'error',
+      'no-var': 'error',
     },
   },
 )

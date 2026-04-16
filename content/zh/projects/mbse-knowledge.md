@@ -3,9 +3,9 @@ title: 大模型驱动的知识增强MBSE智能建模系统
 category: nlp
 date: 2025-04
 tags: [LLM, 知识图谱, Neo4j, FastAPI, SysML]
-link: "https://github.com/asckaya/ai4mbse"
+link: 'https://github.com/asckaya/ai4mbse'
 isOpenSource: false
-badge: "已完成"
+badge: '已完成'
 ---
 
 结合LLM与知识图谱(Neo4j)，支持从MBSE关键技术文档及SysML模型中自动抽取需求、功能及结构三元组。系统支持命令行与Web(FastAPI)多端交互，具备语义检索、向量检索及智能问答功能。

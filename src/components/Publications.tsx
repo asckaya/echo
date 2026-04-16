@@ -4,4 +4,4 @@ const Publications = () => {
   return <PublicationsTerminal />
 }
 
-export default Publications 
+export default Publications

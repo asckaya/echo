@@ -1,4 +1,16 @@
-import { Box, VStack, Heading, Text, Badge, HStack, Button, Link, Collapse, useDisclosure, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  VStack,
+  Heading,
+  Text,
+  Badge,
+  HStack,
+  Button,
+  Link,
+  Collapse,
+  useDisclosure,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import type { ProjectItem } from '../types'
 
 const categoryColors: Record<ProjectItem['category'], string> = {
@@ -7,7 +19,7 @@ const categoryColors: Record<ProjectItem['category'], string> = {
   'web-app': 'orange',
   data: 'green',
   tooling: 'cyan',
-  healthcare: 'red'
+  healthcare: 'red',
 }
 
 const linkColor = (label: string) => {
@@ -15,7 +27,8 @@ const linkColor = (label: string) => {
   if (lower.includes('code') || lower.includes('github')) return 'green'
   if (lower.includes('project')) return 'cyan'
   if (lower.includes('demo')) return 'orange'
-  if (lower.includes('article') || lower.includes('tutorial') || lower.includes('write')) return 'purple'
+  if (lower.includes('article') || lower.includes('tutorial') || lower.includes('write'))
+    return 'purple'
   if (lower.includes('dataset')) return 'teal'
   return 'blue'
 }
@@ -32,11 +45,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const { title, summary, tags = [], link, extraLinks, highlights, category, date } = project
 
-  const primaryLinks = [] as { label: string, url: string }[]
+  const primaryLinks = [] as { label: string; url: string }[]
   if (link) primaryLinks.push({ label: 'Project', url: link })
   if (extraLinks && extraLinks.length > 0) {
     extraLinks.forEach((entry) => {
-      if (!primaryLinks.some(item => item.url === entry.url)) {
+      if (!primaryLinks.some((item) => item.url === entry.url)) {
         primaryLinks.push({ label: entry.label, url: entry.url })
       }
     })
@@ -63,11 +76,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           )}
         </HStack>
 
-        <Heading size={["sm", "md"]} lineHeight="tall">
+        <Heading size={['sm', 'md']} lineHeight="tall">
           {title}
         </Heading>
 
-        <Text fontSize={["sm", "md"]} color={textColor}>
+        <Text fontSize={['sm', 'md']} color={textColor}>
           {summary}
         </Text>
 
@@ -95,12 +108,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         {highlights && highlights.length > 0 && (
           <>
-            <Button
-              size="xs"
-              variant="outline"
-              colorScheme="gray"
-              onClick={onToggle}
-            >
+            <Button size="xs" variant="outline" colorScheme="gray" onClick={onToggle}>
               {isOpen ? 'Hide Highlights' : 'Show Highlights'}
             </Button>
             <Collapse in={isOpen} animateOpacity>

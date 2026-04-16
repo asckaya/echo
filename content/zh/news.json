@@ -9,7 +9,11 @@
     "date": "2025",
     "sortDate": "2025-01-01",
     "links": [
-      { "text": "论文", "url": "https://ieeexplore.ieee.org/abstract/document/11306249/", "icon": "FaExternalLinkAlt" }
+      {
+        "text": "论文",
+        "url": "https://ieeexplore.ieee.org/abstract/document/11306249/",
+        "icon": "FaExternalLinkAlt"
+      }
     ]
   },
   {

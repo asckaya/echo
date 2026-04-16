@@ -166,7 +166,16 @@ export interface Award {
   title: string
   org?: string
   date: string
-  kind?: 'grant' | 'hackathon' | 'travel' | 'scholarship' | 'honor' | 'employment' | 'competition' | 'innovation' | 'other'
+  kind?:
+    | 'grant'
+    | 'hackathon'
+    | 'travel'
+    | 'scholarship'
+    | 'honor'
+    | 'employment'
+    | 'competition'
+    | 'innovation'
+    | 'other'
   link?: string
   egg?: string
 }

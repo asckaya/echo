@@ -3,9 +3,9 @@ title: 云节点资源调度系统
 category: tooling
 date: 2024-07
 tags: [强化学习, DNN, 线性规划, 优化算法]
-link: "https://github.com/asckaya/CacheFlux"
+link: 'https://github.com/asckaya/CacheFlux'
 isOpenSource: false
-badge: "实习项目"
+badge: '实习项目'
 ---
 
 基于强化学习和DNN神经网络与线性规划的组合优化算法设计实现的云服务资源调度系统。与贵州白山云科技合作，负责核心算法实现，提升资源调度效率和系统稳定性。

@@ -39,6 +39,7 @@ npm run dev
 ## AI-Assisted Contributions
 
 If your contribution uses AI-generated code:
+
 - You must understand and be able to explain all code you submit.
 - Disclose AI assistance in your PR description.
 - Ensure AI-generated code follows the project's style and conventions.

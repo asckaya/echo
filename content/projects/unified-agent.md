@@ -3,9 +3,9 @@ title: Unified Multi-Role Agent Training Framework
 category: nlp
 date: 2025-10
 tags: [LLM, Multi-Agent, Reinforcement Learning, Verl, GLM, DiDi]
-link: "#"
+link: '#'
 isOpenSource: false
-badge: "In Progress"
+badge: 'In Progress'
 ---
 
 **Background**: Built at DiDi LLM Lab to power AI assistant "小滴" - users describe travel needs in one sentence and AI matches the right ride. Existing DeepSeek-V3.1 (671B) model had issues: slow inference, high resource consumption, hallucinations, and tool misuse.

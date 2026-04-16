@@ -11,10 +11,12 @@ const BioSection: React.FC = () => {
 
   return (
     <Box w="full">
-      <Container maxW={["full", "full", "7xl"]} px={[2, 4, 8]}>
+      <Container maxW={['full', 'full', '7xl']} px={[2, 4, 8]}>
         <Flex align="center" gap={3} mb={4}>
           <Box h="2px" w="20px" bg="cyan.400" borderRadius="full" flexShrink={0} />
-          <Heading size="md" fontWeight="semibold">{t('about.bio', 'About')}</Heading>
+          <Heading size="md" fontWeight="semibold">
+            {t('about.bio', 'About')}
+          </Heading>
           <Box flex="1" h="1px" bg={useColorModeValue('gray.200', 'gray.700')} />
         </Flex>
         <Text fontSize="sm" lineHeight="tall" color={textColor}>

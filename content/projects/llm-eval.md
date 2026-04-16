@@ -3,9 +3,9 @@ title: llm_eval - LLM Reasoning Performance Testing CLI
 category: tooling
 date: 2024-11
 tags: [LLM, LiteLLM, GitHub Actions, Python]
-link: "https://github.com/ashengstd/llm_evaluation_in_reasoning"
+link: 'https://github.com/ashengstd/llm_evaluation_in_reasoning'
 isOpenSource: true
-badge: "★ Star 50+"
+badge: '★ Star 50+'
 ---
 
 A CLI tool based on LiteLLM for testing LLM reasoning performance. Implemented complete CI/CD with GitHub Actions. Supports GSM, GSM-Symbolic, SimpleBench datasets and any model API calls.

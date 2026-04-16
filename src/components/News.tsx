@@ -1,4 +1,14 @@
-import { VStack, Heading, Text, Box, Code, Container, HStack, Link as ChakraLink, Badge } from '@chakra-ui/react'
+import {
+  VStack,
+  Heading,
+  Text,
+  Box,
+  Code,
+  Container,
+  HStack,
+  Link as ChakraLink,
+  Badge,
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
@@ -19,7 +29,7 @@ const News = () => {
   const { t } = useTranslation()
   const { news: dataNews } = useLocalizedData()
   const news = sortNews(dataNews)
-  const lastUpdated = news.length > 0 ? (news[0].date || 'N/A') : 'N/A'
+  const lastUpdated = news.length > 0 ? news[0].date || 'N/A' : 'N/A'
 
   return (
     <Container maxW="7xl" px={4}>
@@ -29,7 +39,9 @@ const News = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Heading as="h1" size="xl" mb={6}>{t('news.title')}</Heading>
+          <Heading as="h1" size="xl" mb={6}>
+            {t('news.title')}
+          </Heading>
           <Box className="meta">
             <Box className="meta-item">
               <i className="fa-solid fa-clock-rotate-left"></i>
@@ -56,9 +68,13 @@ const News = () => {
                 <Box mb={2}>
                   <Code>{item.date}</Code>{' '}
                   {item.badge && (
-                    <Badge ml={2} colorScheme={item.iconColor?.split('.')[0] || 'gray'}>{item.badge}</Badge>
+                    <Badge ml={2} colorScheme={item.iconColor?.split('.')[0] || 'gray'}>
+                      {item.badge}
+                    </Badge>
                   )}{' '}
-                  <Text as="span" fontWeight="bold">{item.title}</Text>
+                  <Text as="span" fontWeight="bold">
+                    {item.title}
+                  </Text>
                 </Box>
                 <Text>{item.description}</Text>
                 {item.links && item.links.length > 0 && (
@@ -80,9 +96,11 @@ const News = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Heading as="h2" size="lg" mb={4}>{t('news.currentFocus')}</Heading>
+          <Heading as="h2" size="lg" mb={4}>
+            {t('news.currentFocus')}
+          </Heading>
           <Box as="pre" p={4} bg="var(--header-bg)" borderRadius="md" fontFamily="mono">
-{`# Active Projects (2024-Q4)
+            {`# Active Projects (2024-Q4)
 - ThinkGrasp extensions    // Working on improved vision-language integration
 - Equivariant Models       // Refining SE(2) models for grasping
 - Technical blog series    // Writing about LLMs and robotics

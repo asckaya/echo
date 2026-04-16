@@ -1,7 +1,20 @@
 import {
-  Box, Flex, IconButton, useColorMode, HStack, Link as ChakraLink, Image,
-  useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
-  VStack, Divider, Button
+  Box,
+  Flex,
+  IconButton,
+  useColorMode,
+  HStack,
+  Link as ChakraLink,
+  Image,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  VStack,
+  Divider,
+  Button,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -26,7 +39,7 @@ const Navbar: React.FC = () => {
     { icon: FaLinkedin, href: siteOwner.social.linkedin, label: 'LinkedIn' },
     { icon: FaMedium, href: siteOwner.social.medium, label: 'Medium' },
     { icon: SiGooglescholar, href: siteOwner.social.googleScholar, label: 'Google Scholar' },
-  ].filter(link => link.href)
+  ].filter((link) => link.href)
 
   return (
     <Box
@@ -40,13 +53,7 @@ const Navbar: React.FC = () => {
       zIndex={1000}
       w="full"
     >
-      <Flex
-        justify="space-between"
-        align="center"
-        w="full"
-        px={4}
-        position="relative"
-      >
+      <Flex justify="space-between" align="center" w="full" px={4} position="relative">
         {/* Mobile: hamburger */}
         <Box display={{ base: 'block', md: 'none' }}>
           <IconButton
@@ -67,12 +74,7 @@ const Navbar: React.FC = () => {
           _hover={{ opacity: 0.85 }}
           transition="opacity 0.15s"
         >
-          <Image
-            src={`${import.meta.env.BASE_URL}logo-icon.svg`}
-            alt="TermHub"
-            h="28px"
-            w="28px"
-          />
+          <Image src={`${import.meta.env.BASE_URL}logo-icon.svg`} alt="TermHub" h="28px" w="28px" />
         </ChakraLink>
 
         {/* Desktop nav (right aligned) */}
@@ -96,7 +98,7 @@ const Navbar: React.FC = () => {
                   paddingBottom: '2px',
                   fontSize: '1rem',
                   fontWeight: isActive ? '600' : '400',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
                 }}
               >
                 {t(item.labelKey)}
@@ -118,14 +120,11 @@ const Navbar: React.FC = () => {
                 transform: 'translateY(-2px)',
                 ...(link.label === 'LinkedIn' || link.label === 'Email'
                   ? { bg: 'var(--hover-color)' }
-                  : {})
+                  : {}),
               }}
               transition="all 0.2s"
             >
-              <Box
-                as={link.icon}
-                fontSize="1.2rem"
-              />
+              <Box as={link.icon} fontSize="1.2rem" />
             </ChakraLink>
           ))}
           {/* Language switcher */}
@@ -141,7 +140,7 @@ const Navbar: React.FC = () => {
             aria-label={t('aria.toggleLanguage')}
             _hover={{
               bg: 'var(--hover-color)',
-              transform: 'translateY(-2px)'
+              transform: 'translateY(-2px)',
             }}
             transition="all 0.2s"
           >
@@ -155,7 +154,7 @@ const Navbar: React.FC = () => {
             color="var(--text-color)"
             _hover={{
               bg: 'var(--hover-color)',
-              transform: 'translateY(-2px)'
+              transform: 'translateY(-2px)',
             }}
             transition="all 0.2s"
           />

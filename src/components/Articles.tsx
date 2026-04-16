@@ -1,13 +1,21 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import {
-  Box, Collapse, Flex, HStack, Icon, Input, Link, Select, Text, VStack,
-  useColorMode, useColorModeValue,
+  Box,
+  Collapse,
+  Flex,
+  HStack,
+  Icon,
+  Input,
+  Link,
+  Select,
+  Text,
+  VStack,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
-import { IconType } from 'react-icons'
-import {
-  FaGithub, FaMedium, FaYoutube, FaExternalLinkAlt,
-} from 'react-icons/fa'
+import { type IconType } from 'react-icons'
+import { FaGithub, FaMedium, FaYoutube, FaExternalLinkAlt } from 'react-icons/fa'
 import { SiZhihu, SiCsdn } from 'react-icons/si'
 import { useTranslation } from 'react-i18next'
 import type { ProjectItem } from '../types'
@@ -49,13 +57,21 @@ const getYear = (v?: string) => {
 
 /** Known article-type tags — first match becomes the type label */
 const typeTags = new Set([
-  'tutorial', 'notes', 'case study', 'setup notes', 'troubleshooting',
-  'guide', 'review', 'overview', 'deep dive', 'walkthrough',
+  'tutorial',
+  'notes',
+  'case study',
+  'setup notes',
+  'troubleshooting',
+  'guide',
+  'review',
+  'overview',
+  'deep dive',
+  'walkthrough',
 ])
 
 const getArticleType = (tags?: string[]): string | null => {
   if (!tags) return null
-  const found = tags.find(t => typeTags.has(t.toLowerCase()))
+  const found = tags.find((t) => typeTags.has(t.toLowerCase()))
   return found ?? null
 }
 
@@ -73,18 +89,18 @@ const Articles: React.FC = () => {
 
   /* Terminal palette (centralized) */
   const tc = terminalPalette.colors(isDark)
-  const termBg       = tc.bg
-  const termText     = tc.text
-  const termHeader   = tc.header
-  const termBorder   = tc.border
-  const termPrompt   = tc.prompt
-  const termCommand  = tc.command
-  const termParam    = tc.param
-  const termInfo     = tc.info
+  const termBg = tc.bg
+  const termText = tc.text
+  const termHeader = tc.header
+  const termBorder = tc.border
+  const termPrompt = tc.prompt
+  const termCommand = tc.command
+  const termParam = tc.param
+  const termInfo = tc.info
   const termHighlight = tc.highlight
-  const termSuccess  = tc.success
+  const termSuccess = tc.success
   const termSecondary = tc.secondary
-  const termMuted    = tc.muted
+  const termMuted = tc.muted
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -92,26 +108,32 @@ const Articles: React.FC = () => {
   }, [])
 
   const formattedTime = currentTime.toLocaleTimeString('en-US', {
-    hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
   })
 
-  const articles = useMemo(() =>
-    articleData.map((a, i) => ({ ...a, id: `article-${i}` })),
-  [articleData])
+  const articles = useMemo(
+    () => articleData.map((a, i) => ({ ...a, id: `article-${i}` })),
+    [articleData],
+  )
 
   const availableCategories = useMemo(() => {
     const set = new Set<ProjectItem['category']>()
-    articles.forEach(e => set.add(e.category))
+    articles.forEach((e) => set.add(e.category))
     return Array.from(set).sort((a, b) => a.localeCompare(b))
   }, [articles])
 
   const filteredArticles = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
     return articles
-      .filter(e => {
+      .filter((e) => {
         if (selectedCategory !== 'all' && e.category !== selectedCategory) return false
         if (!q) return true
-        return [e.title, e.summary, e.tags?.join(' ')].filter(Boolean).some(t => t!.toLowerCase().includes(q))
+        return [e.title, e.summary, e.tags?.join(' ')]
+          .filter(Boolean)
+          .some((t) => t!.toLowerCase().includes(q))
       })
       .sort((a, b) => {
         const da = a.date ? Date.parse(a.date) : 0
@@ -122,17 +144,18 @@ const Articles: React.FC = () => {
 
   const yearGroups = useMemo(() => {
     const map = new Map<string, typeof filteredArticles>()
-    filteredArticles.forEach(a => {
+    filteredArticles.forEach((a) => {
       const y = getYear(a.date) || 'Unknown'
       if (!map.has(y)) map.set(y, [])
       map.get(y)!.push(a)
     })
-    return Array.from(map.entries())
-      .sort(([a], [b]) => a === 'Unknown' ? 1 : b === 'Unknown' ? -1 : Number(b) - Number(a))
+    return Array.from(map.entries()).sort(([a], [b]) =>
+      a === 'Unknown' ? 1 : b === 'Unknown' ? -1 : Number(b) - Number(a),
+    )
   }, [filteredArticles])
 
   const toggleExpanded = (id: string) => {
-    setExpandedItems(prev => ({ ...prev, [id]: !prev[id] }))
+    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
   const promptPath = selectedCategory === 'all' ? '~' : `~/${selectedCategory}`
@@ -150,7 +173,15 @@ const Articles: React.FC = () => {
           {/* ═══ Pixel RGB light bar ═══ */}
           <Flex h="3px" w="full" overflow="hidden" borderTopRadius="md">
             {(() => {
-              const palette = ['#bf616a','#d08770','#ebcb8b','#a3be8c','#88c0d0','#5e81ac','#b48ead']
+              const palette = [
+                '#bf616a',
+                '#d08770',
+                '#ebcb8b',
+                '#a3be8c',
+                '#88c0d0',
+                '#5e81ac',
+                '#b48ead',
+              ]
               const total = 28
               const tick = Math.floor(currentTime.getTime() / 200)
               return Array.from({ length: total }, (_, i) => {
@@ -180,14 +211,31 @@ const Articles: React.FC = () => {
                 <Box w="10px" h="10px" borderRadius="full" bg="#a3be8c" />
               </HStack>
               <Text>
-                <Box as="span" color={termParam}>const </Box>
-                <Box as="span" color={termPrompt} fontWeight="bold">articles</Box>
-                <Box as="span" color={termSecondary}> = </Box>
-                <Box as="span" color={termParam}>new </Box>
-                <Box as="span" color={termCommand} fontWeight="bold">Reader</Box>
-                <Box as="span" color={termSecondary}>(</Box>
-                <Box as="span" color={termHighlight}>'blog'</Box>
-                <Box as="span" color={termSecondary}>)</Box>
+                <Box as="span" color={termParam}>
+                  const{' '}
+                </Box>
+                <Box as="span" color={termPrompt} fontWeight="bold">
+                  articles
+                </Box>
+                <Box as="span" color={termSecondary}>
+                  {' '}
+                  ={' '}
+                </Box>
+                <Box as="span" color={termParam}>
+                  new{' '}
+                </Box>
+                <Box as="span" color={termCommand} fontWeight="bold">
+                  Reader
+                </Box>
+                <Box as="span" color={termSecondary}>
+                  (
+                </Box>
+                <Box as="span" color={termHighlight}>
+                  'blog'
+                </Box>
+                <Box as="span" color={termSecondary}>
+                  )
+                </Box>
               </Text>
             </HStack>
             <Text color={termHighlight}>{formattedTime}</Text>
@@ -205,30 +253,54 @@ const Articles: React.FC = () => {
             overflow="hidden"
           >
             <Text color={termSecondary} isTruncated>
-              <Text as="span" color={termPrompt} fontWeight="bold">{siteOwner.terminalUsername}</Text>
-              <Text as="span" color={tc.border}> · </Text>
-              <Text as="span" color={termHighlight}>{articles.length}</Text>
+              <Text as="span" color={termPrompt} fontWeight="bold">
+                {siteOwner.terminalUsername}
+              </Text>
+              <Text as="span" color={tc.border}>
+                {' '}
+                ·{' '}
+              </Text>
+              <Text as="span" color={termHighlight}>
+                {articles.length}
+              </Text>
               <Text as="span"> {t('articles.technicalArticles')} </Text>
-              <Text as="span" color={termCommand}>{availableCategories.length} {t('articles.domains')}</Text>
+              <Text as="span" color={termCommand}>
+                {availableCategories.length} {t('articles.domains')}
+              </Text>
             </Text>
-            <Text color={termInfo} flexShrink={0}>~/blog</Text>
+            <Text color={termInfo} flexShrink={0}>
+              ~/blog
+            </Text>
           </Flex>
 
           {/* ═══ Toolbar ═══ */}
           <Flex
-            px={4} py={2} bg={termBg} borderBottom={`1px solid ${termBorder}`}
-            align="center" gap={2} fontSize="xs"
+            px={4}
+            py={2}
+            bg={termBg}
+            borderBottom={`1px solid ${termBorder}`}
+            align="center"
+            gap={2}
+            fontSize="xs"
           >
-            <Text color={termPrompt} flexShrink={0}>{siteOwner.terminalUsername}@blog:{promptPath}$</Text>
+            <Text color={termPrompt} flexShrink={0}>
+              {siteOwner.terminalUsername}@blog:{promptPath}$
+            </Text>
             <Input
               placeholder="grep -i '...'"
-              value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
-              size="xs" variant="unstyled" color={termText} fontFamily="mono"
-              flex="1" minW="120px" _placeholder={{ color: termSecondary }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              size="xs"
+              variant="unstyled"
+              color={termText}
+              fontFamily="mono"
+              flex="1"
+              minW="120px"
+              _placeholder={{ color: termSecondary }}
             />
             <Select
               value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value as CategoryFilter)}
+              onChange={(e) => setSelectedCategory(e.target.value as CategoryFilter)}
               size="xs"
               w="130px"
               bg={isDark ? 'rgba(0,0,0,0.2)' : 'white'}
@@ -238,8 +310,10 @@ const Articles: React.FC = () => {
               borderRadius="sm"
             >
               <option value="all">{t('articles.allTopics')}</option>
-              {availableCategories.map(c => (
-                <option key={c} value={c}>{t(`categoryLabel.${c}`)}</option>
+              {availableCategories.map((c) => (
+                <option key={c} value={c}>
+                  {t(`categoryLabel.${c}`)}
+                </option>
               ))}
             </Select>
           </Flex>
@@ -260,13 +334,19 @@ const Articles: React.FC = () => {
                 <Box key={year} mb={gi < yearGroups.length - 1 ? 6 : 0}>
                   {/* Year heading */}
                   <HStack spacing={2} mb={2} pl="2px">
-                    <Text fontSize="2xs" fontFamily="mono" color={termHighlight}
-                      fontWeight="semibold" letterSpacing="wide">
+                    <Text
+                      fontSize="2xs"
+                      fontFamily="mono"
+                      color={termHighlight}
+                      fontWeight="semibold"
+                      letterSpacing="wide"
+                    >
                       {year}
                     </Text>
                     <Box flex="1" h="1px" bg={termBorder} opacity={0.3} />
                     <Text fontSize="2xs" fontFamily="mono" color={termMuted}>
-                      {items.length} {items.length === 1 ? t('articles.article') : t('articles.articles')}
+                      {items.length}{' '}
+                      {items.length === 1 ? t('articles.article') : t('articles.articles')}
                     </Text>
                   </HStack>
 
@@ -278,8 +358,8 @@ const Articles: React.FC = () => {
                       const resources: { label: string; url: string }[] = []
                       if (item.link) resources.push({ label: 'Source', url: item.link })
                       if (item.extraLinks) {
-                        item.extraLinks.forEach(l => {
-                          if (!resources.some(r => r.url === l.url))
+                        item.extraLinks.forEach((l) => {
+                          if (!resources.some((r) => r.url === l.url))
                             resources.push({ label: l.label, url: l.url })
                         })
                       }
@@ -300,7 +380,12 @@ const Articles: React.FC = () => {
                             onClick={() => toggleExpanded(item.id)}
                           >
                             {/* Date */}
-                            <Text w={["70px", "90px"]} fontSize="xs" color={termHighlight} flexShrink={0}>
+                            <Text
+                              w={['70px', '90px']}
+                              fontSize="xs"
+                              color={termHighlight}
+                              flexShrink={0}
+                            >
                               {fmtDate(item.date)}
                             </Text>
 
@@ -316,7 +401,7 @@ const Articles: React.FC = () => {
                               fontSize="2xs"
                               fontWeight="bold"
                               textTransform="uppercase"
-                              w={["60px", "80px"]}
+                              w={['60px', '80px']}
                               flexShrink={0}
                               justifyContent="center"
                             >
@@ -336,14 +421,26 @@ const Articles: React.FC = () => {
                             </Box>
 
                             {/* Links (desktop) */}
-                            <HStack spacing={1.5} display={["none", "flex"]} flexShrink={0}>
-                              {resources.slice(0, 3).map(r => (
-                                <Link key={r.url} href={r.url} isExternal
-                                  onClick={e => e.stopPropagation()} _hover={{ textDecoration: 'none' }}>
+                            <HStack spacing={1.5} display={['none', 'flex']} flexShrink={0}>
+                              {resources.slice(0, 3).map((r) => (
+                                <Link
+                                  key={r.url}
+                                  href={r.url}
+                                  isExternal
+                                  onClick={(e) => e.stopPropagation()}
+                                  _hover={{ textDecoration: 'none' }}
+                                >
                                   <Flex
-                                    align="center" gap={1} px={2} py={0.5}
-                                    borderRadius="sm" border="1px solid" borderColor={termBorder}
-                                    color={termCommand} fontSize="2xs" fontFamily="mono"
+                                    align="center"
+                                    gap={1}
+                                    px={2}
+                                    py={0.5}
+                                    borderRadius="sm"
+                                    border="1px solid"
+                                    borderColor={termBorder}
+                                    color={termCommand}
+                                    fontSize="2xs"
+                                    fontFamily="mono"
                                     whiteSpace="nowrap"
                                     transition="all 0.15s"
                                     _hover={{ borderColor: ct.fg(isDark), color: ct.fg(isDark) }}
@@ -377,17 +474,27 @@ const Articles: React.FC = () => {
                             >
                               {/* Summary */}
                               <Text fontSize="xs" color={termText} lineHeight="1.7" mb={2}>
-                                {highlightData(item.summary, { num: termHighlight, kw: termCommand, str: termSuccess })}
+                                {highlightData(item.summary, {
+                                  num: termHighlight,
+                                  kw: termCommand,
+                                  str: termSuccess,
+                                })}
                               </Text>
 
                               {/* Tags */}
                               {item.tags.length > 0 && (
                                 <HStack spacing={1.5} flexWrap="wrap" mb={2}>
-                                  {item.tags.map(t => (
-                                    <Text key={t} fontSize="2xs" fontFamily="mono"
-                                      color={termMuted} px={1.5} py={0.5}
+                                  {item.tags.map((t) => (
+                                    <Text
+                                      key={t}
+                                      fontSize="2xs"
+                                      fontFamily="mono"
+                                      color={termMuted}
+                                      px={1.5}
+                                      py={0.5}
                                       bg={isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}
-                                      borderRadius="sm">
+                                      borderRadius="sm"
+                                    >
                                       {t}
                                     </Text>
                                   ))}
@@ -397,15 +504,29 @@ const Articles: React.FC = () => {
                               {/* All links (visible on all screens when expanded) */}
                               {resources.length > 0 && (
                                 <Flex wrap="wrap" gap={2}>
-                                  {resources.map(r => (
-                                    <Link key={r.url} href={r.url} isExternal
-                                      onClick={e => e.stopPropagation()} _hover={{ textDecoration: 'none' }}>
+                                  {resources.map((r) => (
+                                    <Link
+                                      key={r.url}
+                                      href={r.url}
+                                      isExternal
+                                      onClick={(e) => e.stopPropagation()}
+                                      _hover={{ textDecoration: 'none' }}
+                                    >
                                       <HStack
-                                        spacing={1.5} px={2.5} py={1} borderRadius="sm"
-                                        border="1px solid" borderColor={termBorder}
-                                        color={termCommand} fontSize="xs" fontFamily="mono"
+                                        spacing={1.5}
+                                        px={2.5}
+                                        py={1}
+                                        borderRadius="sm"
+                                        border="1px solid"
+                                        borderColor={termBorder}
+                                        color={termCommand}
+                                        fontSize="xs"
+                                        fontFamily="mono"
                                         transition="all 0.15s"
-                                        _hover={{ borderColor: ct.fg(isDark), color: ct.fg(isDark) }}
+                                        _hover={{
+                                          borderColor: ct.fg(isDark),
+                                          color: ct.fg(isDark),
+                                        }}
                                       >
                                         <Icon as={linkIcon(r.url)} boxSize="11px" />
                                         <Text>{r.label}</Text>
@@ -427,23 +548,40 @@ const Articles: React.FC = () => {
             {/* Empty state */}
             {filteredArticles.length === 0 && (
               <Box px={4} py={8} textAlign="center">
-                <Text color={termHighlight} fontSize="sm">{t('articles.noMatches')}</Text>
-                <Text color={termSecondary} fontSize="xs" mt={1}>{t('articles.tryAdjustingFilter')}</Text>
+                <Text color={termHighlight} fontSize="sm">
+                  {t('articles.noMatches')}
+                </Text>
+                <Text color={termSecondary} fontSize="xs" mt={1}>
+                  {t('articles.tryAdjustingFilter')}
+                </Text>
               </Box>
             )}
           </Box>
 
           {/* ═══ Status bar ═══ */}
           <Flex
-            px={4} py={1.5} bg={termHeader} borderTop={`1px solid ${termBorder}`}
-            align="center" justify="space-between" fontSize="2xs" color={termMuted}
+            px={4}
+            py={1.5}
+            bg={termHeader}
+            borderTop={`1px solid ${termBorder}`}
+            align="center"
+            justify="space-between"
+            fontSize="2xs"
+            color={termMuted}
           >
             <Text>
               {filteredArticles.length}/{articles.length} {t('articles.shown')}
             </Text>
             <HStack spacing={1}>
-              <Text color={termPrompt}>{siteOwner.terminalUsername}@blog:{promptPath}$</Text>
-              <Box w="6px" h="11px" bg={termPrompt} sx={{ animation: `${blink} 1s step-end infinite` }} />
+              <Text color={termPrompt}>
+                {siteOwner.terminalUsername}@blog:{promptPath}$
+              </Text>
+              <Box
+                w="6px"
+                h="11px"
+                bg={termPrompt}
+                sx={{ animation: `${blink} 1s step-end infinite` }}
+              />
             </HStack>
           </Flex>
         </Box>

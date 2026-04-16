@@ -1,26 +1,12 @@
-:root {
-  --bg-color: #f8f9fa;
-  --text-color: #212529;
-  --accent-color: #3a86ff;
-  --accent-light: rgba(58, 134, 255, 0.1);
-  --secondary-text: #6c757d;
-  --border-color: #dee2e6;
-  --card-bg: #ffffff;
-  --header-bg: #f1f3f5;
-  --hover-color: #e9ecef;
-}
-
-[data-theme='dark'] {
-  --bg-color: #0d1117;
-  --text-color: #c9d1d9;
-  --accent-color: #58a6ff;
-  --accent-light: rgba(88,166,255,0.15);
-  --secondary-text: #8b949e;
-  --border-color: #30363d;
-  --card-bg: #161b22;
-  --header-bg: #161b22;
-  --hover-color: #21262d;
-}
+/*
+ * CSS custom properties (--bg-color, --text-color, etc.) are no longer
+ * defined here. They are injected at runtime onto :root by ThemeInjector
+ * (src/themes/ThemeInjector.tsx), which reads the values from the active
+ * colour scheme in src/themes/index.ts.
+ *
+ * To change colours, edit src/themes/nord.ts (or add a new theme file and
+ * update the import in src/themes/index.ts). No changes are needed here.
+ */
 
 * {
   margin: 0;
@@ -29,7 +15,7 @@
 }
 
 body {
-  font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--bg-color);
@@ -42,7 +28,7 @@ pre {
   border-radius: 4px;
   overflow-x: auto;
   margin-bottom: 1rem;
-  font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
 }
 
 code {
@@ -50,7 +36,7 @@ code {
   padding: 0.1rem 0.3rem;
   border-radius: 4px;
   font-size: 0.9em;
-  font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
 }
 
 .tag {
@@ -69,7 +55,9 @@ code {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 1.25rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -77,7 +65,7 @@ code {
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .meta {
@@ -93,4 +81,4 @@ code {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-} 
+}

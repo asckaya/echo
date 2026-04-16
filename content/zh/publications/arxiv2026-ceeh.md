@@ -1,6 +1,6 @@
 ---
 id: arxiv2026-compress-explore
-title: "压缩简单问题，探索困难问题：面向高效LLM推理的难度感知熵正则化"
+title: '压缩简单问题，探索困难问题：面向高效LLM推理的难度感知熵正则化'
 authors: [罗钦文, 任笙, 陈想, 刘瑞, 方俊, 谭乃强, 黄生俊]
 venue: arXiv
 venueType: preprint
@@ -9,8 +9,8 @@ status: preprint
 isFirstAuthor: false
 isCoFirst: false
 links:
-  paper: "https://arxiv.org/abs/2602.22642"
-emoji: "🧠"
+  paper: 'https://arxiv.org/abs/2602.22642'
+emoji: '🧠'
 featuredImage: /images/publications/CEEH.png
 ---
 

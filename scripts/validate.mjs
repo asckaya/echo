@@ -70,11 +70,11 @@ if (site?.avatar) {
     const baseName = site.avatar.replace(/\.[^.]+$/, '')
     const altExts = ['jpg', 'jpeg', 'png', 'svg', 'webp']
     const found = altExts.find((ext) =>
-      existsSync(resolve(ROOT, `content/images/${baseName}.${ext}`))
+      existsSync(resolve(ROOT, `content/images/${baseName}.${ext}`)),
     )
     if (found) {
       warn(
-        `Avatar configured as "${site.avatar}" but found "${baseName}.${found}" — update content/site.json or rename the file`
+        `Avatar configured as "${site.avatar}" but found "${baseName}.${found}" — update content/site.json or rename the file`,
       )
     } else {
       fail(`Avatar file missing: ${avatarPath} — place your avatar image in content/images/`)
@@ -111,10 +111,7 @@ if (site) {
 // 5. All content JSON files are valid
 // ---------------------------------------------------------------------------
 
-const jsonFiles = [
-  'experience.json', 'news.json',
-  'awards.json', 'research.json', 'logos.json',
-]
+const jsonFiles = ['experience.json', 'news.json', 'awards.json', 'research.json', 'logos.json']
 
 let validCount = 0
 for (const file of jsonFiles) {
@@ -152,7 +149,10 @@ if (logos) {
   const missing = []
 
   for (const [name, logoPath] of entries) {
-    if (logoPath === '/images/logos/placeholder.png' || logoPath === '/images/logos/placeholder.svg') {
+    if (
+      logoPath === '/images/logos/placeholder.png' ||
+      logoPath === '/images/logos/placeholder.svg'
+    ) {
       missing.push(name)
       continue
     }
@@ -182,7 +182,7 @@ if (site?.selectedPublicationIds?.length > 0) {
     warn('content/publications/ not found — skipping publication ID check')
   } else {
     const allIds = new Set()
-    const pubFiles = readdirSync(pubDir).filter(f => f.endsWith('.md'))
+    const pubFiles = readdirSync(pubDir).filter((f) => f.endsWith('.md'))
     for (const file of pubFiles) {
       const content = readFileSync(resolve(pubDir, file), 'utf-8')
       const idMatch = content.match(/^id:\s*(.+)$/m)
@@ -195,7 +195,7 @@ if (site?.selectedPublicationIds?.length > 0) {
       pass(`All ${site.selectedPublicationIds.length} selected publication ID(s) valid`)
     } else {
       fail(
-        `Invalid selectedPublicationIds: ${invalid.join(', ')}\n  Available IDs: ${[...allIds].join(', ')}`
+        `Invalid selectedPublicationIds: ${invalid.join(', ')}\n  Available IDs: ${[...allIds].join(', ')}`,
       )
     }
   }

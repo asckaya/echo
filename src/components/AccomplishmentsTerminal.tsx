@@ -1,5 +1,19 @@
 import React from 'react'
-import { Box, VStack, HStack, Text, useColorModeValue, Flex, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverBody, Container, Heading } from '@chakra-ui/react'
+import {
+  Box,
+  VStack,
+  HStack,
+  Text,
+  useColorModeValue,
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverBody,
+  Container,
+  Heading,
+} from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import DynamicIcon from './DynamicIcon'
 import type { Award } from '../types'
@@ -65,7 +79,9 @@ const AwardRow = ({ award }: { award: Award }) => {
         </Text>
         <HStack spacing={2} mt={0.5} flexWrap="wrap">
           {award.org && (
-            <Text fontSize="2xs" color={mutedColor}>{award.org}</Text>
+            <Text fontSize="2xs" color={mutedColor}>
+              {award.org}
+            </Text>
           )}
         </HStack>
       </Box>
@@ -73,7 +89,13 @@ const AwardRow = ({ award }: { award: Award }) => {
         <Text fontSize="2xs" fontFamily="mono" color={mutedColor} whiteSpace="nowrap">
           {award.date}
         </Text>
-        <Text fontSize="2xs" fontFamily="mono" color={kindColor} textTransform="uppercase" letterSpacing="wide">
+        <Text
+          fontSize="2xs"
+          fontFamily="mono"
+          color={kindColor}
+          textTransform="uppercase"
+          letterSpacing="wide"
+        >
           {t(meta.labelKey)}
         </Text>
       </VStack>
@@ -83,9 +105,7 @@ const AwardRow = ({ award }: { award: Award }) => {
   if (award.egg) {
     return (
       <Popover trigger="hover" placement="top-start">
-        <PopoverTrigger>
-          {content}
-        </PopoverTrigger>
+        <PopoverTrigger>{content}</PopoverTrigger>
         <PopoverContent
           bg={useColorModeValue('white', 'gray.800')}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
@@ -116,10 +136,13 @@ const AccomplishmentsTerminal: React.FC = () => {
   const { t } = useTranslation()
   const { awards } = useLocalizedData()
   return (
-    <Container maxW={["full", "full", "7xl"]} px={[2, 4, 8]}>
-      <Heading size={["sm", "md"]} mb={3}>{t('about.awardsAndHonors')}</Heading>
+    <Container maxW={['full', 'full', '7xl']} px={[2, 4, 8]}>
+      <Heading size={['sm', 'md']} mb={3}>
+        {t('about.awardsAndHonors')}
+      </Heading>
       <Text fontSize="xs" color={useColorModeValue('gray.500', 'gray.400')} mb={4}>
-        {awards.length} {t('about.awardsSpanning')} {new Set(awards.map(a => a.kind)).size} {t('about.categories')}
+        {awards.length} {t('about.awardsSpanning')} {new Set(awards.map((a) => a.kind)).size}{' '}
+        {t('about.categories')}
       </Text>
       <VStack spacing={0} align="stretch">
         {awards.map((a, i) => (

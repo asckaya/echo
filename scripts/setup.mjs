@@ -77,10 +77,7 @@ function buildSiteJson(a) {
         'share knowledge',
         'learn new things',
       ],
-      skills: [
-        'Python', 'TypeScript', 'Go', 'PyTorch',
-        'React', 'ROS2', 'Docker', 'Kubernetes',
-      ],
+      skills: ['Python', 'TypeScript', 'Go', 'PyTorch', 'React', 'ROS2', 'Docker', 'Kubernetes'],
       timezone: 'America/Los_Angeles',
     },
 
@@ -165,9 +162,16 @@ async function main() {
   iface.close()
 
   const answers = {
-    fullName, firstName, lastName, nickname,
-    email, location, github, linkedin,
-    terminalUser, avatar,
+    fullName,
+    firstName,
+    lastName,
+    nickname,
+    email,
+    location,
+    github,
+    linkedin,
+    terminalUser,
+    avatar,
   }
 
   // ── Write content/site.json ─────────────────────────────────
@@ -195,7 +199,7 @@ async function main() {
   // ── What's next ───────────────────────────────────────────────
   console.log()
   console.log('  ╔═══════════════════════════════════════════════════════╗')
-  console.log('  ║                     What\'s Next?                      ║')
+  console.log("  ║                     What's Next?                      ║")
   console.log('  ╠═══════════════════════════════════════════════════════╣')
   console.log('  ║                                                       ║')
   console.log('  ║  1. Edit your content in the content/ folder:         ║')

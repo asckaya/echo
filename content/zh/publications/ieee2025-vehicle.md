@@ -1,6 +1,6 @@
 ---
 id: ieee2025-vehicle-detection
-title: "CCTV视频中的快速逆行骑行检测：稀疏采样即可"
+title: 'CCTV视频中的快速逆行骑行检测：稀疏采样即可'
 authors: [徐静, 史文涛, 任笙, 张丽娟, 杨伟凯, 高攀, 秦杰]
 venue: IEEE Transactions on Intelligent Transportation Systems
 venueType: journal
@@ -9,9 +9,9 @@ status: published
 isFirstAuthor: false
 isCoFirst: false
 links:
-  paper: "https://ieeexplore.ieee.org/abstract/document/11306249/"
-  code: "https://github.com/VICA-Lab-HKUST-GZ/WWC-Predictor"
-emoji: "🚗"
+  paper: 'https://ieeexplore.ieee.org/abstract/document/11306249/'
+  code: 'https://github.com/VICA-Lab-HKUST-GZ/WWC-Predictor'
+emoji: '🚗'
 featuredImage: /images/publications/ITIS.png
 ---
 

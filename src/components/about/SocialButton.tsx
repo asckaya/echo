@@ -16,18 +16,25 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   label,
   href,
   hoverBg = 'gray.100',
-  shadowColor = 'gray.500'
+  shadowColor = 'gray.500',
 }) => {
   const borderColor = useColorModeValue('gray.300', 'gray.600')
   const hoverBorderColor = useColorModeValue('cyan.400', 'cyan.300')
 
   return (
-    <Tooltip label={label} fontSize="xs" hasArrow placement="bottom" openDelay={200} fontFamily="mono">
+    <Tooltip
+      label={label}
+      fontSize="xs"
+      hasArrow
+      placement="bottom"
+      openDelay={200}
+      fontFamily="mono"
+    >
       <Link href={href} isExternal _hover={{ textDecoration: 'none' }}>
         <IconButton
           aria-label={label}
           icon={<DynamicIcon name={icon} boxSize={[3, 3.5]} />}
-          size={["xs", "sm"]}
+          size={['xs', 'sm']}
           variant="ghost"
           borderRadius="sm"
           border="1px solid"
@@ -45,7 +52,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
             '&:active': {
               transform: 'scale(0.95)',
               boxShadow: 'none',
-            }
+            },
           }}
         />
       </Link>

@@ -1,5 +1,14 @@
 import React from 'react'
-import { Box, Container, VStack, HStack, Text, Link, Image, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Container,
+  VStack,
+  HStack,
+  Text,
+  Link,
+  Image,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
@@ -31,16 +40,12 @@ const Footer: React.FC = () => {
             <Image
               src={`${import.meta.env.BASE_URL}logo.svg`}
               alt="TermHub"
-              h={["40px", "48px"]}
+              h={['40px', '48px']}
               objectFit="contain"
             />
           </Link>
 
-          <HStack
-            spacing={1}
-            color={textColor}
-            fontSize={["xs", "sm"]}
-          >
+          <HStack spacing={1} color={textColor} fontSize={['xs', 'sm']}>
             <Text>{t('footer.poweredBy')}</Text>
             <Link
               href="https://github.com/H-Freax/TermHub"
@@ -53,10 +58,7 @@ const Footer: React.FC = () => {
             </Link>
           </HStack>
 
-          <Text
-            fontSize={["2xs", "xs"]}
-            color={textColor}
-          >
+          <Text fontSize={['2xs', 'xs']} color={textColor}>
             © {new Date().getFullYear()} {siteOwner.name.display}
           </Text>
         </VStack>

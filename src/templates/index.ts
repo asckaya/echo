@@ -37,13 +37,15 @@ const templates: Record<string, TemplateConfig> = {
  * variantRegistry.hero.minimal = MinimalHero
  * // then in site.json: { "components": { "hero": "minimal" } }
  */
-export const variantRegistry: Record<string, Record<string, React.ComponentType<any>>> = Object.fromEntries(
+export const variantRegistry: Record<
+  string,
+  Record<string, React.ComponentType<any>>
+> = Object.fromEntries(
   Object.entries(terminalTemplate.slots).map(([slotName, component]) => [
     slotName,
     { terminal: component },
-  ])
+  ]),
 )
-
 
 /** Default template id when none is specified in site.json */
 const DEFAULT_TEMPLATE = 'terminal'

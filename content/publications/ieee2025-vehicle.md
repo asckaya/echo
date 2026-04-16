@@ -1,6 +1,6 @@
 ---
 id: ieee2025-vehicle-detection
-title: "Fast Wrong-way Cycling Detection in CCTV Videos: Sparse Sampling is All You Need"
+title: 'Fast Wrong-way Cycling Detection in CCTV Videos: Sparse Sampling is All You Need'
 authors: [Jing Xu, Wentao Shi, Sheng Ren, Lijuan Zhang, Weikai Yang, Pan Gao, Jie Qin]
 venue: IEEE Transactions on Intelligent Transportation Systems
 venueType: journal
@@ -9,9 +9,9 @@ status: published
 isFirstAuthor: false
 isCoFirst: false
 links:
-  paper: "https://ieeexplore.ieee.org/abstract/document/11306249/"
-  code: "https://github.com/VICA-Lab-HKUST-GZ/WWC-Predictor"
-emoji: "🚗"
+  paper: 'https://ieeexplore.ieee.org/abstract/document/11306249/'
+  code: 'https://github.com/VICA-Lab-HKUST-GZ/WWC-Predictor'
+emoji: '🚗'
 featuredImage: /images/publications/ITIS.png
 ---
 

@@ -1,6 +1,6 @@
 ---
 id: arxiv2026-compress-explore
-title: "Compress the Easy, Explore the Hard: Difficulty-Aware Entropy Regularization for Efficient LLM Reasoning"
+title: 'Compress the Easy, Explore the Hard: Difficulty-Aware Entropy Regularization for Efficient LLM Reasoning'
 authors: [Qin-Wen Luo, Sheng Ren, Xiang Chen, Rui Liu, Jun Fang, Naiqiang Tan, Sheng-Jun Huang]
 venue: arXiv
 venueType: preprint
@@ -9,8 +9,8 @@ status: preprint
 isFirstAuthor: false
 isCoFirst: false
 links:
-  paper: "https://arxiv.org/abs/2602.22642"
-emoji: "🧠"
+  paper: 'https://arxiv.org/abs/2602.22642'
+emoji: '🧠'
 featuredImage: /images/publications/CEEH.png
 ---
 

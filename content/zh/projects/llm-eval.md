@@ -3,9 +3,9 @@ title: llm_eval - 大模型推理性能测试CLI
 category: tooling
 date: 2024-11
 tags: [LLM, LiteLLM, GitHub Actions, Python]
-link: "https://github.com/ashengstd/llm_evaluation_in_reasoning"
+link: 'https://github.com/ashengstd/llm_evaluation_in_reasoning'
 isOpenSource: true
-badge: "★ Star 50+"
+badge: '★ Star 50+'
 ---
 
 基于LiteLLM实现的CLI工具，用于测试大语言模型推理性能。用GitHub Actions实现完整CI/CD，支持GSM、GSM-Symbolic、SimpleBench等数据集和任意模型API调用。

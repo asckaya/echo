@@ -198,23 +198,23 @@ cd mcp-server && npm install    # 1. Install
 
 <br/>
 
-| Tool | Description |
-|------|-------------|
-| `get_schema` | Get all data types — AI calls this first |
-| `parse_pdf` | Extract text from resume PDF |
-| `generate_from_resume` | Create structured blueprint from resume text |
-| `update_site_config` | Set name, email, social links |
-| `add_publication` | Add a paper with full metadata |
-| `add_project` | Add a project with tags and highlights |
-| `add_experience` | Add work/research timeline entry |
-| `add_education` | Add education entry |
-| `add_news` / `add_award` | Add news items and awards |
-| `write_markdown_content` | Write any Markdown content file |
-| `write_json_content` | Write any JSON content file |
-| `manage_assets` | Copy images to public directory |
-| `preview_site` | Start dev server or production build |
-| `get_site_status` | Overview of current portfolio content |
-| `reset_content` | Clear all content for fresh start |
+| Tool                     | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| `get_schema`             | Get all data types — AI calls this first     |
+| `parse_pdf`              | Extract text from resume PDF                 |
+| `generate_from_resume`   | Create structured blueprint from resume text |
+| `update_site_config`     | Set name, email, social links                |
+| `add_publication`        | Add a paper with full metadata               |
+| `add_project`            | Add a project with tags and highlights       |
+| `add_experience`         | Add work/research timeline entry             |
+| `add_education`          | Add education entry                          |
+| `add_news` / `add_award` | Add news items and awards                    |
+| `write_markdown_content` | Write any Markdown content file              |
+| `write_json_content`     | Write any JSON content file                  |
+| `manage_assets`          | Copy images to public directory              |
+| `preview_site`           | Start dev server or production build         |
+| `get_site_status`        | Overview of current portfolio content        |
+| `reset_content`          | Clear all content for fresh start            |
 
 </details>
 

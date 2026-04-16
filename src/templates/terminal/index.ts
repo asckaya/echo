@@ -1,38 +1,42 @@
 // SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { TemplateConfig } from "../types";
-import theme from "../../theme";
+import { lazy } from 'react'
+import type { TemplateConfig } from '../types'
+import theme from '../../theme'
 
-import Layout from "../../components/Layout";
-import Home from "../../components/Home";
-import Publications from "../../components/Publications";
-import Projects from "../../components/Projects";
-import Articles from "../../components/Articles";
-import Experience from "../../components/Experience";
-import GuideLanding from "../../components/GuideLanding";
-import GuideDocs from "../../components/GuideDocs";
-import AboutPage from "../../components/AboutPage";
+// ── Layout & slots — eagerly loaded (always visible on every route) ──────────
+import Layout from '../../components/Layout'
+import Navbar from '../../components/Navbar'
+import HeroSection from '../../components/about/HeroSection'
+import Footer from '../../components/about/Footer'
+import NewsTimeline from '../../components/about/NewsTimeline'
+import AccomplishmentsTerminal from '../../components/AccomplishmentsTerminal'
+import BioSection from '../../components/sections/BioSection'
+import SkillsSection from '../../components/sections/SkillsSection'
+import JourneySection from '../../components/sections/JourneySection'
+import MentorshipSection from '../../components/sections/MentorshipSection'
+import SelectedPublicationsSection from '../../components/sections/SelectedPublicationsSection'
+import TalksSection from '../../components/sections/TalksSection'
+import TeachingSection from '../../components/sections/TeachingSection'
+import ContactSection from '../../components/sections/ContactSection'
 
-import Navbar from "../../components/Navbar";
-import HeroSection from "../../components/about/HeroSection";
-import Footer from "../../components/about/Footer";
-import NewsTimeline from "../../components/about/NewsTimeline";
-import AccomplishmentsTerminal from "../../components/AccomplishmentsTerminal";
-
-import BioSection from "../../components/sections/BioSection";
-import SkillsSection from "../../components/sections/SkillsSection";
-import JourneySection from "../../components/sections/JourneySection";
-import MentorshipSection from "../../components/sections/MentorshipSection";
-import SelectedPublicationsSection from "../../components/sections/SelectedPublicationsSection";
-import TalksSection from "../../components/sections/TalksSection";
-import TeachingSection from "../../components/sections/TeachingSection";
-import ContactSection from "../../components/sections/ContactSection";
+// ── Pages — lazily loaded, each becomes its own JS chunk ────────────────────
+// Vite splits these at the dynamic import() boundary, so the visitor only
+// downloads code for the page they actually navigate to.
+const Home = lazy(() => import('../../components/Home'))
+const Publications = lazy(() => import('../../components/Publications'))
+const Projects = lazy(() => import('../../components/Projects'))
+const Articles = lazy(() => import('../../components/Articles'))
+const Experience = lazy(() => import('../../components/Experience'))
+const GuideLanding = lazy(() => import('../../components/GuideLanding'))
+const GuideDocs = lazy(() => import('../../components/GuideDocs'))
+const AboutPage = lazy(() => import('../../components/AboutPage'))
 
 const terminalTemplate: TemplateConfig = {
-  id: "terminal",
-  name: "Terminal",
-  description: "Nord-inspired terminal aesthetic with monospace typography",
+  id: 'terminal',
+  name: 'Terminal',
+  description: 'Nord-inspired terminal aesthetic with monospace typography',
   theme,
   layout: Layout,
   pages: {
@@ -60,6 +64,6 @@ const terminalTemplate: TemplateConfig = {
     teaching: TeachingSection,
     contact: ContactSection,
   },
-};
+}
 
-export default terminalTemplate;
+export default terminalTemplate
