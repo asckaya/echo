@@ -19,6 +19,7 @@ import type { RoleType } from '../types'
 import { highlightData } from '../utils/highlightData'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { useThemeConfig } from '@/config/theme'
+import { MotionList, MotionBox, MotionHover } from './animations/MotionList'
 
 /* ── Keyframes ─────────────────────────────────────────────────── */
 const blink = keyframes`0%,100%{opacity:1}50%{opacity:0}`
@@ -345,51 +346,53 @@ const Experience: React.FC = () => {
           </Flex>
 
           {/* Education */}
-          <Box px={[3, 5]} py={3} bg={termBg} borderBottom={`1px solid ${termBorder}`}>
-            <Flex align="center" gap={2} mb={2.5}>
-              <Box w="14px" h="3px" borderRadius="full" bg={termCommand} />
-              <Text fontSize="xs" fontWeight="bold" color={termInfo} letterSpacing="0.06em">
-                {t('experience.education')}
-              </Text>
-              <Box flex="1" h="1px" bg={termBorder} />
-            </Flex>
-            <VStack align="stretch" gap={1.5} pl={1}>
-              {education.map((edu) => {
-                const logo = institutionLogos[edu.institution]
-                return (
-                  <HStack key={edu.course} fontSize="xs" gap={2}>
-                    {logo ? (
-                      <Image
-                        src={logo}
-                        alt=""
-                        w="16px"
-                        h="16px"
-                        borderRadius="sm"
-                        objectFit="contain"
-                        flexShrink={0}
-                      />
-                    ) : (
-                      <Box
-                        w="16px"
-                        h="16px"
-                        borderRadius="sm"
-                        bg={`${termCommand}20`}
-                        flexShrink={0}
-                      />
-                    )}
-                    <Text color={termText} fontWeight="medium">
-                      {edu.course}
-                    </Text>
-                    <Text color={termSecondary}>·</Text>
-                    <Text color={termCommand}>{edu.institution}</Text>
-                    <Text color={termSecondary} ml="auto" flexShrink={0}>
-                      {edu.year}
-                    </Text>
-                  </HStack>
-                )
-              })}
-            </VStack>
-          </Box>
+          <MotionBox delay={0.1}>
+            <Box px={[3, 5]} py={3} bg={termBg} borderBottom={`1px solid ${termBorder}`}>
+              <Flex align="center" gap={2} mb={2.5}>
+                <Box w="14px" h="3px" borderRadius="full" bg={termCommand} />
+                <Text fontSize="xs" fontWeight="bold" color={termInfo} letterSpacing="0.06em">
+                  {t('experience.education')}
+                </Text>
+                <Box flex="1" h="1px" bg={termBorder} />
+              </Flex>
+              <VStack align="stretch" gap={1.5} pl={1}>
+                {education.map((edu) => {
+                  const logo = institutionLogos[edu.institution]
+                  return (
+                    <HStack key={edu.course} fontSize="xs" gap={2}>
+                      {logo ? (
+                        <Image
+                          src={logo}
+                          alt=""
+                          w="16px"
+                          h="16px"
+                          borderRadius="sm"
+                          objectFit="contain"
+                          flexShrink={0}
+                        />
+                      ) : (
+                        <Box
+                          w="16px"
+                          h="16px"
+                          borderRadius="sm"
+                          bg={`${termCommand}20`}
+                          flexShrink={0}
+                        />
+                      )}
+                      <Text color={termText} fontWeight="medium">
+                        {edu.course}
+                      </Text>
+                      <Text color={termSecondary}>·</Text>
+                      <Text color={termCommand}>{edu.institution}</Text>
+                      <Text color={termSecondary} ml="auto" flexShrink={0}>
+                        {edu.year}
+                      </Text>
+                    </HStack>
+                  )
+                })}
+              </VStack>
+            </Box>
+          </MotionBox>
 
           {/* Filter bar */}
           <Flex
@@ -435,267 +438,268 @@ const Experience: React.FC = () => {
 
           {/* ── Experience list ───────────────────────────── */}
           <Box bg={termBg} color={termText}>
-            {grouped.map((group) => (
-              <Box key={group.year}>
-                {/* Year heading */}
-                <Flex
-                  px={[3, 5]}
-                  py={2}
-                  align="center"
-                  gap={2}
-                  bg={isDark ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.03)'}
-                  borderBottom={`1px solid ${termBorder}`}
-                >
-                  <Box
-                    w="8px"
-                    h="8px"
-                    borderRadius="full"
-                    border="2px solid"
-                    borderColor={group.year === 'Present' ? termSuccess : termHighlight}
-                    bg={group.year === 'Present' ? termSuccess : 'transparent'}
-                  />
-                  <Text
-                    fontSize="xs"
-                    fontWeight="bold"
-                    color={group.year === 'Present' ? termSuccess : termHighlight}
-                    letterSpacing="0.04em"
+            <MotionList staggerDelay={0.1}>
+              {grouped.map((group) => (
+                <Box key={group.year}>
+                  {/* Year heading */}
+                  <Flex
+                    px={[3, 5]}
+                    py={2}
+                    align="center"
+                    gap={2}
+                    bg={isDark ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.03)'}
+                    borderBottom={`1px solid ${termBorder}`}
                   >
-                    {group.year === 'Present' ? t('experience.present').toUpperCase() : group.year}
-                  </Text>
-                  <Text fontSize="2xs" color={termSecondary}>
-                    {group.year === 'Present'
-                      ? `${group.items.length} ${t('experience.active')}`
-                      : `${group.items.length}`}
-                  </Text>
-                  <Box flex="1" h="1px" bg={termBorder} />
-                </Flex>
-
-                {/* Entries */}
-                {group.items.map((exp) => {
-                  const id = `${exp.title}-${exp.company}-${exp.start}`
-                  const isExpanded = !!expandedItems[id]
-                  const rt: RoleType =
-                    exp.roleType ??
-                    (categoryFilter[exp.category] === 'industry' ? 'sde' : 'research')
-                  const rtCfg = roleTypeConfig[rt]
-                  const rtColor = rtCfg.color(isDark)
-                  const icon = getIconUrl(exp.companyUrl, exp.company, institutionLogos)
-
-                  return (
                     <Box
-                      key={id}
-                      borderBottom={`1px solid ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)'}`}
-                      _hover={{ bg: hoverBg }}
-                      transition="background 0.15s"
+                      w="8px"
+                      h="8px"
+                      borderRadius="full"
+                      border="2px solid"
+                      borderColor={group.year === 'Present' ? termSuccess : termHighlight}
+                      bg={group.year === 'Present' ? termSuccess : 'transparent'}
+                    />
+                    <Text
+                      fontSize="xs"
+                      fontWeight="bold"
+                      color={group.year === 'Present' ? termSuccess : termHighlight}
+                      letterSpacing="0.04em"
                     >
-                      <Flex
-                        px={[3, 5]}
-                        py={3}
-                        gap={3}
-                        align="start"
-                        cursor="pointer"
-                        onClick={() => toggleExpanded(id)}
-                      >
-                        {/* Logo */}
-                        <Box flexShrink={0} mt="2px">
-                          {icon ? (
-                            <Image
-                              src={icon}
-                              alt=""
-                              w="32px"
-                              h="32px"
-                              borderRadius="md"
-                              objectFit="contain"
-                            />
-                          ) : (
-                            <Flex
-                              w="32px"
-                              h="32px"
-                              borderRadius="md"
-                              bg={`${rtColor}18`}
-                              color={rtColor}
-                              align="center"
-                              justify="center"
-                              fontSize="sm"
-                              fontWeight="bold"
-                            >
-                              {exp.company.charAt(0)}
-                            </Flex>
-                          )}
-                        </Box>
+                      {group.year === 'Present' ? t('experience.present').toUpperCase() : group.year}
+                    </Text>
+                    <Text fontSize="2xs" color={termSecondary}>
+                      {group.year === 'Present'
+                        ? `${group.items.length} ${t('experience.active')}`
+                        : `${group.items.length}`}
+                    </Text>
+                    <Box flex="1" h="1px" bg={termBorder} />
+                  </Flex>
 
-                        {/* Content */}
-                        <Box flex="1" minW={0}>
-                          {/* Title + role badge */}
-                          <Flex align="center" gap={2} flexWrap="wrap" mb={0.5}>
-                            <Text fontSize="sm" fontWeight="semibold" color={termText}>
-                              {exp.title}
-                            </Text>
-                            <Text
-                              fontSize="2xs"
-                              fontWeight="bold"
-                              color={rtColor}
-                              letterSpacing="0.04em"
-                              textTransform="uppercase"
-                              px={1.5}
-                              py={0}
-                              borderRadius="sm"
-                              bg={`${rtColor}15`}
-                            >
-                              {t(rtCfg.labelKey)}
-                            </Text>
-                            {exp.isCurrent && (
-                              <Box
-                                w="6px"
-                                h="6px"
-                                borderRadius="full"
-                                bg={termSuccess}
-                                flexShrink={0}
-                              />
-                            )}
-                          </Flex>
+                  {/* Entries */}
+                  {group.items.map((exp) => {
+                    const id = `${exp.title}-${exp.company}-${exp.start}`
+                    const isExpanded = !!expandedItems[id]
+                    const rt: RoleType =
+                      exp.roleType ??
+                      (categoryFilter[exp.category] === 'industry' ? 'sde' : 'research')
+                    const rtCfg = roleTypeConfig[rt]
+                    const rtColor = rtCfg.color(isDark)
+                    const icon = getIconUrl(exp.companyUrl, exp.company, institutionLogos)
 
-                          {/* Company + location */}
-                          <Flex align="center" gap={1} flexWrap="wrap" fontSize="xs">
-                            {exp.companyUrl ? (
-                              <Link
-                                href={exp.companyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                color={termCommand}
-                                fontSize="xs"
-                                onClick={(e) => e.stopPropagation()}
-                                _hover={{ textDecoration: 'underline' }}
-                              >
-                                {exp.company}
-                              </Link>
-                            ) : (
-                              <Text color={termCommand}>{exp.company}</Text>
-                            )}
-                            {exp.location && <Text color={termSecondary}>· {exp.location}</Text>}
-                          </Flex>
-
-                          {/* Date on mobile */}
-                          <Text fontSize="2xs" color={termSecondary} mt={0.5} display={{ base: "block", md: "none" }}>
-                            {fmtDate(exp.start)} – {fmtDate(exp.end)}
-                          </Text>
-                        </Box>
-
-                        {/* Period (desktop) */}
-                        <Text
-                          fontSize="xs"
-                          color={termSecondary}
-                          flexShrink={0}
-                          pt="2px"
-                          w="160px"
-                          textAlign="right"
-                          display={{ base: "none", md: "block" }}
+                    return (
+                      <MotionBox key={id}>
+                        <Box
+                          borderBottom={`1px solid ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)'}`}
+                          _hover={{ bg: hoverBg }}
+                          transition="background 0.15s"
                         >
-                          {fmtDate(exp.start)} – {fmtDate(exp.end)}
-                        </Text>
-
-                        {/* Chevron */}
-                        <Icon
-                          as={FaChevronDown}
-                          boxSize="10px"
-                          color={termSecondary}
-                          mt="6px"
-                          flexShrink={0}
-                          transition="transform 0.2s"
-                          transform={isExpanded ? 'rotate(180deg)' : 'rotate(0)'}
-                        />
-                      </Flex>
-
-                      {/* Expanded */}
-                      <Collapsible.Root open={isExpanded}>
-                        <Collapsible.Content>
-                          <Box
-                            mx={[3, 5]}
-                            mb={3}
-                            ml={[3, '69px']}
-                            pl={3}
-                            borderLeft={`2px solid ${rtColor}`}
+                          <Flex
+                            px={[3, 5]}
+                            py={3}
+                            gap={3}
+                            align="start"
+                            cursor="pointer"
+                            onClick={() => toggleExpanded(id)}
                           >
-                            {exp.summary && (
-                              <Text fontSize="xs" color={termHighlight} mb={2} lineHeight="1.6">
-                                {highlightData(exp.summary, hlc)}
-                              </Text>
-                            )}
-                            <VStack align="stretch" gap={1}>
-                              {exp.highlights.map((line: string, i: number) => (
-                                <HStack key={i} fontSize="xs" align="start" gap={2}>
-                                  <Text color={rtColor} flexShrink={0} mt="1px">
-                                    ·
-                                  </Text>
-                                  <Text color={termText} lineHeight="1.5">
-                                    {highlightData(line, hlc)}
-                                  </Text>
-                                </HStack>
-                              ))}
-                            </VStack>
-                          </Box>
-                        </Collapsible.Content>
-                      </Collapsible.Root>
-                    </Box>
-                  )
-                })}
-              </Box>
-            ))}
+                            {/* Logo */}
+                            <Box flexShrink={0} mt="2px">
+                              <MotionHover>
+                                {icon ? (
+                                  <Image
+                                    src={icon}
+                                    alt=""
+                                    w="32px"
+                                    h="32px"
+                                    borderRadius="md"
+                                    objectFit="contain"
+                                  />
+                                ) : (
+                                  <Flex
+                                    w="32px"
+                                    h="32px"
+                                    borderRadius="md"
+                                    bg={`${rtColor}18`}
+                                    color={rtColor}
+                                    align="center"
+                                    justify="center"
+                                    fontSize="sm"
+                                    fontWeight="bold"
+                                  >
+                                    {exp.company.charAt(0)}
+                                  </Flex>
+                                )}
+                              </MotionHover>
+                            </Box>
 
-            {filtered.length === 0 && (
-              <Box px={5} py={8} textAlign="center">
-                <Text color={termSecondary} fontSize="sm">
-                  {t('experience.noPositions')}
-                </Text>
-              </Box>
-            )}
+                            {/* Content */}
+                            <Box flex="1" minW={0}>
+                              {/* Title + role badge */}
+                              <Flex align="center" gap={2} flexWrap="wrap" mb={0.5}>
+                                <Text fontSize="sm" fontWeight="semibold" color={termText}>
+                                  {exp.title}
+                                </Text>
+                                <Text
+                                  fontSize="2xs"
+                                  fontWeight="bold"
+                                  color={rtColor}
+                                  letterSpacing="0.04em"
+                                  textTransform="uppercase"
+                                  px={1.5}
+                                  py={0}
+                                  borderRadius="sm"
+                                  bg={`${rtColor}15`}
+                                >
+                                  {t(rtCfg.labelKey)}
+                                </Text>
+                                {exp.isCurrent && (
+                                  <Box
+                                    w="6px"
+                                    h="6px"
+                                    borderRadius="full"
+                                    bg={termSuccess}
+                                    flexShrink={0}
+                                  />
+                                )}
+                              </Flex>
+
+                              {/* Company + location */}
+                              <Flex align="center" gap={1} flexWrap="wrap" fontSize="xs">
+                                {exp.companyUrl ? (
+                                  <Link
+                                    href={exp.companyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    color={termCommand}
+                                    fontSize="xs"
+                                    onClick={(e) => e.stopPropagation()}
+                                    _hover={{ textDecoration: 'underline' }}
+                                  >
+                                    {exp.company}
+                                  </Link>
+                                ) : (
+                                  <Text color={termCommand}>{exp.company}</Text>
+                                )}
+                                {exp.location && <Text color={termSecondary}>· {exp.location}</Text>}
+                              </Flex>
+
+                              {/* Date on mobile */}
+                              <Text fontSize="2xs" color={termSecondary} mt={0.5} display={{ base: "block", md: "none" }}>
+                                {fmtDate(exp.start)} – {fmtDate(exp.end)}
+                              </Text>
+                            </Box>
+
+                            {/* Period (desktop) */}
+                            <Text
+                              fontSize="xs"
+                              color={termSecondary}
+                              flexShrink={0}
+                              pt="2px"
+                              w="160px"
+                              textAlign="right"
+                              display={{ base: "none", md: "block" }}
+                            >
+                              {fmtDate(exp.start)} – {fmtDate(exp.end)}
+                            </Text>
+
+                            {/* Chevron */}
+                            <Icon
+                              as={FaChevronDown}
+                              boxSize="10px"
+                              color={termSecondary}
+                              mt="6px"
+                              flexShrink={0}
+                              transition="transform 0.2s"
+                              transform={isExpanded ? 'rotate(180deg)' : 'rotate(0)'}
+                            />
+                          </Flex>
+
+                          {/* Expanded */}
+                          <Collapsible.Root open={isExpanded}>
+                            <Collapsible.Content>
+                              <Box
+                                mx={[3, 5]}
+                                mb={3}
+                                ml={[3, '69px']}
+                                pl={3}
+                                borderLeft={`2px solid ${rtColor}`}
+                              >
+                                {exp.summary && (
+                                  <Text fontSize="xs" color={termHighlight} mb={2} lineHeight="1.6">
+                                    {highlightData(exp.summary, hlc)}
+                                  </Text>
+                                )}
+                                <VStack align="stretch" gap={1}>
+                                  {exp.highlights.map((line: string, i: number) => (
+                                    <HStack key={i} fontSize="xs" align="start" gap={2}>
+                                      <Text color={rtColor} flexShrink={0} mt="1px">
+                                        ·
+                                      </Text>
+                                      <Text color={termText} lineHeight="1.5">
+                                        {highlightData(line, hlc)}
+                                      </Text>
+                                    </HStack>
+                                  ))}
+                                </VStack>
+                              </Box>
+                            </Collapsible.Content>
+                          </Collapsible.Root>
+                        </Box>
+                      </MotionBox>
+                    )
+                  })}
+                </Box>
+              ))}
+            </MotionList>
           </Box>
 
           {/* Academic Reviewing */}
           {reviewingItems.length > 0 && (
-            <Box px={[3, 5]} py={4} bg={termBg} borderTop={`1px solid ${termBorder}`}>
-              <Flex align="center" gap={2} mb={3}>
-                <Box w="14px" h="3px" borderRadius="full" bg={tc.param} />
-                <Text fontSize="xs" fontWeight="bold" color={termInfo} letterSpacing="0.06em">
-                  {t('experience.academicReviewing')}
-                </Text>
-                <Text fontSize="2xs" color={termSecondary}>
-                  {reviewingItems.length}
-                </Text>
-                <Box flex="1" h="1px" bg={termBorder} />
-              </Flex>
-              <VStack align="stretch" gap={2}>
-                {reviewingByYear.map(([year, items]) => (
-                  <HStack key={year} gap={3} align="start" flexWrap="wrap">
-                    <Text
-                      fontSize="xs"
-                      fontWeight="bold"
-                      color={termHighlight}
-                      w="35px"
-                      flexShrink={0}
-                    >
-                      {year}
-                    </Text>
-                    <HStack gap={1.5} flexWrap="wrap">
-                      {items.map((item, idx) => (
-                        <Text
-                          key={`${item.venue}-${idx}`}
-                          px={2}
-                          py={0.5}
-                          fontSize="xs"
-                          borderRadius="full"
-                          border="1px solid"
-                          borderColor={isDark ? 'whiteAlpha.150' : 'blackAlpha.100'}
-                          color={termCommand}
-                        >
-                          {item.venue.replace(/\s*\d{4}\s*/, ' ').trim()}
-                        </Text>
-                      ))}
+            <MotionBox delay={0.2}>
+              <Box px={[3, 5]} py={4} bg={termBg} borderTop={`1px solid ${termBorder}`}>
+                <Flex align="center" gap={2} mb={3}>
+                  <Box w="14px" h="3px" borderRadius="full" bg={tc.param} />
+                  <Text fontSize="xs" fontWeight="bold" color={termInfo} letterSpacing="0.06em">
+                    {t('experience.academicReviewing')}
+                  </Text>
+                  <Text fontSize="2xs" color={termSecondary}>
+                    {reviewingItems.length}
+                  </Text>
+                  <Box flex="1" h="1px" bg={termBorder} />
+                </Flex>
+                <VStack align="stretch" gap={2}>
+                  {reviewingByYear.map(([year, items]) => (
+                    <HStack key={year} gap={3} align="start" flexWrap="wrap">
+                      <Text
+                        fontSize="xs"
+                        fontWeight="bold"
+                        color={termHighlight}
+                        w="35px"
+                        flexShrink={0}
+                      >
+                        {year}
+                      </Text>
+                      <HStack gap={1.5} flexWrap="wrap">
+                        {items.map((item, idx) => (
+                          <MotionHover key={`${item.venue}-${idx}`}>
+                            <Text
+                              px={2}
+                              py={0.5}
+                              fontSize="xs"
+                              borderRadius="full"
+                              border="1px solid"
+                              borderColor={isDark ? 'whiteAlpha.150' : 'blackAlpha.100'}
+                              color={termCommand}
+                              cursor="default"
+                            >
+                              {item.venue.replace(/\s*\d{4}\s*/, ' ').trim()}
+                            </Text>
+                          </MotionHover>
+                        ))}
+                      </HStack>
                     </HStack>
-                  </HStack>
-                ))}
-              </VStack>
-            </Box>
+                  ))}
+                </VStack>
+              </Box>
+            </MotionBox>
           )}
 
           {/* Command output */}

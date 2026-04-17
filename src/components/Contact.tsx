@@ -1,117 +1,134 @@
-import { VStack, Heading, Text, Box, Container } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { VStack, Heading, Text, Box, Container, HStack } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
-
-const MotionBox = motion(Box)
+import { MotionBox, MotionList, MotionHover } from './animations/MotionList'
+import { useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/color-mode'
 
 const Contact = () => {
   const { t } = useTranslation()
   const { siteOwner, githubUsername } = useLocalizedData()
+  const { colorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
+  const { terminalPalette } = useThemeConfig()
+  const tc = terminalPalette.colors(isDark)
+
+  const contactLinks = [
+    {
+      label: t('contact.email'),
+      value: siteOwner.contact.email,
+      href: `mailto:${siteOwner.contact.email}`,
+      display: siteOwner.contact.email,
+    },
+    {
+      label: t('contact.linkedin'),
+      value: siteOwner.social.linkedin,
+      href: siteOwner.social.linkedin,
+      display: `@${siteOwner.social.linkedin.split('/').filter(Boolean).pop()}`,
+    },
+    {
+      label: t('contact.github'),
+      value: siteOwner.social.github,
+      href: siteOwner.social.github,
+      display: `@${githubUsername}`,
+    },
+    {
+      label: t('contact.medium'),
+      value: siteOwner.social.medium,
+      href: siteOwner.social.medium,
+      display: `@${siteOwner.social.medium.split('@').pop()}`,
+    },
+    {
+      label: t('contact.googleScholar'),
+      value: siteOwner.social.googleScholar,
+      href: siteOwner.social.googleScholar,
+      display: t('contact.viewProfile'),
+    },
+  ]
 
   return (
-    <Container maxW="7xl" px={4}>
+    <Container maxW="7xl" px={4} py={8}>
       <VStack gap={8} align="stretch">
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <MotionBox delay={0.1}>
           <Heading as="h1" size="xl" mb={6}>
             {t('contact.title')}
           </Heading>
-          <Box className="meta">
-            <Box className="meta-item">
-              <i className="fa-solid fa-clock"></i>
+          <Box className="meta" mb={4}>
+            <Box className="meta-item" fontSize="sm" color={tc.secondary}>
+              <Box as="i" className="fa-solid fa-clock" mr={2} />
               {t('contact.responseTime')}
             </Box>
           </Box>
 
-          <Box as="pre" p={4} bg="var(--header-bg)" borderRadius="md" fontFamily="mono" mb={6}>
-            {`# ${t('contact.contactInfo')}
+          <MotionBox delay={0.2}>
+            <Box
+              as="pre"
+              p={4}
+              bg={tc.header}
+              color={tc.text}
+              borderRadius="md"
+              fontFamily="mono"
+              mb={6}
+              border="1px solid"
+              borderColor={tc.border}
+              boxShadow="inner"
+            >
+              {`# ${t('contact.contactInfo')}
 EMAIL    = "${siteOwner.contact.email}"
 LINKEDIN = "${siteOwner.social.linkedin}"
 GITHUB   = "${siteOwner.social.github}"
 LOCATION = "${siteOwner.contact.location}"`}
-          </Box>
+            </Box>
+          </MotionBox>
 
-          <Box
-            mt={8}
-            p={6}
-            borderRadius="md"
-            bg="var(--card-bg)"
-            borderWidth="1px"
-            borderColor="var(--border-color)"
-          >
-            <Heading as="h2" size="md" mb={4}>
-              {t('contact.quickLinks')}
-            </Heading>
-            <VStack align="stretch" gap={3}>
-              <Box>
-                <Text as="span" fontWeight="bold">
-                  {t('contact.email')}
-                </Text>{' '}
-                <a
-                  href={`mailto:${siteOwner.contact.email}`}
-                  style={{ color: 'var(--accent-color)' }}
-                >
-                  {siteOwner.contact.email}
-                </a>
-              </Box>
-              <Box>
-                <Text as="span" fontWeight="bold">
-                  {t('contact.linkedin')}
-                </Text>{' '}
-                <a
-                  href={siteOwner.social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--accent-color)' }}
-                >
-                  @{siteOwner.social.linkedin.split('/').filter(Boolean).pop()}
-                </a>
-              </Box>
-              <Box>
-                <Text as="span" fontWeight="bold">
-                  {t('contact.github')}
-                </Text>{' '}
-                <a
-                  href={siteOwner.social.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--accent-color)' }}
-                >
-                  @{githubUsername}
-                </a>
-              </Box>
-              <Box>
-                <Text as="span" fontWeight="bold">
-                  {t('contact.medium')}
-                </Text>{' '}
-                <a
-                  href={siteOwner.social.medium}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--accent-color)' }}
-                >
-                  @{siteOwner.social.medium.split('@').pop()}
-                </a>
-              </Box>
-              <Box>
-                <Text as="span" fontWeight="bold">
-                  {t('contact.googleScholar')}
-                </Text>{' '}
-                <a
-                  href={siteOwner.social.googleScholar}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--accent-color)' }}
-                >
-                  {t('contact.viewProfile')}
-                </a>
-              </Box>
-            </VStack>
-          </Box>
+          <MotionBox delay={0.3}>
+            <Box
+              mt={8}
+              p={6}
+              borderRadius="md"
+              bg={tc.bg}
+              borderWidth="1px"
+              borderColor={tc.border}
+              boxShadow="lg"
+            >
+              <Heading as="h2" size="sm" mb={6} color={tc.highlight} fontFamily="mono" letterSpacing="widest">
+                // {t('contact.quickLinks').toUpperCase()}
+              </Heading>
+
+              <MotionList staggerDelay={0.1}>
+                {contactLinks.map((link) => (
+                  <MotionBox key={link.label}>
+                    <HStack justify="space-between" wrap="wrap" gap={4} mb={4}>
+                      <Text as="span" fontWeight="bold" fontSize="sm" color={tc.prompt} fontFamily="mono" w="120px">
+                        {link.label}:
+                      </Text>
+                      <MotionHover>
+                        <Box flex="1">
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              color: tc.command,
+                              textDecoration: 'none',
+                              fontFamily: 'var(--font-mono)',
+                              fontSize: '0.9rem',
+                              borderBottom: `1px solid transparent`,
+                              transition: 'border-color 0.2s',
+                            }}
+                            onMouseOver={(e) => (e.currentTarget.style.borderBottomColor = tc.command)}
+                            onMouseOut={(e) => (e.currentTarget.style.borderBottomColor = 'transparent')}
+                          >
+                            {link.display}
+                          </a>
+                        </Box>
+                      </MotionHover>
+                    </HStack>
+                  </MotionBox>
+                ))}
+              </MotionList>
+            </Box>
+          </MotionBox>
         </MotionBox>
       </VStack>
     </Container>

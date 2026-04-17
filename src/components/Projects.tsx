@@ -35,6 +35,7 @@ import { highlightData } from '@/utils/highlightData'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { useThemeConfig, type CatTheme } from '@/config/theme'
 import { useColorMode } from '@/color-mode'
+import { MotionList, MotionHover } from './animations/MotionList'
 
 const blink = keyframes`0%,100%{opacity:1}50%{opacity:0}`
 const bob = keyframes`0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}`
@@ -148,16 +149,18 @@ const FlowNode: React.FC<{
 
         <Flex direction={['column', 'column', hasImg ? 'row' : 'column']} gap={[3, 3, 4]} align="stretch">
           {hasImg && (
-            <Box
-              flexShrink={0} w={['full', 'full', '260px']} minH={['180px', '200px', 'auto']}
-              cursor="zoom-in" overflow="hidden" borderRadius="sm"
-              onClick={() => { if (item.featuredImage) onImageClick(withBase(item.featuredImage) as string, item.title) }}
-            >
-              <Image
-                src={withBase(item.featuredImage!)} alt={item.title} w="full" h="full" objectFit="contain"
-                bg={isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.02)'} p={1} transition="transform 0.3s" _hover={{ transform: 'scale(1.03)' }}
-              />
-            </Box>
+            <MotionHover>
+              <Box
+                flexShrink={0} w={['full', 'full', '260px']} minH={['180px', '200px', 'auto']}
+                cursor="zoom-in" overflow="hidden" borderRadius="sm"
+                onClick={() => { if (item.featuredImage) onImageClick(withBase(item.featuredImage) as string, item.title) }}
+              >
+                <Image
+                  src={withBase(item.featuredImage!)} alt={item.title} w="full" h="full" objectFit="contain"
+                  bg={isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.02)'} p={1} transition="transform 0.3s" _hover={{ transform: 'scale(1.03)' }}
+                />
+              </Box>
+            </MotionHover>
           )}
 
           <VStack align="start" gap={2.5} flex={1} minW={0} justify="center">
@@ -168,22 +171,26 @@ const FlowNode: React.FC<{
 
             <HStack gap={1.5} flexWrap="wrap">
               {res.map((r) => (
-                <Link key={r.url} href={r.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} _hover={{ textDecoration: 'none' }}>
-                  <HStack gap={1.5} px={2.5} py={1} borderRadius="sm" border="1px solid" borderColor={termBorder}
-                    color={termSecondary} fontSize="xs" fontFamily="mono" transition="all 0.15s" _hover={{ borderColor: ct.color, color: ct.color }}>
-                    <Icon as={linkIcon(r.url)} boxSize="11px" />
-                    <Text>{r.label}</Text>
-                  </HStack>
-                </Link>
+                <MotionHover key={r.url}>
+                  <Link href={r.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} _hover={{ textDecoration: 'none' }}>
+                    <HStack gap={1.5} px={2.5} py={1} borderRadius="sm" border="1px solid" borderColor={termBorder}
+                      color={termSecondary} fontSize="xs" fontFamily="mono" transition="all 0.15s" _hover={{ borderColor: ct.color, color: ct.color }}>
+                      <Icon as={linkIcon(r.url)} boxSize="11px" />
+                      <Text>{r.label}</Text>
+                    </HStack>
+                  </Link>
+                </MotionHover>
               ))}
               {hasExpandable && (
-                <HStack as="button" gap={1.5} px={2.5} py={1} borderRadius="sm" border="1px solid" fontSize="xs" fontFamily="mono"
-                  borderColor={expanded ? ct.color : termBorder} color={expanded ? ct.color : termSecondary} transition="all 0.15s"
-                  _hover={{ borderColor: ct.color, color: ct.color }} onClick={() => setExpanded((p) => !p)}
-                >
-                  <Icon as={FaChevronDown} boxSize="8px" transition="transform 0.15s" transform={expanded ? 'rotate(180deg)' : undefined} />
-                  <Text>{expanded ? t('projects.less') : t('projects.details')}</Text>
-                </HStack>
+                <MotionHover>
+                  <HStack as="button" gap={1.5} px={2.5} py={1} borderRadius="sm" border="1px solid" fontSize="xs" fontFamily="mono"
+                    borderColor={expanded ? ct.color : termBorder} color={expanded ? ct.color : termSecondary} transition="all 0.15s"
+                    _hover={{ borderColor: ct.color, color: ct.color }} onClick={() => setExpanded((p) => !p)}
+                  >
+                    <Icon as={FaChevronDown} boxSize="8px" transition="transform 0.15s" transform={expanded ? 'rotate(180deg)' : undefined} />
+                    <Text>{expanded ? t('projects.less') : t('projects.details')}</Text>
+                  </HStack>
+                </MotionHover>
               )}
             </HStack>
 
@@ -361,11 +368,13 @@ const Projects: React.FC = () => {
             {tabs.map((tab) => {
               const active = activeTab === tab.key
               return (
-                <Flex key={tab.key} as="button" align="center" gap={1.5} px={4} py={2} fontSize="xs" fontFamily="mono" color={active ? tab.color : termMuted} bg={active ? termBg : 'transparent'} borderBottom={active ? `2px solid ${tab.color}` : '2px solid transparent'} fontWeight={active ? 'bold' : 'normal'} transition="all 0.15s" _hover={{ color: tab.color, bg: active ? termBg : isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }} onClick={() => setActiveTab(tab.key)} flexShrink={0} whiteSpace="nowrap">
-                  <Box css={active && tab.key !== 'all' ? { animation: themes[tab.key as ProjectItem['category']].anim } : undefined}><Icon as={tab.icon} boxSize="12px" /></Box>
-                  {tab.label}
-                  <Text as="span" opacity={0.7}>({tab.count})</Text>
-                </Flex>
+                <MotionHover key={tab.key}>
+                  <Flex as="button" align="center" gap={1.5} px={4} py={2} fontSize="xs" fontFamily="mono" color={active ? tab.color : termMuted} bg={active ? termBg : 'transparent'} borderBottom={active ? `2px solid ${tab.color}` : '2px solid transparent'} fontWeight={active ? 'bold' : 'normal'} transition="all 0.15s" _hover={{ color: tab.color, bg: active ? termBg : isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }} onClick={() => setActiveTab(tab.key)} flexShrink={0} whiteSpace="nowrap">
+                    <Box css={active && tab.key !== 'all' ? { animation: themes[tab.key as ProjectItem['category']].anim } : undefined}><Icon as={tab.icon} boxSize="12px" /></Box>
+                    {tab.label}
+                    <Text as="span" opacity={0.7}>({tab.count})</Text>
+                  </Flex>
+                </MotionHover>
               )
             })}
           </Flex>
@@ -377,23 +386,25 @@ const Projects: React.FC = () => {
 
           <Box key={activeTab} bg={termBg} color={termText} maxH="75vh" overflowY="auto" css={{ '&::-webkit-scrollbar': { width: '6px', background: 'transparent' }, '&::-webkit-scrollbar-thumb': { background: tc.border, borderRadius: '3px' } }}>
             <Box px={[3, 4, 5]} py={4}>
-              {yearGroups.map((group, gi) => (
-                <Box key={group.year} mb={gi < yearGroups.length - 1 ? 6 : 0}>
-                  <HStack gap={2} mb={2} pl="2px">
-                    <Text fontSize="2xs" fontFamily="mono" color={termHighlight} fontWeight="semibold" letterSpacing="wide">{group.year}</Text>
-                    <Box flex="1" h="1px" bg={termBorder} opacity={0.3} />
-                    <Text fontSize="2xs" fontFamily="mono" color={termMuted}>{group.items.length} {t('projects.projects')}</Text>
-                  </HStack>
-                  <Box position="relative">
-                    <Box position="absolute" left="7px" top="12px" bottom="12px" w="1px" bg={termBorder} opacity={0.3} />
-                    <VStack gap={0} align="stretch">
-                      {group.items.map((item, idx) => (
-                        <FlowNode key={item.id} item={item} ct={themes[item.category]} isDark={isDark} isLast={idx === group.items.length - 1} termText={termText} termSecondary={termSecondary} termMuted={termMuted} termBorder={termBorder} hlc={hlc} onImageClick={onImgClick} />
-                      ))}
-                    </VStack>
+              <MotionList staggerDelay={0.15}>
+                {yearGroups.map((group, gi) => (
+                  <Box key={group.year} mb={gi < yearGroups.length - 1 ? 6 : 0}>
+                    <HStack gap={2} mb={2} pl="2px">
+                      <Text fontSize="2xs" fontFamily="mono" color={termHighlight} fontWeight="semibold" letterSpacing="wide">{group.year}</Text>
+                      <Box flex="1" h="1px" bg={termBorder} opacity={0.3} />
+                      <Text fontSize="2xs" fontFamily="mono" color={termMuted}>{group.items.length} {t('projects.projects')}</Text>
+                    </HStack>
+                    <Box position="relative">
+                      <Box position="absolute" left="7px" top="12px" bottom="12px" w="1px" bg={termBorder} opacity={0.3} />
+                      <VStack gap={0} align="stretch">
+                        {group.items.map((item, idx) => (
+                          <FlowNode key={item.id} item={item} ct={themes[item.category]} isDark={isDark} isLast={idx === group.items.length - 1} termText={termText} termSecondary={termSecondary} termMuted={termMuted} termBorder={termBorder} hlc={hlc} onImageClick={onImgClick} />
+                        ))}
+                      </VStack>
+                    </Box>
                   </Box>
-                </Box>
-              ))}
+                ))}
+              </MotionList>
             </Box>
             {filtered.length === 0 && (
               <Box px={4} py={8} textAlign="center">

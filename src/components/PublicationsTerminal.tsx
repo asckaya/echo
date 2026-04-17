@@ -35,6 +35,7 @@ import { highlightData } from '../utils/highlightData'
 import { useThemeConfig } from '@/config/theme'
 import { useColorMode } from '@/color-mode'
 import { Dialog, Collapsible } from '@chakra-ui/react'
+import { MotionList, MotionBox, MotionHover } from './animations/MotionList'
 
 /* ── Emoji → Icon mapping ─────────────────────────────────────── */
 const emojiIconMap: Record<string, IconType> = {
@@ -196,6 +197,7 @@ const PublicationsTerminal: React.FC = () => {
           border={"1px solid"}
           borderColor={termBorder}
           overflow="hidden"
+          bg={termBg}
         >
           {/* RGB Light Bar */}
           <Flex h="3px" w="full" overflow="hidden">
@@ -404,15 +406,17 @@ const PublicationsTerminal: React.FC = () => {
 
           <Collapsible.Root open={showStats}>
             <Collapsible.Content>
-              <Box px={4} py={3} bg={isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.03)'} borderBottom={`1px solid ${termBorder}`}>
-                <Flex gap={4} flexWrap="wrap">
-                  <Box><Text color={termInfo} fontSize="xs">Total</Text><Text color={termHighlight} fontSize="lg" fontWeight="bold">{stats.total}</Text></Box>
-                  <Box><Text color={termInfo} fontSize="xs">First Author</Text><Text color={termSuccess} fontSize="lg" fontWeight="bold">{stats.firstAuthor}</Text></Box>
-                  <Box><Text color={termInfo} fontSize="xs">With Code</Text><Text color={termCommand} fontSize="lg" fontWeight="bold">{stats.withCode}</Text></Box>
-                  <Box><Text color={termInfo} fontSize="xs">Conferences</Text><Text color={termParam} fontSize="lg" fontWeight="bold">{stats.byVenue.conference || 0}</Text></Box>
-                  <Box><Text color={termInfo} fontSize="xs">Workshops</Text><Text color={termWarning} fontSize="lg" fontWeight="bold">{stats.byVenue.workshop || 0}</Text></Box>
-                </Flex>
-              </Box>
+              <MotionBox delay={0.1}>
+                <Box px={4} py={3} bg={isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.03)'} borderBottom={`1px solid ${termBorder}`}>
+                  <Flex gap={4} flexWrap="wrap">
+                    <Box><Text color={termInfo} fontSize="xs">Total</Text><Text color={termHighlight} fontSize="lg" fontWeight="bold">{stats.total}</Text></Box>
+                    <Box><Text color={termInfo} fontSize="xs">First Author</Text><Text color={termSuccess} fontSize="lg" fontWeight="bold">{stats.firstAuthor}</Text></Box>
+                    <Box><Text color={termInfo} fontSize="xs">With Code</Text><Text color={termCommand} fontSize="lg" fontWeight="bold">{stats.withCode}</Text></Box>
+                    <Box><Text color={termInfo} fontSize="xs">Conferences</Text><Text color={termParam} fontSize="lg" fontWeight="bold">{stats.byVenue.conference || 0}</Text></Box>
+                    <Box><Text color={termInfo} fontSize="xs">Workshops</Text><Text color={termWarning} fontSize="lg" fontWeight="bold">{stats.byVenue.workshop || 0}</Text></Box>
+                  </Flex>
+                </Box>
+              </MotionBox>
             </Collapsible.Content>
           </Collapsible.Root>
 
@@ -427,181 +431,189 @@ const PublicationsTerminal: React.FC = () => {
               <Text w="50px" textAlign="center">MORE</Text>
             </Flex>
 
-            {filteredPublications.map((pub) => (
-              <Box key={pub.id} borderBottom={`1px dotted ${termBorder}`} _hover={{ bg: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}>
-                <Flex px={4} py={6} align="center" cursor="pointer" onClick={() => toggleExpanded(pub.id)} fontSize="sm" position="relative" minH="200px">
-                  {pub.featuredImage && (
-                    <Box
-                      w="320px" h="180px" mr={6} flexShrink={0} display={{ base: "none", md: "flex" }} alignItems="center" justifyContent="center"
-                      bg={isDark ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.8)'} borderRadius="lg" border={`1px solid ${termBorder}`}
-                      overflow="hidden" cursor="zoom-in" role="button" tabIndex={0}
-                      onClick={(e) => { e.stopPropagation(); showImagePreview(pub.featuredImage, `${pub.title} thumbnail`) }}
-                    >
-                      <Image src={pub.featuredImage} alt={pub.title} w="full" h="full" objectFit="contain" p={3} transition="transform 0.2s" _hover={{ transform: 'scale(1.05)' }} />
-                    </Box>
-                  )}
-                  <Box flex="1" pr={2} minW={0}>
-                    <HStack gap={1} mb={1} flexWrap="wrap" align="start">
-                      {pub.emoji && emojiIconMap[pub.emoji] && (
-                        <Icon
-                          as={emojiIconMap[pub.emoji]}
-                          color={venueColors[pub.venueType]?.fg}
-                          mt="3px"
-                          mr={1}
-                        />
-                      )}
-                      <Text fontWeight="medium" whiteSpace="normal" overflowWrap="anywhere">
-                        {pub.title}
-                      </Text>
-                    </HStack>
-                    <HStack gap={1} mb={1} flexWrap="wrap">
-                      <Badge
-                        bg={venueColors[pub.venueType]?.bg}
-                        color={venueColors[pub.venueType]?.fg}
-                        fontSize="xs"
-                        px={2}
-                        py={0.5}
-                        fontWeight="bold"
-                        whiteSpace="normal"
-                        textAlign="left"
-                        overflowWrap="anywhere"
-                      >
-                        {pub.venue && String(pub.year) && pub.venue.includes(String(pub.year))
-                          ? pub.venue
-                          : `${pub.venue} ${pub.year}`}
-                      </Badge>
-                      <Badge
-                        colorPalette={
-                          pub.venueType === 'conference'
-                            ? 'blue'
-                            : pub.venueType === 'workshop'
-                              ? 'purple'
-                              : pub.venueType === 'demo'
-                                ? 'orange'
-                                : 'green'
-                        }
-                        fontSize="2xs"
-                      >
-                        {venueColors[pub.venueType]?.label}
-                      </Badge>
-                      {pub.specialBadges?.map((badge, i) => (
-                        <Badge
-                          key={i}
-                          colorPalette={
-                            badge === 'Best Paper'
-                              ? 'red'
-                              : badge === 'Oral'
-                                ? 'orange'
-                                : badge === 'Spotlight'
-                                  ? 'yellow'
-                                  : badge === 'First Author'
-                                    ? 'green'
-                                    : 'gray'
-                          }
-                          fontSize="2xs"
-                        >
-                          {badge}
-                        </Badge>
-                      ))}
-                    </HStack>
-                    <Text
-                      fontSize="xs"
-                      color={termSecondary}
-                      whiteSpace="normal"
-                      overflowWrap="anywhere"
-                    >
-                      {pub.authors.map((author, i) => {
-                        const cleanAuthor = author.replace('*', '')
-                        const hasAsterisk = author.includes('*')
-                        const isOwner = (siteOwner.name.authorVariants as readonly string[]).includes(
-                          cleanAuthor,
-                        )
-                        return (
-                          <Text as="span" key={i}>
-                            {isOwner ? (
-                              <Text as="span" color={termSuccess} fontWeight="bold">
-                                {cleanAuthor}
-                                {hasAsterisk && (
-                                  <Text as="span" color={termWarning} position="relative" top="-0.2em">
-                                    *
-                                  </Text>
-                                )}
-                                {pub.isFirstAuthor && i === 0 && !hasAsterisk && ' (1st)'}
-                                {pub.isCorrespondingAuthor && ' (†)'}
-                              </Text>
-                            ) : (
-                              <>
-                                {cleanAuthor}
-                                {hasAsterisk && (
-                                  <Text as="span" color={termWarning} position="relative" top="-0.2em">
-                                    *
-                                  </Text>
-                                )}
-                              </>
-                            )}
-                            {i < pub.authors.length - 1 ? ', ' : ''}
-                          </Text>
-                        )
-                      })}
-                      {pub.coFirstAuthors && pub.coFirstAuthors.length > 0 && (
-                        <Text as="span" fontSize="2xs" color={termInfo} ml={2}>
-                          (* co-first)
-                        </Text>
-                      )}
-                    </Text>
-                  </Box>
-
-                  <Box w="150px" display={{ base: "none", md: "block" }}>
-                    <HStack gap={1}>
-                      {pub.links.paper && <Box title="Paper"><Link href={pub.links.paper} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="blue" fontSize="2xs">PDF</Badge></Link></Box>}
-                      {pub.links.code && <Box title="Code"><Link href={pub.links.code} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="green" fontSize="2xs">CODE</Badge></Link></Box>}
-                      {pub.links.projectPage && <Box title="Project"><Link href={pub.links.projectPage} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="purple" fontSize="2xs">PROJ</Badge></Link></Box>}
-                    </HStack>
-                  </Box>
-                  <Text w="50px" textAlign="center" color={expandedItems[pub.id] ? termInfo : termCommand} fontWeight="bold">
-                    {expandedItems[pub.id] ? '[-]' : '[+]'}
-                  </Text>
-                </Flex>
-
-                <Collapsible.Root open={!!expandedItems[pub.id]}>
-                  <Collapsible.Content>
-                    <Box px={8} py={4} bg={isDark ? 'rgba(76, 86, 106, 0.15)' : 'rgba(203, 213, 225, 0.15)'} borderLeft={`3px solid ${venueColors[pub.venueType]?.fg || termBorder}`}>
-                      <Flex gap={4} flexDirection={{ base: "column", md: "row" }}>
-                        <Box flex="1">
-                          {pub.abstract && (
-                            <Box mb={3}>
-                              <Text fontSize="xs" color={termInfo} mb={1}>── ABSTRACT ─────────────</Text>
-                              <Text fontSize="sm" color={termText} lineHeight="tall">
-                                {highlightData(pub.abstract, { num: termHighlight, kw: termCommand, str: termSuccess })}
-                              </Text>
-                            </Box>
-                          )}
-                          {pub.keywords && (
-                            <Box mb={3}>
-                              <Text fontSize="xs" color={termInfo} mb={1}>── KEYWORDS ─────────────</Text>
-                              <HStack gap={2} flexWrap="wrap">
-                                {pub.keywords.map((k, i) => <Badge key={i} colorPalette="cyan" fontSize="2xs">{k}</Badge>)}
-                              </HStack>
-                            </Box>
-                          )}
-                        </Box>
-                        {pub.featuredImage && (
+            <MotionList staggerDelay={0.08}>
+              {filteredPublications.map((pub) => (
+                <MotionBox key={pub.id}>
+                  <Box borderBottom={`1px dotted ${termBorder}`} _hover={{ bg: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}>
+                    <Flex px={4} py={6} align="center" cursor="pointer" onClick={() => toggleExpanded(pub.id)} fontSize="sm" position="relative" minH="200px">
+                      {pub.featuredImage && (
+                        <MotionHover>
                           <Box
-                            w={{ base: "full", md: "450px" }}
-                            h={{ base: "auto", md: "300px" }}
-                            flexShrink={0} display="flex" alignItems="center" justifyContent="center"
-                            bg={isDark ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.9)'} borderRadius="lg" border={`1px solid ${termBorder}`}
-                            overflow="hidden" cursor="zoom-in" onClick={(e) => { e.stopPropagation(); showImagePreview(pub.featuredImage, pub.title) }}
+                            w="320px" h="180px" mr={6} flexShrink={0} display={{ base: "none", md: "flex" }} alignItems="center" justifyContent="center"
+                            bg={isDark ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.8)'} borderRadius="lg" border={`1px solid ${termBorder}`}
+                            overflow="hidden" cursor="zoom-in" role="button" tabIndex={0}
+                            onClick={(e) => { e.stopPropagation(); showImagePreview(pub.featuredImage, `${pub.title} thumbnail`) }}
                           >
-                            <Image src={pub.featuredImage} alt={pub.title} w="full" h="full" objectFit="contain" p={4} _hover={{ transform: 'scale(1.08)' }} transition="transform 0.3s"/>
+                            <Image src={pub.featuredImage} alt={pub.title} w="full" h="full" objectFit="contain" p={3} transition="transform 0.2s" />
                           </Box>
-                        )}
-                      </Flex>
-                    </Box>
-                  </Collapsible.Content>
-                </Collapsible.Root>
-              </Box>
-            ))}
+                        </MotionHover>
+                      )}
+                      <Box flex="1" pr={2} minW={0}>
+                        <HStack gap={1} mb={1} flexWrap="wrap" align="start">
+                          {pub.emoji && emojiIconMap[pub.emoji] && (
+                            <Icon
+                              as={emojiIconMap[pub.emoji]}
+                              color={venueColors[pub.venueType]?.fg}
+                              mt="3px"
+                              mr={1}
+                            />
+                          )}
+                          <Text fontWeight="medium" whiteSpace="normal" overflowWrap="anywhere">
+                            {pub.title}
+                          </Text>
+                        </HStack>
+                        <HStack gap={1} mb={1} flexWrap="wrap">
+                          <Badge
+                            bg={venueColors[pub.venueType]?.bg}
+                            color={venueColors[pub.venueType]?.fg}
+                            fontSize="xs"
+                            px={2}
+                            py={0.5}
+                            fontWeight="bold"
+                            whiteSpace="normal"
+                            textAlign="left"
+                            overflowWrap="anywhere"
+                          >
+                            {pub.venue && String(pub.year) && pub.venue.includes(String(pub.year))
+                              ? pub.venue
+                              : `${pub.venue} ${pub.year}`}
+                          </Badge>
+                          <Badge
+                            colorPalette={
+                              pub.venueType === 'conference'
+                                ? 'blue'
+                                : pub.venueType === 'workshop'
+                                  ? 'purple'
+                                  : pub.venueType === 'demo'
+                                    ? 'orange'
+                                    : 'green'
+                            }
+                            fontSize="2xs"
+                          >
+                            {venueColors[pub.venueType]?.label}
+                          </Badge>
+                          {pub.specialBadges?.map((badge, i) => (
+                            <Badge
+                              key={i}
+                              colorPalette={
+                                badge === 'Best Paper'
+                                  ? 'red'
+                                  : badge === 'Oral'
+                                    ? 'orange'
+                                    : badge === 'Spotlight'
+                                      ? 'yellow'
+                                      : badge === 'First Author'
+                                        ? 'green'
+                                        : 'gray'
+                              }
+                              fontSize="2xs"
+                            >
+                              {badge}
+                            </Badge>
+                          ))}
+                        </HStack>
+                        <Text
+                          fontSize="xs"
+                          color={termSecondary}
+                          whiteSpace="normal"
+                          overflowWrap="anywhere"
+                        >
+                          {pub.authors.map((author, i) => {
+                            const cleanAuthor = author.replace('*', '')
+                            const hasAsterisk = author.includes('*')
+                            const isOwner = (siteOwner.name.authorVariants as readonly string[]).includes(
+                              cleanAuthor,
+                            )
+                            return (
+                              <Text as="span" key={i}>
+                                {isOwner ? (
+                                  <Text as="span" color={termSuccess} fontWeight="bold">
+                                    {cleanAuthor}
+                                    {hasAsterisk && (
+                                      <Text as="span" color={termWarning} position="relative" top="-0.2em">
+                                        *
+                                      </Text>
+                                    )}
+                                    {pub.isFirstAuthor && i === 0 && !hasAsterisk && ' (1st)'}
+                                    {pub.isCorrespondingAuthor && ' (†)'}
+                                  </Text>
+                                ) : (
+                                  <>
+                                    {cleanAuthor}
+                                    {hasAsterisk && (
+                                      <Text as="span" color={termWarning} position="relative" top="-0.2em">
+                                        *
+                                      </Text>
+                                    )}
+                                  </>
+                                )}
+                                {i < pub.authors.length - 1 ? ', ' : ''}
+                              </Text>
+                            )
+                          })}
+                          {pub.coFirstAuthors && pub.coFirstAuthors.length > 0 && (
+                            <Text as="span" fontSize="2xs" color={termInfo} ml={2}>
+                              (* co-first)
+                            </Text>
+                          )}
+                        </Text>
+                      </Box>
+
+                      <Box w="150px" display={{ base: "none", md: "block" }}>
+                        <HStack gap={1}>
+                          {pub.links.paper && <MotionHover><Box title="Paper"><Link href={pub.links.paper} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="blue" fontSize="2xs">PDF</Badge></Link></Box></MotionHover>}
+                          {pub.links.code && <MotionHover><Box title="Code"><Link href={pub.links.code} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="green" fontSize="2xs">CODE</Badge></Link></Box></MotionHover>}
+                          {pub.links.projectPage && <MotionHover><Box title="Project"><Link href={pub.links.projectPage} target="_blank" onClick={(e) => e.stopPropagation()}><Badge colorPalette="purple" fontSize="2xs">PROJ</Badge></Link></Box></MotionHover>}
+                        </HStack>
+                      </Box>
+                      <Text w="50px" textAlign="center" color={expandedItems[pub.id] ? termInfo : termCommand} fontWeight="bold">
+                        {expandedItems[pub.id] ? '[-]' : '[+]'}
+                      </Text>
+                    </Flex>
+
+                    <Collapsible.Root open={!!expandedItems[pub.id]}>
+                      <Collapsible.Content>
+                        <Box px={8} py={4} bg={isDark ? 'rgba(76, 86, 106, 0.15)' : 'rgba(203, 213, 225, 0.15)'} borderLeft={`3px solid ${venueColors[pub.venueType]?.fg || termBorder}`}>
+                          <Flex gap={4} flexDirection={{ base: "column", md: "row" }}>
+                            <Box flex="1">
+                              {pub.abstract && (
+                                <Box mb={3}>
+                                  <Text fontSize="xs" color={termInfo} mb={1}>── ABSTRACT ─────────────</Text>
+                                  <Text fontSize="sm" color={termText} lineHeight="tall">
+                                    {highlightData(pub.abstract, { num: termHighlight, kw: termCommand, str: termSuccess })}
+                                  </Text>
+                                </Box>
+                              )}
+                              {pub.keywords && (
+                                <Box mb={3}>
+                                  <Text fontSize="xs" color={termInfo} mb={1}>── KEYWORDS ─────────────</Text>
+                                  <HStack gap={2} flexWrap="wrap">
+                                    {pub.keywords.map((k, i) => <Badge key={i} colorPalette="cyan" fontSize="2xs">{k}</Badge>)}
+                                  </HStack>
+                                </Box>
+                              )}
+                            </Box>
+                            {pub.featuredImage && (
+                              <MotionHover>
+                                <Box
+                                  w={{ base: "full", md: "450px" }}
+                                  h={{ base: "auto", md: "300px" }}
+                                  flexShrink={0} display="flex" alignItems="center" justifyContent="center"
+                                  bg={isDark ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.9)'} borderRadius="lg" border={`1px solid ${termBorder}`}
+                                  overflow="hidden" cursor="zoom-in" onClick={(e) => { e.stopPropagation(); showImagePreview(pub.featuredImage, pub.title) }}
+                                >
+                                  <Image src={pub.featuredImage} alt={pub.title} w="full" h="full" objectFit="contain" p={4} transition="transform 0.3s"/>
+                                </Box>
+                              </MotionHover>
+                            )}
+                          </Flex>
+                        </Box>
+                      </Collapsible.Content>
+                    </Collapsible.Root>
+                  </Box>
+                </MotionBox>
+              ))}
+            </MotionList>
 
             {filteredPublications.length === 0 && (
               <Box px={4} py={8} textAlign="center">
@@ -639,13 +651,15 @@ const PublicationsTerminal: React.FC = () => {
           </Dialog.Root>
         )}
 
-        <Flex w="full" px={4} py={2} bg={termHeader} borderRadius="md" border={`1px solid ${termBorder}`} justify="space-between" fontSize="xs" fontFamily="mono" flexWrap="wrap" gap={2}>
-          <Text color={termInfo}>Showing <Text as="span" color={termHighlight} fontWeight="bold">{filteredPublications.length}</Text> of {publications.length} papers</Text>
-          <HStack gap={4}>
-            <Text color={termSuccess}>First Author: {filteredPublications.filter((p) => p.isFirstAuthor).length}</Text>
-            <Text color={termCommand}>With Code: {filteredPublications.filter((p) => p.links.code).length}</Text>
-          </HStack>
-        </Flex>
+        <MotionBox delay={0.4}>
+          <Flex w="full" px={4} py={2} bg={termHeader} borderRadius="md" border={`1px solid ${termBorder}`} justify="space-between" fontSize="xs" fontFamily="mono" flexWrap="wrap" gap={2}>
+            <Text color={termInfo}>Showing <Text as="span" color={termHighlight} fontWeight="bold">{filteredPublications.length}</Text> of {publications.length} papers</Text>
+            <HStack gap={4}>
+              <Text color={termSuccess}>First Author: {filteredPublications.filter((p) => p.isFirstAuthor).length}</Text>
+              <Text color={termCommand}>With Code: {filteredPublications.filter((p) => p.links.code).length}</Text>
+            </HStack>
+          </Flex>
+        </MotionBox>
       </VStack>
     </Box>
   )

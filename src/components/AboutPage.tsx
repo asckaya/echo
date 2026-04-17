@@ -24,6 +24,7 @@ import DynamicIcon from './DynamicIcon'
 import JourneySection from './sections/JourneySection'
 import BioSection from './sections/BioSection'
 import MentorshipSection from './sections/MentorshipSection'
+import { MotionBox, MotionHover } from './animations/MotionList'
 
 /* ── Typewriter Terminal ──────────────────────────────────── */
 
@@ -303,15 +304,17 @@ const ProfileSidebar: React.FC = () => {
       <VStack gap={0} align="stretch">
         {/* Avatar + Name */}
         <VStack gap={3} px={5} pt={6} pb={4} align="center">
-          <Image
-            src={withBase(`images/${siteConfig.avatar}`)}
-            alt={siteOwner.name.full}
-            borderRadius="xl"
-            boxSize={['100px', '120px', '128px']}
-            objectFit="cover"
-            border="2px solid"
-            borderColor={useColorModeValue('gray.200', 'gray.600')}
-          />
+          <MotionHover>
+            <Image
+              src={withBase(`images/${siteConfig.avatar}`)}
+              alt={siteOwner.name.full}
+              borderRadius="xl"
+              boxSize={['100px', '120px', '128px']}
+              objectFit="cover"
+              border="2px solid"
+              borderColor={useColorModeValue('gray.200', 'gray.600')}
+            />
+          </MotionHover>
           <VStack gap={1} align="center">
             <HStack gap={1} fontFamily="mono" fontSize="sm">
               <Text color={promptColor} fontWeight="bold">
@@ -342,34 +345,38 @@ const ProfileSidebar: React.FC = () => {
           {siteOwner.contact.email && (
             <HStack gap={2.5}>
               <DynamicIcon name="FaEnvelope" boxSize={3} color="cyan.400" />
-              <Link
-                href={`mailto:${siteOwner.contact.email}`}
-                fontSize="xs"
-                color={textColor}
-                fontFamily="mono"
-                _hover={{ color: 'cyan.400', textDecoration: 'none' }}
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-              >
-                {siteOwner.contact.email}
-              </Link>
+              <MotionHover>
+                <Link
+                  href={`mailto:${siteOwner.contact.email}`}
+                  fontSize="xs"
+                  color={textColor}
+                  fontFamily="mono"
+                  _hover={{ color: 'cyan.400', textDecoration: 'none' }}
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
+                  {siteOwner.contact.email}
+                </Link>
+              </MotionHover>
             </HStack>
           )}
           {siteOwner.social.github && (
             <HStack gap={2.5}>
               <DynamicIcon name="FaGithub" boxSize={3} color="cyan.400" />
-              <Link
-                href={siteOwner.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                fontSize="xs"
-                color={textColor}
-                fontFamily="mono"
-                _hover={{ color: 'cyan.400', textDecoration: 'none' }}
-              >
-                {siteOwner.social.github.replace('https://github.com/', '@')}
-              </Link>
+              <MotionHover>
+                <Link
+                  href={siteOwner.social.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  fontSize="xs"
+                  color={textColor}
+                  fontFamily="mono"
+                  _hover={{ color: 'cyan.400', textDecoration: 'none' }}
+                >
+                  {siteOwner.social.github.replace('https://github.com/', '@')}
+                </Link>
+              </MotionHover>
             </HStack>
           )}
         </VStack>
@@ -381,34 +388,35 @@ const ProfileSidebar: React.FC = () => {
           <>
             <HStack gap={2} px={5} py={3} flexWrap="wrap">
               {heroSocialIcons.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  _hover={{ textDecoration: 'none' }}
-                >
-                  <HStack
-                    gap={1.5}
-                    px={2.5}
-                    py={1.5}
-                    borderRadius="md"
-                    fontSize="xs"
-                    fontFamily="mono"
-                    color={textColor}
-                    border="1px solid"
-                    borderColor={borderColor}
-                    transition="all 0.2s"
-                    _hover={{
-                      color: item.color,
-                      borderColor: item.color,
-                      transform: 'translateY(-1px)',
-                    }}
+                <MotionHover key={item.label}>
+                  <Link
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    _hover={{ textDecoration: 'none' }}
                   >
-                    <DynamicIcon name={item.icon} boxSize={3} />
-                    <Text>{item.label}</Text>
-                  </HStack>
-                </Link>
+                    <HStack
+                      gap={1.5}
+                      px={2.5}
+                      py={1.5}
+                      borderRadius="md"
+                      fontSize="xs"
+                      fontFamily="mono"
+                      color={textColor}
+                      border="1px solid"
+                      borderColor={borderColor}
+                      transition="all 0.2s"
+                      _hover={{
+                        color: item.color,
+                        borderColor: item.color,
+                        transform: 'translateY(-1px)',
+                      }}
+                    >
+                      <DynamicIcon name={item.icon} boxSize={3} />
+                      <Text>{item.label}</Text>
+                    </HStack>
+                  </Link>
+                </MotionHover>
               ))}
             </HStack>
             <Separator borderColor={dividerColor} />
@@ -525,24 +533,28 @@ const AboutPage: React.FC = () => {
         >
           {/* Sidebar */}
           <GridItem>
-            <ProfileSidebar />
+            <MotionBox delay={0.1}>
+              <ProfileSidebar />
+            </MotionBox>
           </GridItem>
 
           {/* Main content */}
           <GridItem>
-            <VStack gap={[6, 7, 8]} align="stretch">
-              {/* Typewriter terminal — self intro */}
-              <TerminalTypewriter />
+            <MotionBox delay={0.2}>
+              <VStack gap={[6, 7, 8]} align="stretch">
+                {/* Typewriter terminal — self intro */}
+                <TerminalTypewriter />
 
-              {/* Bio */}
-              <BioSection />
+                {/* Bio */}
+                <BioSection />
 
-              {/* Journey / Timeline */}
-              <JourneySection />
+                {/* Journey / Timeline */}
+                <JourneySection />
 
-              {/* Tech Stack */}
-              <MentorshipSection />
-            </VStack>
+                {/* Tech Stack */}
+                <MentorshipSection />
+              </VStack>
+            </MotionBox>
           </GridItem>
         </Grid>
       </Container>

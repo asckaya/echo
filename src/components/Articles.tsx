@@ -10,6 +10,7 @@ import type { ProjectItem } from '../types'
 import { highlightData } from '../utils/highlightData'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { useThemeConfig } from '@/config/theme'
+import { MotionList, MotionBox, MotionHover } from './animations/MotionList'
 
 /* ── Keyframes ─────────────────────────────────────────────────── */
 const blink = keyframes`0%,100%{opacity:1}50%{opacity:0}`
@@ -157,6 +158,7 @@ const Articles: React.FC = () => {
           fontFamily="mono"
           boxShadow={`0 0 0 1px ${termBorder}, 0 4px 16px ${isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.1)'}`}
           overflow="hidden"
+          bg={termBg}
         >
           {/* ═══ Pixel RGB light bar ═══ */}
           <Flex h="3px" w="full" overflow="hidden" borderTopRadius="md">
@@ -328,229 +330,240 @@ const Articles: React.FC = () => {
             }}
           >
             <Box px={[3, 4, 5]} py={4}>
-              {yearGroups.map(([year, items], gi) => (
-                <Box key={year} mb={gi < yearGroups.length - 1 ? 6 : 0}>
-                  {/* Year heading */}
-                  <HStack gap={2} mb={2} pl="2px">
-                    <Text
-                      fontSize="2xs"
-                      fontFamily="mono"
-                      color={termHighlight}
-                      fontWeight="semibold"
-                      letterSpacing="wide"
-                    >
-                      {year}
-                    </Text>
-                    <Box flex="1" h="1px" bg={termBorder} opacity={0.3} />
-                    <Text fontSize="2xs" fontFamily="mono" color={termMuted}>
-                      {items.length}{' '}
-                      {items.length === 1 ? t('articles.article') : t('articles.articles')}
-                    </Text>
-                  </HStack>
+              <MotionList staggerDelay={0.08}>
+                {yearGroups.map(([year, items], gi) => (
+                  <Box key={year} mb={gi < yearGroups.length - 1 ? 6 : 0}>
+                    {/* Year heading */}
+                    <HStack gap={2} mb={2} pl="2px">
+                      <Text
+                        fontSize="2xs"
+                        fontFamily="mono"
+                        color={termHighlight}
+                        fontWeight="semibold"
+                        letterSpacing="wide"
+                      >
+                        {year}
+                      </Text>
+                      <Box flex="1" h="1px" bg={termBorder} opacity={0.3} />
+                      <Text fontSize="2xs" fontFamily="mono" color={termMuted}>
+                        {items.length}{' '}
+                        {items.length === 1 ? t('articles.article') : t('articles.articles')}
+                      </Text>
+                    </HStack>
 
-                  {/* Articles in year */}
-                  <VStack gap={0} align="stretch">
-                    {items.map((item) => {
-                      const ct = categoryColors[item.category]
-                      const articleType = getArticleType(item.tags)
-                      const resources: { label: string; url: string }[] = []
-                      if (item.link) resources.push({ label: 'Source', url: item.link })
-                      if (item.extraLinks) {
-                        item.extraLinks.forEach((l) => {
-                          if (!resources.some((r) => r.url === l.url))
-                            resources.push({ label: l.label, url: l.url })
-                        })
-                      }
-                      const isExpanded = expandedItems[item.id]
+                    {/* Articles in year */}
+                    <VStack gap={0} align="stretch">
+                      {items.map((item) => {
+                        const ct = categoryColors[item.category]
+                        const articleType = getArticleType(item.tags)
+                        const resources: { label: string; url: string }[] = []
+                        if (item.link) resources.push({ label: 'Source', url: item.link })
+                        if (item.extraLinks) {
+                          item.extraLinks.forEach((l) => {
+                            if (!resources.some((r) => r.url === l.url))
+                              resources.push({ label: l.label, url: l.url })
+                          })
+                        }
+                        const isExpanded = expandedItems[item.id]
 
-                      return (
-                        <Box
-                          key={item.id}
-                          borderBottom={`1px dotted ${termBorder}`}
-                          _hover={{ bg: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}
-                        >
-                          <Flex
-                            py={3}
-                            px={[0, 0.5]}
-                            fontSize="sm"
-                            align="center"
-                            cursor="pointer"
-                            onClick={() => toggleExpanded(item.id)}
-                          >
-                            {/* Date */}
-                            <Text
-                              w={['70px', '90px']}
-                              fontSize="xs"
-                              color={termHighlight}
-                              flexShrink={0}
+                        return (
+                          <MotionBox key={item.id}>
+                            <Box
+                              borderBottom={`1px dotted ${termBorder}`}
+                              _hover={{ bg: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}
                             >
-                              {fmtDate(item.date)}
-                            </Text>
-
-                            {/* Category badge */}
-                            <Flex
-                              align="center"
-                              gap={1}
-                              px={1.5}
-                              py={0.5}
-                              bg={ct.bg(isDark)}
-                              color={ct.fg(isDark)}
-                              borderRadius="sm"
-                              fontSize="2xs"
-                              fontWeight="bold"
-                              textTransform="uppercase"
-                              w={['60px', '80px']}
-                              flexShrink={0}
-                              justifyContent="center"
-                            >
-                              {t(`categoryLabel.${item.category}`).split(' ')[0]}
-                            </Flex>
-
-                            {/* Title + type */}
-                            <Box flex="1" px={[2, 3]} minW={0}>
-                              <Text
-                                fontWeight="medium"
-                                color={termText}
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                whiteSpace="nowrap"
-                              >
-                                {item.title}
-                              </Text>
-                              {articleType && (
-                                <Text fontSize="2xs" color={termSecondary} mt={0.5}>
-                                  {articleType}
-                                </Text>
-                              )}
-                            </Box>
-
-                            {/* Links (desktop) */}
-                            <HStack gap={1.5} display={['none', 'flex']} flexShrink={0}>
-                              {resources.slice(0, 3).map((r) => (
-                                <Link
-                                  key={r.url}
-                                  href={r.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  _hover={{ textDecoration: 'none' }}
-                                >
-                                  <Flex
-                                    align="center"
-                                    gap={1}
-                                    px={2}
-                                    py={0.5}
-                                    borderRadius="sm"
-                                    border="1px solid"
-                                    borderColor={termBorder}
-                                    color={termCommand}
-                                    fontSize="2xs"
-                                    fontFamily="mono"
-                                    whiteSpace="nowrap"
-                                    transition="all 0.15s"
-                                    _hover={{ borderColor: ct.fg(isDark), color: ct.fg(isDark) }}
-                                  >
-                                    <Icon as={linkIcon(r.url)} boxSize="10px" />
-                                    <Text>{r.label}</Text>
-                                  </Flex>
-                                </Link>
-                              ))}
-                            </HStack>
-
-                            {/* Expand */}
-                            <Flex w="40px" justify="center" flexShrink={0}>
-                              <Box
-                                color={isExpanded ? termInfo : termCommand}
-                                fontWeight="bold"
-                                fontSize="xs"
-                              >
-                                {isExpanded ? '[-]' : '[+]'}
-                              </Box>
-                            </Flex>
-                          </Flex>
-
-                          {/* Expanded details */}
-                          <Collapsible.Root open={isExpanded}>
-                            <Collapsible.Content>
-                              <Box
-                                px={[3, 4, 8]}
+                              <Flex
                                 py={3}
-                                bg={isDark ? 'rgba(76,86,106,0.1)' : 'rgba(203,213,225,0.15)'}
-                                borderLeft={`2px solid ${ct.fg(isDark)}`}
+                                px={[0, 0.5]}
+                                fontSize="sm"
+                                align="center"
+                                cursor="pointer"
+                                onClick={() => toggleExpanded(item.id)}
                               >
-                                {/* Summary */}
-                                <Text fontSize="xs" color={termText} lineHeight="1.7" mb={2}>
-                                  {highlightData(item.summary, {
-                                    num: termHighlight,
-                                    kw: termCommand,
-                                    str: termSuccess,
-                                  })}
+                                {/* Date */}
+                                <Text
+                                  w={['70px', '90px']}
+                                  fontSize="xs"
+                                  color={termHighlight}
+                                  flexShrink={0}
+                                >
+                                  {fmtDate(item.date)}
                                 </Text>
 
-                                {/* Tags */}
-                                {item.tags.length > 0 && (
-                                  <HStack gap={1.5} flexWrap="wrap" mb={2}>
-                                    {item.tags.map((t) => (
-                                      <Text
-                                        key={t}
-                                        fontSize="2xs"
-                                        fontFamily="mono"
-                                        color={termMuted}
-                                        px={1.5}
-                                        py={0.5}
-                                        bg={isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}
-                                        borderRadius="sm"
-                                      >
-                                        {t}
-                                      </Text>
-                                    ))}
-                                  </HStack>
-                                )}
+                                {/* Category badge */}
+                                <Flex
+                                  align="center"
+                                  gap={1}
+                                  px={1.5}
+                                  py={0.5}
+                                  bg={ct.bg(isDark)}
+                                  color={ct.fg(isDark)}
+                                  borderRadius="sm"
+                                  fontSize="2xs"
+                                  fontWeight="bold"
+                                  textTransform="uppercase"
+                                  w={['60px', '80px']}
+                                  flexShrink={0}
+                                  justifyContent="center"
+                                >
+                                  {t(`categoryLabel.${item.category}`).split(' ')[0]}
+                                </Flex>
 
-                                {/* All links (visible on all screens when expanded) */}
-                                {resources.length > 0 && (
-                                  <Flex wrap="wrap" gap={2}>
-                                    {resources.map((r) => (
+                                {/* Title + type */}
+                                <Box flex="1" px={[2, 3]} minW={0}>
+                                  <Text
+                                    fontWeight="medium"
+                                    color={termText}
+                                    overflow="hidden"
+                                    textOverflow="ellipsis"
+                                    whiteSpace="nowrap"
+                                  >
+                                    {item.title}
+                                  </Text>
+                                  {articleType && (
+                                    <Text fontSize="2xs" color={termSecondary} mt={0.5}>
+                                      {articleType}
+                                    </Text>
+                                  )}
+                                </Box>
+
+                                {/* Links (desktop) */}
+                                <HStack gap={1.5} display={['none', 'flex']} flexShrink={0}>
+                                  {resources.slice(0, 3).map((r) => (
+                                    <MotionHover key={r.url}>
                                       <Link
-                                        key={r.url}
                                         href={r.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={(e) => e.stopPropagation()}
                                         _hover={{ textDecoration: 'none' }}
                                       >
-                                        <HStack
-                                          gap={1.5}
-                                          px={2.5}
-                                          py={1}
+                                        <Flex
+                                          align="center"
+                                          gap={1}
+                                          px={2}
+                                          py={0.5}
                                           borderRadius="sm"
                                           border="1px solid"
                                           borderColor={termBorder}
                                           color={termCommand}
-                                          fontSize="xs"
+                                          fontSize="2xs"
                                           fontFamily="mono"
+                                          whiteSpace="nowrap"
                                           transition="all 0.15s"
                                           _hover={{
                                             borderColor: ct.fg(isDark),
                                             color: ct.fg(isDark),
                                           }}
                                         >
-                                          <Icon as={linkIcon(r.url)} boxSize="11px" />
+                                          <Icon as={linkIcon(r.url)} boxSize="10px" />
                                           <Text>{r.label}</Text>
-                                        </HStack>
+                                        </Flex>
                                       </Link>
-                                    ))}
-                                  </Flex>
-                                )}
-                              </Box>
-                            </Collapsible.Content>
-                          </Collapsible.Root>
-                        </Box>
-                      )
-                    })}
-                  </VStack>
-                </Box>
-              ))}
+                                    </MotionHover>
+                                  ))}
+                                </HStack>
+
+                                {/* Expand */}
+                                <Flex w="40px" justify="center" flexShrink={0}>
+                                  <Box
+                                    color={isExpanded ? termInfo : termCommand}
+                                    fontWeight="bold"
+                                    fontSize="xs"
+                                  >
+                                    {isExpanded ? '[-]' : '[+]'}
+                                  </Box>
+                                </Flex>
+                              </Flex>
+
+                              {/* Expanded details */}
+                              <Collapsible.Root open={isExpanded}>
+                                <Collapsible.Content>
+                                  <Box
+                                    px={[3, 4, 8]}
+                                    py={3}
+                                    bg={isDark ? 'rgba(76,86,106,0.1)' : 'rgba(203,213,225,0.15)'}
+                                    borderLeft={`2px solid ${ct.fg(isDark)}`}
+                                  >
+                                    {/* Summary */}
+                                    <Text fontSize="xs" color={termText} lineHeight="1.7" mb={2}>
+                                      {highlightData(item.summary, {
+                                        num: termHighlight,
+                                        kw: termCommand,
+                                        str: termSuccess,
+                                      })}
+                                    </Text>
+
+                                    {/* Tags */}
+                                    {item.tags.length > 0 && (
+                                      <HStack gap={1.5} flexWrap="wrap" mb={2}>
+                                        {item.tags.map((t) => (
+                                          <Text
+                                            key={t}
+                                            fontSize="2xs"
+                                            fontFamily="mono"
+                                            color={termMuted}
+                                            px={1.5}
+                                            py={0.5}
+                                            bg={
+                                              isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'
+                                            }
+                                            borderRadius="sm"
+                                          >
+                                            {t}
+                                          </Text>
+                                        ))}
+                                      </HStack>
+                                    )}
+
+                                    {/* All links (visible on all screens when expanded) */}
+                                    {resources.length > 0 && (
+                                      <Flex wrap="wrap" gap={2}>
+                                        {resources.map((r) => (
+                                          <MotionHover key={r.url}>
+                                            <Link
+                                              key={r.url}
+                                              href={r.url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              onClick={(e) => e.stopPropagation()}
+                                              _hover={{ textDecoration: 'none' }}
+                                            >
+                                              <HStack
+                                                gap={1.5}
+                                                px={2.5}
+                                                py={1}
+                                                borderRadius="sm"
+                                                border="1px solid"
+                                                borderColor={termBorder}
+                                                color={termCommand}
+                                                fontSize="xs"
+                                                fontFamily="mono"
+                                                transition="all 0.15s"
+                                                _hover={{
+                                                  borderColor: ct.fg(isDark),
+                                                  color: ct.fg(isDark),
+                                                }}
+                                              >
+                                                <Icon as={linkIcon(r.url)} boxSize="11px" />
+                                                <Text>{r.label}</Text>
+                                              </HStack>
+                                            </Link>
+                                          </MotionHover>
+                                        ))}
+                                      </Flex>
+                                    )}
+                                  </Box>
+                                </Collapsible.Content>
+                              </Collapsible.Root>
+                            </Box>
+                          </MotionBox>
+                        )
+                      })}
+                    </VStack>
+                  </Box>
+                ))}
+              </MotionList>
             </Box>
 
             {/* Empty state */}
@@ -580,17 +593,19 @@ const Articles: React.FC = () => {
             <Text>
               {filteredArticles.length}/{articles.length} {t('articles.shown')}
             </Text>
-            <HStack gap={1}>
-              <Text color={termPrompt}>
-                {siteOwner.terminalUsername}@blog:{promptPath}$
-              </Text>
-              <Box
-                w="6px"
-                h="11px"
-                bg={termPrompt}
-                css={{ animation: `${blink} 1s step-end infinite` }}
-              />
-            </HStack>
+            <MotionBox delay={0.6}>
+              <HStack gap={1}>
+                <Text color={termPrompt}>
+                  {siteOwner.terminalUsername}@blog:{promptPath}$
+                </Text>
+                <Box
+                  w="6px"
+                  h="11px"
+                  bg={termPrompt}
+                  css={{ animation: `${blink} 1s step-end infinite` }}
+                />
+              </HStack>
+            </MotionBox>
           </Flex>
         </Box>
       </VStack>

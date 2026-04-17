@@ -13,6 +13,7 @@ import { useColorMode } from '@/color-mode'
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
 import { ThemePicker } from './ThemePicker'
+import { MotionHover } from './animations/MotionList'
 import { FaGithub, FaLinkedin, FaMedium, FaEnvelope } from 'react-icons/fa'
 import { SiGooglescholar } from 'react-icons/si'
 import { useTranslation } from 'react-i18next'
@@ -53,25 +54,29 @@ const Navbar: React.FC = () => {
         {/* Left Section: Mobile hamburger + Always-visible Logo */}
         <HStack gap={2}>
           <Box display={{ base: 'block', md: 'none' }}>
-            <IconButton
-              aria-label={t('aria.openNav')}
-              onClick={isOpen ? onClose : onOpen}
-              variant="ghost"
-              color="var(--text-color)"
-            >
-              {isOpen ? <FiX /> : <FiMenu />}
-            </IconButton>
+            <MotionHover>
+              <IconButton
+                aria-label={t('aria.openNav')}
+                onClick={isOpen ? onClose : onOpen}
+                variant="ghost"
+                color="var(--text-color)"
+              >
+                {isOpen ? <FiX /> : <FiMenu />}
+              </IconButton>
+            </MotionHover>
           </Box>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <Image
-              src={`${import.meta.env.BASE_URL}logo-icon.svg`}
-              alt="TermHub"
-              h="28px"
-              w="28px"
-              transition="opacity 0.15s"
-              _hover={{ opacity: 0.8 }}
-            />
-          </Link>
+          <MotionHover>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+              <Image
+                src={`${import.meta.env.BASE_URL}logo-icon.svg`}
+                alt="TermHub"
+                h="28px"
+                w="28px"
+                transition="opacity 0.15s"
+                _hover={{ opacity: 0.8 }}
+              />
+            </Link>
+          </MotionHover>
         </HStack>
 
         {/* Desktop nav (centered-right) */}
@@ -80,21 +85,22 @@ const Navbar: React.FC = () => {
             const isActive = location.pathname === item.path
 
             return (
-              <Link
-                key={item.path}
-                to={item.path}
-                style={{
-                  color: 'var(--text-color)',
-                  textDecoration: 'none',
-                  borderBottom: isActive ? '2px solid var(--accent-color)' : 'none',
-                  paddingBottom: '2px',
-                  fontSize: '1rem',
-                  fontWeight: isActive ? '600' : '400',
-                  transition: 'all 0.2s',
-                }}
-              >
-                {t(item.labelKey)}
-              </Link>
+              <MotionHover key={item.path}>
+                <Link
+                  to={item.path}
+                  style={{
+                    color: 'var(--text-color)',
+                    textDecoration: 'none',
+                    borderBottom: isActive ? '2px solid var(--accent-color)' : 'none',
+                    paddingBottom: '2px',
+                    fontSize: '1rem',
+                    fontWeight: isActive ? '600' : '400',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {t(item.labelKey)}
+                </Link>
+              </MotionHover>
             )
           })}
         </HStack>
@@ -104,62 +110,68 @@ const Navbar: React.FC = () => {
           {/* Desktop-only: Socials and Language switcher */}
           <HStack gap={4} display={{ base: 'none', md: 'flex' }}>
             {socialLinks.map((link) => (
-              <ChakraLink
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                color="var(--secondary-text)"
-                p={1.5}
-                borderRadius="md"
+              <MotionHover key={link.label}>
+                <ChakraLink
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="var(--secondary-text)"
+                  p={1.5}
+                  borderRadius="md"
+                  _hover={{
+                    color: 'var(--accent-color)',
+                    bg: link.label === 'LinkedIn' || link.label === 'Email'
+                      ? 'var(--hover-color)'
+                      : 'transparent',
+                  }}
+                  transition="all 0.2s"
+                >
+                  <Box as={link.icon} fontSize="1.2rem" />
+                </ChakraLink>
+              </MotionHover>
+            ))}
+            <MotionHover>
+              <Button
+                size="xs"
+                variant="ghost"
+                color="var(--text-color)"
+                fontWeight="medium"
+                fontSize="xs"
+                px={2}
+                minW="auto"
+                onClick={toggleLanguage}
+                aria-label={t('aria.toggleLanguage')}
                 _hover={{
-                  color: 'var(--accent-color)',
+                  bg: 'var(--hover-color)',
                   transform: 'translateY(-2px)',
-                  ...(link.label === 'LinkedIn' || link.label === 'Email'
-                    ? { bg: 'var(--hover-color)' }
-                    : {}),
                 }}
                 transition="all 0.2s"
               >
-                <Box as={link.icon} fontSize="1.2rem" />
-              </ChakraLink>
-            ))}
-            <Button
-              size="xs"
-              variant="ghost"
-              color="var(--text-color)"
-              fontWeight="medium"
-              fontSize="xs"
-              px={2}
-              minW="auto"
-              onClick={toggleLanguage}
-              aria-label={t('aria.toggleLanguage')}
-              _hover={{
-                bg: 'var(--hover-color)',
-                transform: 'translateY(-2px)',
-              }}
-              transition="all 0.2s"
-            >
-              {i18n.language === 'zh' ? 'EN' : '中'}
-            </Button>
+                {i18n.language === 'zh' ? 'EN' : '中'}
+              </Button>
+            </MotionHover>
           </HStack>
 
           {/* Theme & Color Mode (Always visible for quick access) */}
           <HStack gap={1}>
-            <ThemePicker />
-            <IconButton
-              aria-label={t('aria.toggleColorMode')}
-              onClick={toggleColorMode}
-              variant="ghost"
-              color="var(--text-color)"
-              _hover={{
-                bg: 'var(--hover-color)',
-                transform: 'translateY(-2px)',
-              }}
-              transition="all 0.2s"
-            >
-              {colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-            </IconButton>
+            <MotionHover>
+              <ThemePicker />
+            </MotionHover>
+            <MotionHover>
+              <IconButton
+                aria-label={t('aria.toggleColorMode')}
+                onClick={(e) => toggleColorMode(e)}
+                variant="ghost"
+                color="var(--text-color)"
+                _hover={{
+                  bg: 'var(--hover-color)',
+                  transform: 'translateY(-2px)',
+                }}
+                transition="all 0.2s"
+              >
+                {colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+              </IconButton>
+            </MotionHover>
           </HStack>
         </HStack>
       </Flex>
@@ -170,18 +182,21 @@ const Navbar: React.FC = () => {
             {navItems.map((item) => {
               const isActive = location.pathname === item.path
               return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={onClose}
-                  style={{
-                    color: isActive ? 'var(--accent-color)' : 'var(--text-color)',
-                    textDecoration: 'none',
-                    fontWeight: isActive ? 600 : 400,
-                  }}
-                >
-                  {t(item.labelKey)}
-                </Link>
+                <MotionHover key={item.path}>
+                  <Link
+                    to={item.path}
+                    onClick={onClose}
+                    style={{
+                      color: isActive ? 'var(--accent-color)' : 'var(--text-color)',
+                      textDecoration: 'none',
+                      fontWeight: isActive ? 600 : 400,
+                      display: 'block',
+                      padding: '4px 0',
+                    }}
+                  >
+                    {t(item.labelKey)}
+                  </Link>
+                </MotionHover>
               )
             })}
 
@@ -213,7 +228,7 @@ const Navbar: React.FC = () => {
               <ThemePicker />
               <IconButton
                 aria-label={t('aria.toggleColorMode')}
-                onClick={toggleColorMode}
+                onClick={(e) => toggleColorMode(e)}
                 variant="outline"
                 color="var(--text-color)"
               >
