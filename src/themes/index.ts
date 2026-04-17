@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
-// SPDX-License-Identifier: GPL-3.0-only
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Active theme — change this one import to switch the entire colour scheme.
 //

@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
-// SPDX-License-Identifier: GPL-3.0-only
-
 /**
  * Site configuration — imports from content/site.json
  *
@@ -27,60 +24,50 @@ export function getLocalizedSiteConfig(lang: string) {
 // Derived values — computed automatically, do NOT edit
 // ═══════════════════════════════════════════════════════════════
 
-/** GitHub username extracted from URL */
-export const githubUsername = siteConfig.social.github.split('/').pop() ?? ''
+/** Get GitHub username for a specific language */
+export function getLocalizedGithubUsername(lang: string) {
+  const cfg = getLocalizedSiteConfig(lang)
+  return cfg.social.github.split('/').pop() ?? ''
+}
+
+/** GitHub username extracted from URL (static English default) */
+export const githubUsername = getLocalizedGithubUsername('en')
 
 /** Selected publication IDs as a Set for fast lookup */
 export const selectedPublicationIds = new Set<string>(siteConfig.selectedPublicationIds)
 
-/** Auto-generated navigation from enabled features */
-export const navItems = [
-  { path: '/', labelKey: 'nav.home' },
-  ...(siteConfig.features.publications
-    ? [{ path: '/publications', labelKey: 'nav.publications' }]
-    : []),
-  ...(siteConfig.features.experience ? [{ path: '/experience', labelKey: 'nav.experience' }] : []),
-  ...(siteConfig.features.projects ? [{ path: '/projects', labelKey: 'nav.projects' }] : []),
-  ...(siteConfig.features.articles ? [{ path: '/articles', labelKey: 'nav.articles' }] : []),
-  ...(siteConfig.features.guide !== false ? [{ path: '/guide', labelKey: 'nav.guide' }] : []),
-  ...((siteConfig.features as Record<string, boolean>).about
-    ? [{ path: '/about', labelKey: 'nav.about' }]
-    : []),
-] as const
+/** Get navigation items for a specific language */
+export function getLocalizedNavItems(lang: string) {
+  const cfg = getLocalizedSiteConfig(lang)
+  return [
+    { path: '/', labelKey: 'nav.home' },
+    ...(cfg.features.publications ? [{ path: '/publications', labelKey: 'nav.publications' }] : []),
+    ...(cfg.features.experience ? [{ path: '/experience', labelKey: 'nav.experience' }] : []),
+    ...(cfg.features.projects ? [{ path: '/projects', labelKey: 'nav.projects' }] : []),
+    ...(cfg.features.articles ? [{ path: '/articles', labelKey: 'nav.articles' }] : []),
+    ...(cfg.features.guide !== false ? [{ path: '/guide', labelKey: 'nav.guide' }] : []),
+    ...((cfg.features as Record<string, boolean>).about
+      ? [{ path: '/about', labelKey: 'nav.about' }]
+      : []),
+  ] as const
+}
 
-/** Hero social icons with resolved URLs from social config */
-export const heroSocialIcons = (siteConfig.heroSocialIcons ?? []).map((item) => ({
-  icon: item.icon,
-  label: item.label,
-  color: item.color,
-  href: (siteConfig.social as Record<string, string>)[item.platform] ?? '',
-}))
+/** Auto-generated navigation from enabled features (static English default) */
+export const navItems = getLocalizedNavItems('en')
 
-/**
- * Backward-compatible `siteOwner` — components import this shape.
- */
-export const siteOwner = {
-  name: siteConfig.name,
-  terminalUsername: siteConfig.terminal.username,
-  rotatingSubtitles: siteConfig.terminal.rotatingSubtitles,
-  contact: {
-    email: siteConfig.contact.email,
-    academicEmail: siteConfig.contact.academicEmail,
-    hiringEmail: siteConfig.contact.hiringEmail,
-    location: siteConfig.contact.location,
-    linkedin: siteConfig.social.linkedin,
-  },
-  social: siteConfig.social,
-  timezone: siteConfig.terminal.timezone,
-  skills: siteConfig.terminal.skills,
-  pets: (siteConfig.pets ?? []) as {
-    name: string
-    emoji: string
-    image: string
-    title: string
-    description: string
-  }[],
-} as const
+/** Get hero social icons for a specific language */
+export function getLocalizedHeroSocialIcons(lang: string) {
+  const cfg = getLocalizedSiteConfig(lang)
+  return (cfg.heroSocialIcons ?? []).map((item) => ({
+    icon: item.icon,
+    label: item.label,
+    color: item.color,
+    href: (cfg.social as Record<string, string>)[item.platform] ?? '',
+  }))
+}
+
+/** Hero social icons with resolved URLs (static English default) */
+export const heroSocialIcons = getLocalizedHeroSocialIcons('en')
 
 /** Build a siteOwner-like object for a given language */
 export function getLocalizedSiteOwner(lang: string) {
@@ -108,3 +95,9 @@ export function getLocalizedSiteOwner(lang: string) {
     }[],
   }
 }
+
+/**
+ * Backward-compatible `siteOwner` (static English default).
+ * Components should prefer using getLocalizedSiteOwner(lang).
+ */
+export const siteOwner = getLocalizedSiteOwner('en')

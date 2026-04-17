@@ -16,13 +16,14 @@ import { ThemePicker } from './ThemePicker'
 import { FaGithub, FaLinkedin, FaMedium, FaEnvelope } from 'react-icons/fa'
 import { SiGooglescholar } from 'react-icons/si'
 import { useTranslation } from 'react-i18next'
-import { navItems, siteOwner } from '@/site.config'
+import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 const Navbar: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const location = useLocation()
   const { open: isOpen, onOpen, onClose } = useDisclosure()
   const { t, i18n } = useTranslation()
+  const { navItems, siteOwner } = useLocalizedData()
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'zh' ? 'en' : 'zh')
@@ -49,20 +50,18 @@ const Navbar: React.FC = () => {
       w="full"
     >
       <Flex justify="space-between" align="center" w="full" px={4} position="relative">
-        {/* Mobile: hamburger */}
-        <Box display={{ base: 'block', md: 'none' }}>
-          <IconButton
-            aria-label={t('aria.openNav')}
-            onClick={isOpen ? onClose : onOpen}
-            variant="ghost"
-            color="var(--text-color)"
-          >
-            {isOpen ? <FiX /> : <FiMenu />}
-          </IconButton>
-        </Box>
-
-        {/* Desktop: logo left */}
-        <Box display={{ base: 'none', md: 'flex' }}>
+        {/* Left Section: Mobile hamburger + Always-visible Logo */}
+        <HStack gap={2}>
+          <Box display={{ base: 'block', md: 'none' }}>
+            <IconButton
+              aria-label={t('aria.openNav')}
+              onClick={isOpen ? onClose : onOpen}
+              variant="ghost"
+              color="var(--text-color)"
+            >
+              {isOpen ? <FiX /> : <FiMenu />}
+            </IconButton>
+          </Box>
           <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
             <Image
               src={`${import.meta.env.BASE_URL}logo-icon.svg`}
@@ -73,9 +72,9 @@ const Navbar: React.FC = () => {
               _hover={{ opacity: 0.8 }}
             />
           </Link>
-        </Box>
+        </HStack>
 
-        {/* Desktop nav (right aligned) */}
+        {/* Desktop nav (centered-right) */}
         <HStack gap={8} display={{ base: 'none', md: 'flex' }} ml="auto" mr={{ base: 0, md: 6 }}>
           {navItems.map((item) => {
             const isActive = location.pathname === item.path
@@ -99,61 +98,69 @@ const Navbar: React.FC = () => {
             )
           })}
         </HStack>
-        <HStack gap={4} display={{ base: 'none', md: 'flex' }}>
-          {socialLinks.map((link) => (
-            <ChakraLink
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              color="var(--secondary-text)"
-              p={1.5}
-              borderRadius="md"
+
+        {/* Global Action Items */}
+        <HStack gap={4}>
+          {/* Desktop-only: Socials and Language switcher */}
+          <HStack gap={4} display={{ base: 'none', md: 'flex' }}>
+            {socialLinks.map((link) => (
+              <ChakraLink
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="var(--secondary-text)"
+                p={1.5}
+                borderRadius="md"
+                _hover={{
+                  color: 'var(--accent-color)',
+                  transform: 'translateY(-2px)',
+                  ...(link.label === 'LinkedIn' || link.label === 'Email'
+                    ? { bg: 'var(--hover-color)' }
+                    : {}),
+                }}
+                transition="all 0.2s"
+              >
+                <Box as={link.icon} fontSize="1.2rem" />
+              </ChakraLink>
+            ))}
+            <Button
+              size="xs"
+              variant="ghost"
+              color="var(--text-color)"
+              fontWeight="medium"
+              fontSize="xs"
+              px={2}
+              minW="auto"
+              onClick={toggleLanguage}
+              aria-label={t('aria.toggleLanguage')}
               _hover={{
-                color: 'var(--accent-color)',
+                bg: 'var(--hover-color)',
                 transform: 'translateY(-2px)',
-                ...(link.label === 'LinkedIn' || link.label === 'Email'
-                  ? { bg: 'var(--hover-color)' }
-                  : {}),
               }}
               transition="all 0.2s"
             >
-              <Box as={link.icon} fontSize="1.2rem" />
-            </ChakraLink>
-          ))}
-          {/* Language switcher */}
-          <Button
-            size="xs"
-            variant="ghost"
-            color="var(--text-color)"
-            fontWeight="medium"
-            fontSize="xs"
-            px={2}
-            minW="auto"
-            onClick={toggleLanguage}
-            aria-label={t('aria.toggleLanguage')}
-            _hover={{
-              bg: 'var(--hover-color)',
-              transform: 'translateY(-2px)',
-            }}
-            transition="all 0.2s"
-          >
-            {i18n.language === 'zh' ? 'EN' : '中'}
-          </Button>
-          <ThemePicker />
-          <IconButton
-            aria-label={t('aria.toggleColorMode')}
-            onClick={toggleColorMode}
-            variant="ghost"
-            color="var(--text-color)"
-            _hover={{
-              bg: 'var(--hover-color)',
-              transform: 'translateY(-2px)',
-            }}
-            transition="all 0.2s"
-          >
-            {colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-          </IconButton>
+              {i18n.language === 'zh' ? 'EN' : '中'}
+            </Button>
+          </HStack>
+
+          {/* Theme & Color Mode (Always visible for quick access) */}
+          <HStack gap={1}>
+            <ThemePicker />
+            <IconButton
+              aria-label={t('aria.toggleColorMode')}
+              onClick={toggleColorMode}
+              variant="ghost"
+              color="var(--text-color)"
+              _hover={{
+                bg: 'var(--hover-color)',
+                transform: 'translateY(-2px)',
+              }}
+              transition="all 0.2s"
+            >
+              {colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            </IconButton>
+          </HStack>
         </HStack>
       </Flex>
 
@@ -203,6 +210,7 @@ const Navbar: React.FC = () => {
               >
                 {i18n.language === 'zh' ? 'English' : '中文'}
               </Button>
+              <ThemePicker />
               <IconButton
                 aria-label={t('aria.toggleColorMode')}
                 onClick={toggleColorMode}

@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
-// SPDX-License-Identifier: GPL-3.0-only
-
 import { lazy } from 'react'
 import type { TemplateConfig } from '../types'
 import theme from '../../theme'

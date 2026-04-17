@@ -28,3 +28,6 @@ dist-ssr
 
 # cf
 .wrangler/
+
+# Local MCP configs (contains private absolute paths)
+mcp-server/mcp-config.json

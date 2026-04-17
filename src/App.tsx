@@ -2,13 +2,14 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Suspense } from 'react'
 import { ThemeInjector } from './themes/ThemeInjector'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { siteConfig } from './site.config'
 import { getTemplate, getResolvedSlots, SlotProvider } from './templates'
 import { ThemeProvider } from './themes/ThemeContext'
+import { useLocalizedData } from './hooks/useLocalizedData'
 import './styles/globals.css'
 import './i18n'
 
 function App() {
+  const { siteConfig } = useLocalizedData()
   const features = siteConfig.features as Record<string, boolean>
   const cfg = siteConfig as Record<string, unknown>
   const template = getTemplate(cfg.template as string | undefined)

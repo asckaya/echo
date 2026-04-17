@@ -26,7 +26,7 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [themeKey, setThemeKey] = useState<ThemeKey>('nord')
+  const [themeKey, setThemeKey] = useState<ThemeKey>('catppuccin-mocha')
 
   useEffect(() => {
     const saved = localStorage.getItem('termhub-theme') as ThemeKey

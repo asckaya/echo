@@ -11,7 +11,6 @@ import {
   VStack,
   Image,
   Link,
-  useBreakpointValue,
 } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
 import { FaChevronDown } from 'react-icons/fa'
@@ -75,7 +74,6 @@ const fmtDateFn = (v: string | undefined, presentLabel: string, lang: string) =>
 const Experience: React.FC = () => {
   const { colorMode } = useColorMode()
   const isDark = colorMode === 'dark'
-  const isMobile = useBreakpointValue({ base: true, md: false })
   const { t, i18n } = useTranslation()
   const {
     experienceTimeline,
@@ -578,26 +576,23 @@ const Experience: React.FC = () => {
                           </Flex>
 
                           {/* Date on mobile */}
-                          {isMobile && (
-                            <Text fontSize="2xs" color={termSecondary} mt={0.5}>
-                              {fmtDate(exp.start)} – {fmtDate(exp.end)}
-                            </Text>
-                          )}
+                          <Text fontSize="2xs" color={termSecondary} mt={0.5} display={{ base: "block", md: "none" }}>
+                            {fmtDate(exp.start)} – {fmtDate(exp.end)}
+                          </Text>
                         </Box>
 
                         {/* Period (desktop) */}
-                        {!isMobile && (
-                          <Text
-                            fontSize="xs"
-                            color={termSecondary}
-                            flexShrink={0}
-                            pt="2px"
-                            w="160px"
-                            textAlign="right"
-                          >
-                            {fmtDate(exp.start)} – {fmtDate(exp.end)}
-                          </Text>
-                        )}
+                        <Text
+                          fontSize="xs"
+                          color={termSecondary}
+                          flexShrink={0}
+                          pt="2px"
+                          w="160px"
+                          textAlign="right"
+                          display={{ base: "none", md: "block" }}
+                        >
+                          {fmtDate(exp.start)} – {fmtDate(exp.end)}
+                        </Text>
 
                         {/* Chevron */}
                         <Icon

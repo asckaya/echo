@@ -1,14 +1,13 @@
 import { VStack, Heading, Text, Box, Container } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { githubUsername } from '@/site.config'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 const MotionBox = motion(Box)
 
 const Contact = () => {
   const { t } = useTranslation()
-  const { siteOwner } = useLocalizedData()
+  const { siteOwner, githubUsername } = useLocalizedData()
 
   return (
     <Container maxW="7xl" px={4}>

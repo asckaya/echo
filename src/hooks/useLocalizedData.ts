@@ -1,10 +1,13 @@
-// SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
-// SPDX-License-Identifier: GPL-3.0-only
-
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getLocalizedData } from '../data'
-import { getLocalizedSiteConfig, getLocalizedSiteOwner } from '../site.config'
+import { 
+  getLocalizedSiteConfig, 
+  getLocalizedSiteOwner, 
+  getLocalizedNavItems, 
+  getLocalizedHeroSocialIcons,
+  getLocalizedGithubUsername
+} from '../site.config'
 
 /**
  * Returns content data + site config for the current language.
@@ -18,6 +21,17 @@ export function useLocalizedData() {
     const data = getLocalizedData(lang)
     const siteConfig = getLocalizedSiteConfig(lang)
     const siteOwner = getLocalizedSiteOwner(lang)
-    return { ...data, siteConfig, siteOwner }
+    const navItems = getLocalizedNavItems(lang)
+    const heroSocialIcons = getLocalizedHeroSocialIcons(lang)
+    const githubUsername = getLocalizedGithubUsername(lang)
+    
+    return { 
+      ...data, 
+      siteConfig, 
+      siteOwner, 
+      navItems, 
+      heroSocialIcons,
+      githubUsername
+    }
   }, [lang])
 }

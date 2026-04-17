@@ -1,10 +1,10 @@
 {
   "mcpServers": {
     "termhub": {
-      "command": "/opt/homebrew/bin/node",
-      "args": ["/Users/freax/Downloads/gitee/TermHub/mcp-server/dist/index.js"],
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/TermHub/mcp-server/dist/index.js"],
       "env": {
-        "TERMHUB_ROOT": "/Users/freax/Downloads/gitee/TermHub"
+        "TERMHUB_ROOT": "/ABSOLUTE/PATH/TO/TermHub"
       }
     }
   }

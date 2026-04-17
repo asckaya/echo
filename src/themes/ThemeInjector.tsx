@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2026 Yaoyao(Freax) Qian <limyoonaxi@gmail.com>
-// SPDX-License-Identifier: GPL-3.0-only
-
 import { useEffect } from 'react'
 import { useColorMode } from '@/color-mode'
 import { useThemeContext } from './ThemeContext'
