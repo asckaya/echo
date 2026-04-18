@@ -3,17 +3,17 @@ import {
   Container,
   Flex,
   Heading,
-  Text
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 const BioSection: React.FC = () => {
   const { t } = useTranslation()
   const { about } = useLocalizedData()
   const textColor = useColorModeValue('gray.600', 'gray.400')
+  const separatorColor = useColorModeValue('gray.200', 'gray.700')
 
   if (!about.journey) return null
 
@@ -25,11 +25,11 @@ const BioSection: React.FC = () => {
           <Heading fontWeight="semibold" size="md">
             {t('about.bio', 'About')}
           </Heading>
-          <Box bg={useColorModeValue('gray.200', 'gray.700')} flex="1" h="1px" />
+          <Box bg={separatorColor} flex="1" h="1px" />
         </Flex>
-        <Text color={textColor} fontSize="sm" lineHeight="tall">
-          {about.journey}
-        </Text>
+        <Box color={textColor} fontSize="sm" lineHeight="tall">
+          {about.Content ? <about.Content /> : about.journey}
+        </Box>
       </Container>
     </Box>
   )

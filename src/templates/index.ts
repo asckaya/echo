@@ -15,7 +15,7 @@
 import type { ComponentSlots } from './slots'
 import type { TemplateConfig } from './types'
 
-import { resolveSlots } from './context'
+import { resolveSlots } from './slots'
 import terminalTemplate from './terminal'
 
 /** All registered templates keyed by id */
@@ -37,7 +37,7 @@ const templates: Record<string, TemplateConfig> = {
  */
 export const variantRegistry: Record<
   string,
-  Record<string, React.ComponentType<any>>
+  Record<string, React.ComponentType>
 > = Object.fromEntries(
   Object.entries(terminalTemplate.slots).map(([slotName, component]) => [
     slotName,
@@ -84,7 +84,8 @@ export function getTemplates(): TemplateConfig[] {
   return Object.values(templates)
 }
 
-export { SlotProvider, useSlot } from './context'
+export { useSlot } from './hooks'
+export { SlotProvider } from './slots'
 export type { ComponentSlots, SlotName } from './slots'
 export { DEFAULT_SECTIONS, SECTION_SLOTS } from './slots'
 export type { LayoutProps, TemplateConfig, TemplatePages } from './types'

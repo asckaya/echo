@@ -8,6 +8,7 @@
 
 export interface About {
   bio: string
+  Content?: React.ComponentType
   journey: string
   journeyPhases?: JourneyPhase[]
   mentorship?: {
@@ -121,6 +122,7 @@ export interface NewsLink {
 export interface ProjectItem {
   badge?: string
   category: 'data' | 'healthcare' | 'nlp' | 'robotics' | 'tooling' | 'web-app'
+  Content?: React.ComponentType
   date?: string
   extraLinks?: ProjectLink[]
   featured?: boolean
@@ -145,6 +147,7 @@ export interface Publication {
   authors: string[]
   citations?: number
   coFirstAuthors?: string[]
+  Content?: React.ComponentType
   emoji?: string
   featuredImage?: string
   id: string

@@ -2,8 +2,8 @@ import { Box, Flex, IconButton, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { FaCheck, FaPalette } from 'react-icons/fa'
 
-import { useColorMode, useColorModeValue } from '@/color-mode'
-import { type ThemeKey, themes, useThemeContext } from '@/themes/ThemeContext'
+import { useColorMode, useColorModeValue } from '@/hooks/useColorMode'
+import { type ThemeKey, themes, useThemeContext } from '@/themes/hooks'
 
 export const ThemePicker: React.FC = () => {
   const { activeTheme, currentThemeKey, setTheme } = useThemeContext()

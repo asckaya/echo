@@ -15,8 +15,8 @@ import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaChevronDown } from 'react-icons/fa'
 
-import { useColorMode } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import type { RoleType } from '../types'
@@ -91,6 +91,7 @@ const Experience: React.FC = () => {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
   const [command, setCommand] = useState('')
   const [cmdOutput, setCmdOutput] = useState<string[]>([])
+  const [tick, setTick] = useState(0)
 
   /* Palette (centralized) */
   const { terminalPalette } = useThemeConfig()
@@ -107,6 +108,13 @@ const Experience: React.FC = () => {
   const termSecondary = tc.secondary
   const hoverBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'
   const hlc = { kw: termCommand, num: termHighlight, str: termSuccess }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTick((t) => (t + 1) % 1000)
+    }, 200)
+    return () => clearInterval(timer)
+  }, [])
 
   /* ── Data ──────────────────────────────────────────────────── */
   const sorted = useMemo(() => {
@@ -151,7 +159,7 @@ const Experience: React.FC = () => {
   }, [sorted])
 
   const education = experienceData.education.courses
-  const reviewingItems = experienceData.reviewing ?? []
+  const reviewingItems = useMemo(() => experienceData.reviewing ?? [], [experienceData.reviewing])
   const reviewingByYear = useMemo(() => {
     const groups: Record<string, typeof reviewingItems> = {}
     for (const item of reviewingItems) {
@@ -228,7 +236,6 @@ const Experience: React.FC = () => {
           <Flex borderTopRadius="md" h="3px" overflow="hidden" w="full">
             {(() => {
               const total = 28
-              const tick = Math.floor(Date.now() / 200)
               return Array.from({ length: total }, (_, i) => {
                 const colorIdx = (i + tick) % terminalPalette.rainbow.length
                 const brightness = 0.6 + 0.4 * Math.abs(Math.sin((i + tick * 0.5) * 0.3))

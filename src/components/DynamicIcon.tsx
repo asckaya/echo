@@ -95,7 +95,7 @@ const icons: { [key: string]: IconType } = {
 }
 
 interface DynamicIconProps {
-  [key: string]: any
+  [key: string]: unknown
   boxSize?: number | number[] | string | string[]
   color?: string
   name?: string

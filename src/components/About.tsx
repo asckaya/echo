@@ -11,9 +11,9 @@ import { useTranslation } from 'react-i18next'
 
 import type { SlotName } from '@/templates/slots'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
-import { useSlot } from '@/templates/context'
+import { useSlot } from '@/templates/hooks'
 import { DEFAULT_SECTIONS } from '@/templates/slots'
 
 function About() {
@@ -22,6 +22,8 @@ function About() {
   const researchLogos = institutionLogos
   const universityLogos = institutionLogos
   const lineColor = useColorModeValue('gray.200', 'gray.700')
+  const newsBadgeBg = useColorModeValue('green.100', 'rgba(154,230,180,0.16)')
+  const newsBadgeColor = useColorModeValue('green.800', 'green.200')
 
   const cfg = siteConfig as Record<string, unknown>
   const sectionOrder = (cfg.sections as string[] | undefined) ?? DEFAULT_SECTIONS
@@ -85,8 +87,8 @@ function About() {
                   {t('about.recentUpdates')}
                 </Heading>
                 <Badge
-                  bg={useColorModeValue('green.100', 'rgba(154,230,180,0.16)')}
-                  color={useColorModeValue('green.800', 'green.200')}
+                  bg={newsBadgeBg}
+                  color={newsBadgeColor}
                   fontFamily="mono"
                   fontSize="2xs"
                 >

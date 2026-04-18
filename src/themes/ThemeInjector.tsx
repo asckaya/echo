@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import { useColorMode } from '@/color-mode'
+import { useColorMode } from '@/hooks/useColorMode'
 
-import { useThemeContext } from './ThemeContext'
+import { useThemeContext } from './hooks'
 
 /**
  * Renderless component — mounts once inside <ChakraProvider> and keeps the

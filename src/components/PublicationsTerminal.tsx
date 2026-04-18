@@ -31,8 +31,8 @@ import {
   FaVideo,
 } from 'react-icons/fa'
 
-import { useColorMode } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import { getPublicationStats } from '../data'
@@ -104,7 +104,7 @@ const PublicationsTerminal: React.FC = () => {
     return () => clearInterval(interval)
   }, [])
 
-  const stats = useMemo(() => getPublicationStats(), [publications])
+  const stats = useMemo(() => getPublicationStats(publications), [publications])
 
   const filteredPublications = useMemo(() => {
     let filtered = [...publications]
@@ -300,7 +300,7 @@ const PublicationsTerminal: React.FC = () => {
                   flex="1"
                   fontFamily="mono"
                   h="auto"
-                  onChange={(e: any) => setSearchQuery(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
                   outline="none"
                   p={0}
                   placeholder="'robotics' papers/*"
@@ -315,7 +315,7 @@ const PublicationsTerminal: React.FC = () => {
                 {/* Year Select */}
                 <Box flex={{ base: "1", md: "initial" }} minW="100px" position="relative">
                   <select
-                    onChange={(e: any) => setSelectedYear(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedYear(e.target.value)}
                     style={{
                       appearance: 'none',
                       backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'white',
@@ -346,7 +346,7 @@ const PublicationsTerminal: React.FC = () => {
                 {/* Venue Select */}
                 <Box flex={{ base: "1.2", md: "initial" }} minW="110px" position="relative">
                   <select
-                    onChange={(e: any) => setSelectedVenue(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedVenue(e.target.value)}
                     style={{
                       appearance: 'none',
                       backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'white',
@@ -563,9 +563,9 @@ const PublicationsTerminal: React.FC = () => {
 
                       <Box display={{ base: "none", md: "block" }} w="150px">
                         <HStack gap={1}>
-                          {pub.links.paper && <MotionHover><Box title="Paper"><Link href={pub.links.paper} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="blue" fontSize="2xs">PDF</Badge></Link></Box></MotionHover>}
-                          {pub.links.code && <MotionHover><Box title="Code"><Link href={pub.links.code} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="green" fontSize="2xs">CODE</Badge></Link></Box></MotionHover>}
-                          {pub.links.projectPage && <MotionHover><Box title="Project"><Link href={pub.links.projectPage} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="purple" fontSize="2xs">PROJ</Badge></Link></Box></MotionHover>}
+                          {pub.links?.paper && <MotionHover><Box title="Paper"><Link href={pub.links.paper} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="blue" fontSize="2xs">PDF</Badge></Link></Box></MotionHover>}
+                          {pub.links?.code && <MotionHover><Box title="Code"><Link href={pub.links.code} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="green" fontSize="2xs">CODE</Badge></Link></Box></MotionHover>}
+                          {pub.links?.projectPage && <MotionHover><Box title="Project"><Link href={pub.links.projectPage} onClick={(e) => e.stopPropagation()} target="_blank"><Badge colorPalette="purple" fontSize="2xs">PROJ</Badge></Link></Box></MotionHover>}
                         </HStack>
                       </Box>
                       <Text color={expandedItems[pub.id] ? termInfo : termCommand} fontWeight="bold" textAlign="center" w="50px">
@@ -578,6 +578,11 @@ const PublicationsTerminal: React.FC = () => {
                         <Box bg={isDark ? 'rgba(76, 86, 106, 0.15)' : 'rgba(203, 213, 225, 0.15)'} borderLeft={`3px solid ${venueColors[pub.venueType]?.fg || termBorder}`} px={8} py={4}>
                           <Flex flexDirection={{ base: "column", md: "row" }} gap={4}>
                             <Box flex="1">
+                              {pub.Content && (
+                                <Box mb={3}>
+                                  <pub.Content />
+                                </Box>
+                              )}
                               {pub.abstract && (
                                 <Box mb={3}>
                                   <Text color={termInfo} fontSize="xs" mb={1}>── ABSTRACT ─────────────</Text>
@@ -590,7 +595,7 @@ const PublicationsTerminal: React.FC = () => {
                                 <Box mb={3}>
                                   <Text color={termInfo} fontSize="xs" mb={1}>── KEYWORDS ─────────────</Text>
                                   <HStack flexWrap="wrap" gap={2}>
-                                    {pub.keywords.map((k, i) => <Badge colorPalette="cyan" fontSize="2xs" key={i}>{k}</Badge>)}
+                                    {pub.keywords?.map((k, i) => <Badge colorPalette="cyan" fontSize="2xs" key={i}>{k}</Badge>)}
                                   </HStack>
                                 </Box>
                               )}
@@ -631,7 +636,7 @@ const PublicationsTerminal: React.FC = () => {
               _focus={{ outline: "none" }}
               border="none"
               color={termText}
-              flex="1" fontFamily="mono" onChange={(e: any) => setCurrentCommand(e.target.value)} onKeyDown={(e: any) => { if (e.key === 'Enter') handleCommand(currentCommand) }} outline="none" placeholder="type 'help' for commands" size="xs" value={currentCommand}
+              flex="1" fontFamily="mono" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentCommand(e.target.value)} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => { if (e.key === 'Enter') handleCommand(currentCommand) }} outline="none" placeholder="type 'help' for commands" size="xs" value={currentCommand}
             />
             <Box bg={termPrompt} css={{ animation: `${blink} 1s step-end infinite` }} h="12px" ml={1} w="6px" />
           </Flex>

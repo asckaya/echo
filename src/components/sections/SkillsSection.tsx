@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import DynamicIcon from '../DynamicIcon'
@@ -22,6 +22,7 @@ const SkillsSection: React.FC = () => {
   const tagBg = useColorModeValue('gray.100', 'gray.800')
   const tagColor = useColorModeValue('gray.700', 'gray.300')
   const iconColor = useColorModeValue('gray.500', 'gray.400')
+  const lineBg = useColorModeValue('gray.200', 'gray.700')
 
   if (skills.length === 0) return null
 
@@ -36,7 +37,7 @@ const SkillsSection: React.FC = () => {
           <Heading fontWeight="semibold" size="md">
             {t('about.skills', 'Skills')}
           </Heading>
-          <Box bg={useColorModeValue('gray.200', 'gray.700')} flex="1" h="1px" />
+          <Box bg={lineBg} flex="1" h="1px" />
         </Flex>
         <HStack flexWrap="wrap" gap={2}>
           {skills.map((skill) => (

@@ -8,7 +8,7 @@ import {
   VStack
 } from '@chakra-ui/react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 const MentorshipSection: React.FC = () => {

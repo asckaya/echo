@@ -10,7 +10,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { SiCloudflare, SiGithub } from 'react-icons/si'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 const Footer: React.FC = () => {

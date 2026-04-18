@@ -17,8 +17,8 @@ import { keyframes } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorMode, useColorModeValue } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode, useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { heroSocialIcons } from '@/site.config'
 import { withBase } from '@/utils/asset'
@@ -50,7 +50,7 @@ const TerminalTypewriter: React.FC = () => {
   const tc = terminalPalette.colors(isDark)
 
   const { about, siteOwner } = useLocalizedData()
-  const phrases = (siteOwner.rotatingSubtitles ?? []) as string[]
+  const phrases = useMemo(() => (siteOwner.rotatingSubtitles ?? []) as string[], [siteOwner.rotatingSubtitles])
   const username = siteOwner.terminalUsername ?? 'user'
   const fullName = siteOwner.name.full ?? ''
 
@@ -269,6 +269,9 @@ const ProfileSidebar: React.FC = () => {
   const tagBg = useColorModeValue('gray.100', 'gray.700')
   const tagColor = useColorModeValue('gray.600', 'gray.300')
   const dividerColor = useColorModeValue('gray.100', 'gray.700')
+  const headerBg = useColorModeValue('gray.50', 'gray.900')
+  const avatarBorderColor = useColorModeValue('gray.200', 'gray.600')
+  const skillIconColor = useColorModeValue('gray.500', 'gray.400')
 
   type SkillItem = string | { icon?: string; name: string; }
   const skills = (siteOwner.skills ?? []) as SkillItem[]
@@ -288,7 +291,7 @@ const ProfileSidebar: React.FC = () => {
       {/* Terminal title bar */}
       <Flex
         align="center"
-        bg={useColorModeValue('gray.50', 'gray.900')}
+        bg={headerBg}
         borderBottom="1px solid"
         borderColor={borderColor}
         gap={2}
@@ -312,7 +315,7 @@ const ProfileSidebar: React.FC = () => {
             <Image
               alt={siteOwner.name.full}
               border="2px solid"
-              borderColor={useColorModeValue('gray.200', 'gray.600')}
+              borderColor={avatarBorderColor}
               borderRadius="xl"
               boxSize={['100px', '120px', '128px']}
               objectFit="cover"
@@ -459,7 +462,7 @@ const ProfileSidebar: React.FC = () => {
                   {getIcon(skill) && (
                     <DynamicIcon
                       boxSize={2.5}
-                      color={useColorModeValue('gray.500', 'gray.400')}
+                      color={skillIconColor}
                       name={getIcon(skill)!}
                     />
                   )}
@@ -481,6 +484,7 @@ const PageHeader: React.FC = () => {
   const { siteOwner } = useLocalizedData()
   const borderColor = useColorModeValue('gray.200', 'gray.700')
   const textColor = useColorModeValue('gray.500', 'gray.500')
+  const cmdColor = useColorModeValue('gray.700', 'gray.200')
 
   return (
     <Box borderBottom="1px solid" borderColor={borderColor} mb={2} pb={6}>
@@ -489,7 +493,7 @@ const PageHeader: React.FC = () => {
           $
         </Text>
         <Text color="cyan.400">cat</Text>
-        <Text color={useColorModeValue('gray.700', 'gray.200')}>about.md</Text>
+        <Text color={cmdColor}>about.md</Text>
         <Box
           animation="blink 1s step-end infinite"
           as="span"

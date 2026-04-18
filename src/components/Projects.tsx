@@ -30,8 +30,8 @@ import {
 } from 'react-icons/fa'
 import { SiCsdn, SiZhihu } from 'react-icons/si'
 
-import { useColorMode } from '@/color-mode'
 import { type CatTheme, useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { withBase } from '@/utils/asset'
 import { highlightData } from '@/utils/highlightData'
@@ -212,6 +212,11 @@ const FlowNode: React.FC<{
         <Collapsible.Root open={expanded}>
           <Collapsible.Content>
             <VStack align="stretch" gap={3} mt={3}>
+              {item.Content && (
+                <Box color={termSecondary} fontSize="xs" lineHeight="tall">
+                  <item.Content />
+                </Box>
+              )}
               {item.highlights && item.highlights.length > 0 && (
                 <Box>
                   {item.highlights.map((h, i) => (
@@ -245,6 +250,7 @@ const Projects: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [imgPreview, setImgPreview] = useState<null | { alt: string; src: string; }>(null)
   const [isImgOpen, setImgOpen] = useState(false)
+  const [tick, setTick] = useState(0)
 
   const { buildCategoryThemes, terminalPalette } = useThemeConfig()
   const tc = terminalPalette.colors(isDark)
@@ -262,6 +268,13 @@ const Projects: React.FC = () => {
   const termSuccess = tc.success
   const hlc = { kw: termCommand, num: termHighlight, str: termSuccess }
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTick((t) => (t + 1) % 1000)
+    }, 200)
+    return () => clearInterval(timer)
+  }, [])
+
   const themes = useMemo(() => buildThemes(buildCategoryThemes(isDark)), [isDark, buildCategoryThemes])
   const projects = useMemo<TP[]>(() => projectData.map((p, i) => ({ ...p, id: `p-${i}` })), [projectData])
 
@@ -273,7 +286,8 @@ const Projects: React.FC = () => {
       { color: termInfo, count: cnt.all, icon: FaFolderOpen, key: 'all' as TabKey, label: t('projects.all') },
       ...cats.filter((k) => cnt[k] > 0).map((k) => ({ color: themes[k].color, count: cnt[k], icon: themes[k].icon, key: k as TabKey, label: t(`category.${k}`) })),
     ]
-  }, [projects, themes, termInfo, t])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projects, themes, isDark, t])
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
@@ -291,7 +305,7 @@ const Projects: React.FC = () => {
         if (da !== db) return db - da
         if (a.featured && !b.featured) return -1
         if (!a.featured && b.featured) return 1
-        return a.title.localeCompare(b.title)
+        return (a.title || '').localeCompare(b.title || '')
       })
   }, [projects, searchQuery, activeTab])
 
@@ -324,7 +338,6 @@ const Projects: React.FC = () => {
             {(() => {
               const palette = ['#bf616a', '#d08770', '#ebcb8b', '#a3be8c', '#88c0d0', '#5e81ac', '#b48ead']
               const total = 28
-              const tick = Math.floor(Date.now() / 200)
               return Array.from({ length: total }, (_, i) => {
                 const colorIdx = (i + tick) % palette.length
                 const brightness = 0.6 + 0.4 * Math.abs(Math.sin((i + tick * 0.5) * 0.3))

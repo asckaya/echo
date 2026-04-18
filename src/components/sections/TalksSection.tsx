@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import DynamicIcon from '../DynamicIcon'
@@ -34,6 +34,8 @@ const TalksSection: React.FC = () => {
   const titleColor = useColorModeValue('gray.800', 'gray.100')
   const mutedColor = useColorModeValue('gray.400', 'gray.500')
 
+  const lineBg = useColorModeValue('gray.200', 'gray.700')
+
   if (!talks || talks.length === 0) return null
 
   return (
@@ -44,7 +46,7 @@ const TalksSection: React.FC = () => {
           <Heading fontWeight="semibold" size="md">
             {t('about.talks', 'Talks')}
           </Heading>
-          <Box bg={useColorModeValue('gray.200', 'gray.700')} flex="1" h="1px" />
+          <Box bg={lineBg} flex="1" h="1px" />
         </Flex>
         <VStack align="stretch" gap={0}>
           {talks.map((talk, i) => {

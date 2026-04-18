@@ -1,7 +1,7 @@
 import { IconButton, Link } from '@chakra-ui/react'
 import React from 'react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 import DynamicIcon from '../DynamicIcon'
 

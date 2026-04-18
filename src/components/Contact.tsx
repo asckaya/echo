@@ -1,8 +1,8 @@
 import { Box, Container, Heading, HStack, Text, VStack } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorMode } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import { MotionBox, MotionHover, MotionList } from './animations/MotionList'

@@ -2,7 +2,7 @@ import { Box, Container, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import type { Award } from '../types'
@@ -46,6 +46,7 @@ const AwardRow = ({ award }: { award: Award }) => {
   const borderColor = useColorModeValue('gray.100', 'gray.800')
   const titleColor = useColorModeValue('gray.800', 'gray.100')
   const mutedColor = useColorModeValue('gray.400', 'gray.500')
+  const eggTextColor = useColorModeValue('gray.600', 'gray.300')
   const meta = kindMeta[award.kind || 'other']
   const kindColor = useColorModeValue(meta.color[0], meta.color[1])
 
@@ -96,7 +97,7 @@ const AwardRow = ({ award }: { award: Award }) => {
     return (
       <VStack align="stretch" gap={1} title={award.egg}>
         {content}
-        <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize="xs" pl={8}>
+        <Text color={eggTextColor} fontSize="xs" pl={8}>
           {award.egg}
         </Text>
       </VStack>
@@ -109,12 +110,13 @@ const AwardRow = ({ award }: { award: Award }) => {
 const AccomplishmentsTerminal: React.FC = () => {
   const { t } = useTranslation()
   const { awards } = useLocalizedData()
+  const mutedColor = useColorModeValue('gray.500', 'gray.400')
   return (
     <Container maxW={['full', 'full', '7xl']} px={[2, 4, 8]}>
       <Heading mb={3} size={['sm', 'md']}>
         {t('about.awardsAndHonors')}
       </Heading>
-      <Text color={useColorModeValue('gray.500', 'gray.400')} fontSize="xs" mb={4}>
+      <Text color={mutedColor} fontSize="xs" mb={4}>
         {awards.length} {t('about.awardsSpanning')} {new Set(awards.map((a) => a.kind)).size}{' '}
         {t('about.categories')}
       </Text>

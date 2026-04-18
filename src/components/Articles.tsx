@@ -6,8 +6,8 @@ import { type IconType } from 'react-icons'
 import { FaExternalLinkAlt, FaGithub, FaMedium, FaYoutube } from 'react-icons/fa'
 import { SiCsdn, SiZhihu } from 'react-icons/si'
 
-import { useColorMode, useColorModeValue } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode, useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import type { ProjectItem } from '../types'
@@ -93,6 +93,10 @@ const Articles: React.FC = () => {
   const termSuccess = tc.success
   const termSecondary = tc.secondary
   const termMuted = tc.muted
+  const pageBg = useColorModeValue('gray.50', 'gray.900')
+  const articleHoverBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'
+  const expandedBg = isDark ? 'rgba(76,86,106,0.1)' : 'rgba(203,213,225,0.15)'
+  const tagBg = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -153,7 +157,7 @@ const Articles: React.FC = () => {
   const promptPath = selectedCategory === 'all' ? '~' : `~/${selectedCategory}`
 
   return (
-    <Box bg={useColorModeValue('gray.50', 'gray.900')} minH="100vh" py={8} w="full">
+    <Box bg={pageBg} minH="100vh" py={8} w="full">
       <VStack gap={6} maxW="1400px" mx="auto" px={[2, 4, 6]}>
         <Box
           bg={termBg}
@@ -372,7 +376,7 @@ const Articles: React.FC = () => {
                         return (
                           <MotionBox key={item.id}>
                             <Box
-                              _hover={{ bg: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}
+                              _hover={{ bg: articleHoverBg }}
                               borderBottom={`1px dotted ${termBorder}`}
                             >
                               <Flex
@@ -483,7 +487,7 @@ const Articles: React.FC = () => {
                               <Collapsible.Root open={isExpanded}>
                                 <Collapsible.Content>
                                   <Box
-                                    bg={isDark ? 'rgba(76,86,106,0.1)' : 'rgba(203,213,225,0.15)'}
+                                    bg={expandedBg}
                                     borderLeft={`2px solid ${ct.fg(isDark)}`}
                                     px={[3, 4, 8]}
                                     py={3}
@@ -502,9 +506,7 @@ const Articles: React.FC = () => {
                                       <HStack flexWrap="wrap" gap={1.5} mb={2}>
                                         {item.tags.map((t) => (
                                           <Text
-                                            bg={
-                                              isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'
-                                            }
+                                            bg={tagBg}
                                             borderRadius="sm"
                                             color={termMuted}
                                             fontFamily="mono"

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 /** Parse **bold** markers in text */
@@ -39,9 +39,11 @@ const JourneySection: React.FC = () => {
   const boldColor = useColorModeValue('gray.700', 'gray.200')
   const headingColor = useColorModeValue('gray.800', 'gray.100')
   const lineColor = useColorModeValue('gray.200', 'gray.700')
-  const dotBorder = useColorModeValue('gray.300', 'gray.600')
   const dotBg = useColorModeValue('white', 'gray.800')
   const tagBg = useColorModeValue('gray.100', 'gray.800')
+  const slashColor = useColorModeValue('gray.400', 'gray.600')
+  const orgColor = useColorModeValue('gray.400', 'gray.500')
+  const dotBorderColor = useColorModeValue('gray.300', 'gray.600')
 
   if (!about.journeyPhases || about.journeyPhases.length === 0) return null
 
@@ -73,7 +75,7 @@ const JourneySection: React.FC = () => {
                   <Box
                     bg={index === about.journeyPhases!.length - 1 ? 'cyan.400' : dotBg}
                     border="2px solid"
-                    borderColor={index === about.journeyPhases!.length - 1 ? 'cyan.400' : dotBorder}
+                    borderColor={index === about.journeyPhases!.length - 1 ? 'cyan.400' : dotBorderColor}
                     borderRadius="full"
                     h="14px"
                     w="14px"
@@ -91,11 +93,11 @@ const JourneySection: React.FC = () => {
                     >
                       {phase.period}
                     </Text>
-                    <Text color={useColorModeValue('gray.400', 'gray.600')} fontSize="2xs">
+                    <Text color={slashColor} fontSize="2xs">
                       /
                     </Text>
                     <Text
-                      color={useColorModeValue('gray.400', 'gray.500')}
+                      color={orgColor}
                       fontFamily="mono"
                       fontSize="2xs"
                     >
@@ -134,7 +136,7 @@ const JourneySection: React.FC = () => {
               <Box flexShrink={0} mt="6px">
                 <Box
                   border="2px dashed"
-                  borderColor={dotBorder}
+                  borderColor={dotBorderColor}
                   borderRadius="full"
                   h="14px"
                   w="14px"

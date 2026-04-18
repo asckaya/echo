@@ -1,10 +1,16 @@
+import mdx from '@mdx-js/rollup'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
 import { copyFileSync, mkdirSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
+import rehypeKatex from 'rehype-katex'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defineConfig } from 'vite'
 
 import contentImages from './plugins/vite-plugin-content-images'
-import markdown from './plugins/vite-plugin-markdown'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,21 +25,16 @@ export default defineConfig({
         /**
          * Split vendor libraries into logical chunks so the browser can cache
          * them independently and visitors only download what changed.
-         *
-         * Groups:
-         *   react-vendor  — React core + DOM + Router (rarely changes)
-         *   chakra        — Chakra UI + Emotion (large, rarely changes)
-         *   motion        — Framer Motion (animation engine)
-         *   icons         — react-icons (tree-shaken, but still sizeable)
-         *   i18n          — i18next stack
-         *   markdown      — marked + gray-matter (content parsing)
-         *   vendor        — everything else in node_modules
          */
         manualChunks(id) {
           if (!id.includes('node_modules')) return
 
           if (id.includes('/react-dom/')) return 'react-dom'
-          if (id.includes('/react/') || id.includes('/react-router') || id.includes('/scheduler/'))
+          if (
+            id.includes('/react/') ||
+            id.includes('/@tanstack/react-router/') ||
+            id.includes('/scheduler/')
+          )
             return 'react-core'
 
           if (id.includes('@chakra-ui/') || id.includes('@emotion/')) return 'chakra'
@@ -49,8 +50,13 @@ export default defineConfig({
           )
             return 'i18n'
 
-          if (id.includes('/marked/') || id.includes('/gray-matter/') || id.includes('/js-yaml/'))
-            return 'markdown'
+          if (
+            id.includes('/@mdx-js/') ||
+            id.includes('/remark-') ||
+            id.includes('/rehype-') ||
+            id.includes('/katex/')
+          )
+            return 'mdx'
 
           return 'vendor'
         },
@@ -58,8 +64,38 @@ export default defineConfig({
     },
   },
   plugins: [
+    mdx({
+      rehypePlugins: [rehypeKatex],
+      remarkPlugins: [
+        remarkGfm,
+        remarkFrontmatter,
+        // Injects plain-text body into frontmatter for card summaries
+        () => (tree, _file) => {
+          let text = ''
+          const walk = (node) => {
+            if (node.type === 'yaml' || node.type === 'toml') return
+            if (node.type === 'text') text += node.value + ' '
+            if (node.children) node.children.forEach(walk)
+          }
+          walk(tree)
+          
+          let yamlNode = tree.children.find(n => n.type === 'yaml')
+          if (!yamlNode) {
+            yamlNode = { type: 'yaml', value: '' }
+            tree.children.unshift(yamlNode)
+          }
+          const cleanText = text.replace(/\n/g, ' ').replace(/"/g, '\\"').trim().slice(0, 1000)
+          yamlNode.value += `\nbodyText: "${cleanText}"`
+        },
+        [remarkMdxFrontmatter, { name: 'frontmatter' }],
+        remarkMath,
+      ],
+    }),
     react(),
-    markdown(),
+    TanStackRouterVite({
+      generatedRouteTree: './src/routeTree.gen.ts',
+      routesDirectory: './src/routes',
+    }),
     contentImages(),
     {
       closeBundle() {

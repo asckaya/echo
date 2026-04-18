@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint'
 
 export default [
   { 
-    ignores: ['dist', 'node_modules', 'mcp-server', 'plugins', 'public'] 
+    ignores: ['dist', 'node_modules', 'mcp-server', 'plugins', 'public', '.wrangler'] 
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -46,6 +46,14 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'error',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    },
+  },
+  {
+    files: ['scripts/**/*.mjs', 'scratch/**/*.mjs', 'vite.config.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
     },
   },
   prettier,

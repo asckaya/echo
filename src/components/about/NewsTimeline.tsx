@@ -11,8 +11,8 @@ import { keyframes } from '@emotion/react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorMode } from '@/color-mode'
 import { useThemeConfig } from '@/config/theme'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import { type NewsItem } from '../../types'
@@ -157,7 +157,7 @@ const NewsTimeline: React.FC<NewsTimelineProps> = ({ news, showHeader: _showHead
   const [researchStatusIndex, setResearchStatusIndex] = useState(0)
   const [processIndex, setProcessIndex] = useState(0)
   const [interactions, setInteractions] = useState(0)
-  const [memoryUsage, setMemoryUsage] = useState(65 + Math.floor(Math.random() * 20))
+  const [memoryUsage, setMemoryUsage] = useState(() => 65 + Math.floor(Math.random() * 20))
 
   // Handle system interaction
   const handleSystemInteraction = useCallback(() => {
@@ -302,7 +302,7 @@ const NewsTimeline: React.FC<NewsTimelineProps> = ({ news, showHeader: _showHead
 
       return description
     },
-    [isWideEnough, termCommand],
+    [isWideEnough, termCommand, t],
   )
 
   // Based on browser width, decide category display
@@ -724,9 +724,12 @@ const NewsTimeline: React.FC<NewsTimelineProps> = ({ news, showHeader: _showHead
                       >
                         {item.badge
                           .replace(
-                            /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{200D}\u{20E3}]/gu,
+                            /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu,
                             '',
                           )
+                          .replace(/[\u{FE00}-\u{FE0F}]/gu, '')
+                          .replace(/\u{200D}/gu, '')
+                          .replace(/\u{20E3}/gu, '')
                           .replace(' Accepted', '')
                           .replace('!', '')
                           .trim()}
@@ -839,9 +842,12 @@ const NewsTimeline: React.FC<NewsTimelineProps> = ({ news, showHeader: _showHead
                             <Text color={termSuccess} fontWeight="medium">
                               {item.badge
                                 .replace(
-                                  /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{200D}\u{20E3}]/gu,
+                                  /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu,
                                   '',
                                 )
+                                .replace(/[\u{FE00}-\u{FE0F}]/gu, '')
+                                .replace(/\u{200D}/gu, '')
+                                .replace(/\u{20E3}/gu, '')
                                 .trim()}
                             </Text>
                           </>

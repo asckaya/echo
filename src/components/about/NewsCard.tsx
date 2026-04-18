@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Flex, Heading, HStack, Link, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 import { type NewsItem } from '../../types'
 import DynamicIcon from '../DynamicIcon'
@@ -12,6 +12,16 @@ interface NewsCardProps {
 
 const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
   // Get appropriate icon based on news type
+  const iconBase = news.iconColor.split('.')[0]
+  const cardBg = useColorModeValue('white', 'gray.800')
+  const cardBorderColor = useColorModeValue('gray.100', 'gray.700')
+  const badgeBg = useColorModeValue(`${iconBase}.500`, `${iconBase}.600`)
+  const badgeShadow = useColorModeValue('0 2px 5px rgba(0,0,0,0.1)', '0 2px 5px rgba(0,0,0,0.3)')
+  const badgeTextColor = useColorModeValue('white', 'white')
+  const iconBg = useColorModeValue(`${iconBase}.50`, `${iconBase}.900`)
+  const iconColor = useColorModeValue(`${iconBase}.500`, `${iconBase}.200`)
+  const descColor = useColorModeValue('gray.600', 'gray.400')
+
   const getIconName = () => {
     switch (news.type) {
       case 'course':
@@ -29,8 +39,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
     <Box
       _hover={{ shadow: 'md', transform: 'translateY(-4px)' }}
       aria-labelledby={`news-title-${news.title.replace(/\s+/g, '-').toLowerCase()}`}
-      bg={useColorModeValue('white', 'gray.800')}
-      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      bg={cardBg}
+      borderColor={cardBorderColor}
       borderRadius="lg"
       borderWidth="1px"
       overflow="hidden"
@@ -47,14 +57,11 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
       {news.date && (
         <Badge
           alignItems="center"
-          bg={useColorModeValue(
-            `${news.iconColor.split('.')[0]}.500`,
-            `${news.iconColor.split('.')[0]}.600`,
-          )}
+          bg={badgeBg}
           borderRadius="md"
-          boxShadow={useColorModeValue('0 2px 5px rgba(0,0,0,0.1)', '0 2px 5px rgba(0,0,0,0.3)')}
-          color={useColorModeValue('white', 'white')}
-          colorPalette={news.iconColor.split('.')[0]}
+          boxShadow={badgeShadow}
+          color={badgeTextColor}
+          colorPalette={iconBase}
           display="flex"
           fontSize="xs"
           fontWeight="medium"
@@ -77,15 +84,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
           <Box
             alignItems="center"
             aria-hidden="true"
-            bg={useColorModeValue(
-              `${news.iconColor.split('.')[0]}.50`,
-              `${news.iconColor.split('.')[0]}.900`,
-            )}
+            bg={iconBg}
             borderRadius="md"
-            color={useColorModeValue(
-              `${news.iconColor.split('.')[0]}.500`,
-              `${news.iconColor.split('.')[0]}.200`,
-            )}
+            color={iconColor}
             display="flex"
             fontSize="xl"
             height="32px"
@@ -118,7 +119,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
 
         {/* Description text */}
         <Text
-          color={useColorModeValue('gray.600', 'gray.400')}
+          color={descColor}
           fontSize="sm"
           lineHeight="taller"
           mb={3}
@@ -138,7 +139,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Button colorPalette={news.iconColor.split('.')[0]} size="xs" variant="outline">
+                <Button colorPalette={iconBase} size="xs" variant="outline">
                   {LinkIcon && (
                     <Box aria-hidden="true" as="span">
                       {LinkIcon}

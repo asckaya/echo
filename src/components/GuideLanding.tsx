@@ -1,6 +1,6 @@
 import { Box, Container, Heading, HStack, Link, Text, VStack } from '@chakra-ui/react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 const GuideLanding = () => {
   const border = useColorModeValue('gray.200', 'gray.700')

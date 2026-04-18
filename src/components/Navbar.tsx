@@ -9,13 +9,13 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react'
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { FaEnvelope, FaGithub, FaLinkedin, FaMedium } from 'react-icons/fa'
 import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi'
 import { SiGooglescholar } from 'react-icons/si'
-import { Link, useLocation } from 'react-router-dom'
 
-import { useColorMode } from '@/color-mode'
+import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import { MotionHover } from './animations/MotionList'
@@ -23,7 +23,6 @@ import { ThemePicker } from './ThemePicker'
 
 const Navbar: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
-  const location = useLocation()
   const { onClose, onOpen, open: isOpen } = useDisclosure()
   const { i18n, t } = useTranslation()
   const { navItems, siteOwner } = useLocalizedData()
@@ -84,16 +83,24 @@ const Navbar: React.FC = () => {
         {/* Desktop nav (centered-right) */}
         <HStack display={{ base: 'none', md: 'flex' }} gap={8} ml="auto" mr={{ base: 0, md: 6 }}>
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path
-
             return (
               <MotionHover key={item.path}>
                 <Link
+                  activeProps={{
+                    style: {
+                      borderBottom: '2px solid var(--accent-color)',
+                      fontWeight: '600',
+                    },
+                  }}
+                  inactiveProps={{
+                    style: {
+                      borderBottom: 'none',
+                      fontWeight: '400',
+                    },
+                  }}
                   style={{
-                    borderBottom: isActive ? '2px solid var(--accent-color)' : 'none',
                     color: 'var(--text-color)',
                     fontSize: '1rem',
-                    fontWeight: isActive ? '600' : '400',
                     paddingBottom: '2px',
                     textDecoration: 'none',
                     transition: 'all 0.2s',
@@ -115,9 +122,10 @@ const Navbar: React.FC = () => {
               <MotionHover key={link.label}>
                 <ChakraLink
                   _hover={{
-                    bg: link.label === 'LinkedIn' || link.label === 'Email'
-                      ? 'var(--hover-color)'
-                      : 'transparent',
+                    bg:
+                      link.label === 'LinkedIn' || link.label === 'Email'
+                        ? 'var(--hover-color)'
+                        : 'transparent',
                     color: 'var(--accent-color)',
                   }}
                   borderRadius="md"
@@ -182,15 +190,24 @@ const Navbar: React.FC = () => {
         <Box display={{ base: 'block', md: 'none' }} mt={3} px={4}>
           <VStack align="stretch" bg="var(--bg-color)" gap={3}>
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path
               return (
                 <MotionHover key={item.path}>
                   <Link
+                    activeProps={{
+                      style: {
+                        color: 'var(--accent-color)',
+                        fontWeight: 600,
+                      },
+                    }}
+                    inactiveProps={{
+                      style: {
+                        color: 'var(--text-color)',
+                        fontWeight: 400,
+                      },
+                    }}
                     onClick={onClose}
                     style={{
-                      color: isActive ? 'var(--accent-color)' : 'var(--text-color)',
                       display: 'block',
-                      fontWeight: isActive ? 600 : 400,
                       padding: '4px 0',
                       textDecoration: 'none',
                     }}

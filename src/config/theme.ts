@@ -1,7 +1,7 @@
 import type { ProjectItem } from '@/types'
 
+import { useThemeContext } from '@/themes/hooks'
 import { activeTheme as staticActiveTheme } from '@/themes/index'
-import { useThemeContext } from '@/themes/ThemeContext'
 
 export type { CatTheme } from '@/themes'
 

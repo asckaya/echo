@@ -94,3 +94,28 @@ export const SECTION_SLOTS: SlotName[] = [
   'contact',
   'footer',
 ]
+
+/**
+ * Merge template default slots with user-selected variant overrides.
+ *
+ * @param templateSlots - Default slot implementations from the template
+ * @param variantRegistry - All registered variants keyed by `slotName.variantId`
+ * @param userOverrides - User selections from site.json `components` field
+ */
+export function resolveSlots(
+  templateSlots: ComponentSlots,
+  variantRegistry: Record<string, Record<string, React.ComponentType>>,
+  userOverrides?: Record<string, string>,
+): ComponentSlots {
+  if (!userOverrides) return templateSlots
+
+  const resolved = { ...templateSlots }
+
+  for (const [slotName, variantId] of Object.entries(userOverrides)) {
+    if (slotName in resolved && variantRegistry[slotName]?.[variantId]) {
+      ;(resolved as unknown as Record<string, React.ComponentType>)[slotName] = variantRegistry[slotName][variantId]
+    }
+  }
+
+  return resolved
+}

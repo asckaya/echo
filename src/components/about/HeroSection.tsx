@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorMode, useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { heroSocialIcons } from '@/site.config'
 import { withBase } from '@/utils/asset'
@@ -58,10 +58,16 @@ const HeroSection = ({
 }: HeroSectionProps) => {
   const { t } = useTranslation()
   const { siteConfig, siteOwner } = useLocalizedData()
+  const { colorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
   const headingColor = useColorModeValue('gray.800', 'white')
   const textColor = useColorModeValue('gray.600', 'gray.400')
   const bg = useColorModeValue('gray.50', 'gray.900')
   const accentBg = useColorModeValue('blue.50', 'blue.900')
+  const sublineColor = useColorModeValue('gray.600', 'gray.400')
+  const separatorColor = useColorModeValue('gray.200', 'gray.700')
+  const socialIconColor = isDark ? 'gray.500' : 'gray.400'
+  const hoverBg = isDark ? 'gray.700' : 'gray.100'
 
   return (
     <Box bg={bg} mt={[2, 3, 4]} py={[3, 4, 6]} w="full">
@@ -147,7 +153,7 @@ const HeroSection = ({
               <Text color="yellow.400" fontSize={['xs', 'sm']}>
                 $
               </Text>
-              <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={['xs', 'sm']}>
+              <Text color={sublineColor} fontSize={['xs', 'sm']}>
                 {t('hero.sometimesI')}
               </Text>
               <Box h={['18px', '20px', '24px']} overflow="hidden">
@@ -177,7 +183,7 @@ const HeroSection = ({
             </HStack>
 
             <Box
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
+              borderColor={separatorColor}
               borderTop="1px dashed"
               w="full"
             />
@@ -208,7 +214,7 @@ const HeroSection = ({
                           w="full"
                         >
                           <HStack
-                            _hover={{ bg: useColorModeValue('gray.100', 'gray.700') }}
+                            _hover={{ bg: hoverBg }}
                             borderRadius="md"
                             gap={2.5}
                             p={2}
@@ -318,7 +324,7 @@ const HeroSection = ({
             )}
 
             <Box
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
+              borderColor={separatorColor}
               borderTop="1px dashed"
               w="full"
             />
@@ -409,7 +415,7 @@ const HeroSection = ({
                   >
                     <Box
                       _hover={{ color: item.color, transform: 'scale(1.2)' }}
-                      color={useColorModeValue('gray.400', 'gray.500')}
+                      color={socialIconColor}
                       cursor="pointer"
                       p={1.5}
                       transition="all 0.2s"

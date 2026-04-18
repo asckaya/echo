@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 interface Course {
   course: string

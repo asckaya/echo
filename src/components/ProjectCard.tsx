@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 import type { ProjectItem } from '../types'
 
@@ -44,6 +44,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardBg = useColorModeValue('white', 'gray.800')
   const chipBg = useColorModeValue('gray.50', 'gray.900')
   const textColor = useColorModeValue('gray.600', 'gray.400')
+  const highlightBorderColor = useColorModeValue('blue.400', 'blue.600')
 
   const { category, date, extraLinks, highlights, link, summary, tags = [], title } = project
 
@@ -118,7 +119,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 <Box
                   bg={chipBg}
                   borderLeft="4px solid"
-                  borderLeftColor={useColorModeValue('blue.400', 'blue.600')}
+                  borderLeftColor={highlightBorderColor}
                   borderRadius="md"
                   mt={2}
                   p={4}

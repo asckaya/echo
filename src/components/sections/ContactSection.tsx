@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 
 import DynamicIcon from '../DynamicIcon'
@@ -59,6 +59,7 @@ const ContactSection: React.FC = () => {
     },
   ].filter(Boolean) as { href?: string; icon: string; label: string; value: string; }[]
 
+  const lineBg = useColorModeValue('gray.200', 'gray.700')
   if (items.length === 0) return null
 
   return (
@@ -69,7 +70,7 @@ const ContactSection: React.FC = () => {
           <Heading fontWeight="semibold" size="md">
             {t('about.contact', 'Contact')}
           </Heading>
-          <Box bg={useColorModeValue('gray.200', 'gray.700')} flex="1" h="1px" />
+          <Box bg={lineBg} flex="1" h="1px" />
         </Flex>
         <VStack align="stretch" gap={2}>
           {items.map((item) => (

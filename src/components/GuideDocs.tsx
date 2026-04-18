@@ -1,6 +1,6 @@
 import { Box, Container, Heading, Link, Text, VStack } from '@chakra-ui/react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 const GuideDocs = () => {
   const muted = useColorModeValue('gray.600', 'gray.400')

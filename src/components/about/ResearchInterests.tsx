@@ -6,7 +6,7 @@ import {
 import { motion } from 'framer-motion'
 import React from 'react'
 
-import { useColorModeValue } from '@/color-mode'
+import { useColorModeValue } from '@/hooks/useColorMode'
 
 const MotionBox = motion(Box)
 
