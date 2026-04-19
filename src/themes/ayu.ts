@@ -208,6 +208,11 @@ export const ayuDarkTheme: ThemeDefinition = {
       fg: (dk) => (dk ? ayuDark.entity : ayuLight.entity),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk) => (dk ? 'rgba(144,153,171,0.15)' : 'rgba(85,101,130,0.1)'),
+      fg: (dk) => (dk ? ayuDark.comment : ayuLight.comment),
+      label: 'PUBLICATION',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(255,180,84,0.15)' : 'rgba(242,151,24,0.1)'),
       fg: (dk) => (dk ? ayuDark.func : ayuLight.func),

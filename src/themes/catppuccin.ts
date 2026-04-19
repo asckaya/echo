@@ -339,12 +339,17 @@ function makeCatppuccinoTheme(
     conference: {
       bg: (dk) => tint(dk ? darkFlavor.sky : lightFlavor.sky, 0.15),
       fg: (dk) => (dk ? darkFlavor.sky : lightFlavor.sky),
-      label: 'CONFERENCE',
+      label: 'CONF',
+    },
+    default: {
+      bg: (dk) => tint(dk ? darkFlavor.overlay2 : lightFlavor.overlay2, 0.15),
+      fg: (dk) => (dk ? darkFlavor.overlay2 : lightFlavor.overlay2),
+      label: 'PUB',
     },
     demo: {
       bg: (dk) => tint(dk ? darkFlavor.peach : lightFlavor.peach, 0.15),
       fg: (dk) => (dk ? darkFlavor.peach : lightFlavor.peach),
-      label: 'DEMO TRACK',
+      label: 'DEMO',
     },
     journal: {
       bg: (dk) => tint(dk ? darkFlavor.yellow : lightFlavor.yellow, 0.15),
@@ -362,6 +367,7 @@ function makeCatppuccinoTheme(
       label: 'WORKSHOP',
     },
   }
+
 
   return {
     articleCategoryColors,

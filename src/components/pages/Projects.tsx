@@ -16,6 +16,7 @@ import { SiCsdn, SiMedium, SiZhihu } from 'react-icons/si'
 import type { ProjectItem } from '@/types'
 
 import { MotionHover } from '@/components/animations/MotionList'
+import { TerminalEntrance } from '@/components/animations/TerminalEntrance'
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible'
 import { Dialog, DialogContent, DialogOverlay, DialogTitle } from '@/components/ui/dialog'
 import { TerminalShell } from '@/components/ui/TerminalShell'
@@ -319,7 +320,7 @@ const FlowNode: React.FC<{
 }
 
 const Projects: React.FC = () => {
-  "use no memo"
+  'use no memo'
   const { colorMode } = useColorMode()
   const isDark = colorMode === 'dark'
   const { t } = useT()
@@ -479,224 +480,228 @@ const Projects: React.FC = () => {
   return (
     <div className="py-8 w-full">
       <div className="flex flex-col gap-4 max-w-[1400px] mx-auto px-2 md:px-4 lg:px-8">
-        <TerminalShell
-          bodyClassName="p-0"
-          headerRight={
-            <div style={{ color: tc.highlight }}>
-              {new Date().toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                hour12: false,
-                minute: '2-digit',
-                second: '2-digit',
-              })}
-            </div>
-          }
-          title={
-            <div className="flex items-center gap-1">
-              <SyntaxText type="keyword">const </SyntaxText>
-              <SyntaxText className="font-bold" type="variable">
-                projects
-              </SyntaxText>
-              <SyntaxText type="punctuation"> = </SyntaxText>
-              <SyntaxText type="keyword">new </SyntaxText>
-              <SyntaxText className="font-bold" type="function">
-                Portfolio
-              </SyntaxText>
-              <SyntaxText type="punctuation">(</SyntaxText>
-              <SyntaxText type="string">'showcase'</SyntaxText>
-              <SyntaxText type="punctuation">)</SyntaxText>
-            </div>
-          }
-          titleAlign="left"
-          touchBar={
-            <div className="flex items-center justify-between w-full">
-              <div className="truncate" style={{ color: tc.secondary }}>
-                <span className="font-bold" style={{ color: tc.prompt }}>
-                  {siteOwner.terminalUsername}
-                </span>
-                <span className="mx-1" style={{ color: tc.border }}>
-                  ·
-                </span>
-                <span style={{ color: tc.highlight }}>{projects.length.toString()}</span>
-                <span> {t('projects.projectsAcross')} </span>
-                <span style={{ color: tc.prompt }}>
-                  {totalIndep.toString()} {t('projects.independentlyBuilt')}
-                </span>
-              </div>
-              <div className="flex-shrink-0" style={{ color: tc.info }}>
-                ~/projects/{activeTab === 'all' ? 'all' : activeTab}
-              </div>
-            </div>
-          }
-        >
-          {/* Tab Bar */}
-          <div
-            className="flex overflow-x-auto border-b scrollbar-none"
-            style={{ backgroundColor: tc.tabBar, borderColor: tc.border }}
-          >
-            {tabs.map((tab) => {
-              const active = activeTab === tab.key
-              return (
-                <MotionHover key={tab.key}>
-                  <button
-                    className={cn(
-                      'flex items-center gap-1.5 px-4 py-2 font-mono text-xs whitespace-nowrap border-b-2 transition-all duration-150 cursor-pointer',
-                      active ? 'font-bold' : 'font-normal hover:bg-white/[0.03]',
-                    )}
-                    onClick={() => setActiveTab(tab.key)}
-                    style={{
-                      backgroundColor: active ? tc.bg : 'transparent',
-                      borderBottomColor: active ? tab.color : 'transparent',
-                      color: active ? tab.color : tc.muted,
-                    }}
-                  >
-                    <div
-                      style={
-                        active && tab.key !== 'all'
-                          ? { animation: themes[tab.key].anim }
-                          : undefined
-                      }
-                    >
-                      {React.createElement(tab.icon as React.ElementType, { className: 'w-3 h-3' })}
-                    </div>
-                    <span>{tab.label}</span>
-                    <span className="opacity-70">({tab.count.toString()})</span>
-                  </button>
-                </MotionHover>
-              )
-            })}
-          </div>
-
-          {/* Search Bar / Command Line */}
-          <div
-            className="flex items-center gap-2 px-4 py-2 border-b text-xs font-mono"
-            style={{ backgroundColor: tc.bg, borderColor: tc.border }}
-          >
-            <span className="flex-shrink-0" style={{ color: tc.prompt }}>
-              {siteOwner.terminalUsername}@projects:{promptPath}$
-            </span>
-            <input
-              className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-xs font-mono placeholder:opacity-50"
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="grep -i '...'"
-              style={{ color: tc.text }}
-              type="text"
-              value={searchQuery}
-            />
-          </div>
-
-          {/* Projects Content Area */}
-          <div
-            className="overflow-y-auto max-h-[75vh] scrollbar-thin scrollbar-thumb-gray-500/50"
-            ref={parentRef}
-            style={{ backgroundColor: tc.bg, color: tc.text }}
-          >
-            <div className="px-3 md:px-4 lg:px-5 py-4">
-              <div
-                style={{
-                  height: `${virtualizer.getTotalSize().toString()}px`,
-                  position: 'relative',
-                  width: '100%',
-                }}
-              >
-                {virtualizer.getVirtualItems().map((vItem) => {
-                  const item = virtualItems[vItem.index]
-                  return (
-                    <div
-                      data-index={vItem.index}
-                      key={vItem.key}
-                      ref={virtualizer.measureElement}
-                      style={{
-                        left: 0,
-                        position: 'absolute',
-                        top: 0,
-                        transform: `translateY(${vItem.start.toString()}px)`,
-                        width: '100%',
-                      }}
-                    >
-                      {item.type === 'header' ? (
-                        <div className="relative mb-2">
-                          <div className="flex items-center gap-2 pl-0.5">
-                            <span
-                              className="font-mono text-[10px] font-semibold tracking-wide"
-                              style={{ color: tc.highlight }}
-                            >
-                              {item.year}
-                            </span>
-                            <div
-                              className="flex-1 h-px opacity-30"
-                              style={{ backgroundColor: tc.border }}
-                            />
-                            <span className="font-mono text-[10px]" style={{ color: tc.muted }}>
-                              {item.count.toString()} {t('projects.projects')}
-                            </span>
-                          </div>
-                          {/* Vertical connector line (top part) */}
-                          <div
-                            className="absolute left-[7px] top-6 h-4 w-px opacity-30 z-0"
-                            style={{ backgroundColor: tc.border }}
-                          />
-                        </div>
-                      ) : (
-                        <div className="relative">
-                          {/* Vertical connector line */}
-                          <div
-                            className="absolute left-[7px] top-0 bottom-0 w-px opacity-30 z-0"
-                            style={{ backgroundColor: tc.border }}
-                          />
-                          <FlowNode
-                            ct={themes[item.data.category]}
-                            hlc={hlc}
-                            isDark={isDark}
-                            isLast={false} // idx === group.items.length - 1
-                            item={item.data}
-                            onImageClick={onImgClick}
-                            tc={tc}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )
+        <TerminalEntrance path="projects">
+          <TerminalShell
+            bodyClassName="p-0"
+            headerRight={
+              <div style={{ color: tc.highlight }}>
+                {new Date().toLocaleTimeString('en-US', {
+                  hour: '2-digit',
+                  hour12: false,
+                  minute: '2-digit',
+                  second: '2-digit',
                 })}
               </div>
-            </div>
-
-            {filtered.length === 0 && (
-              <div className="px-4 py-8 text-center">
-                <p className="text-sm" style={{ color: tc.highlight }}>
-                  {t('projects.noMatches')}
-                </p>
-                <p className="text-xs mt-1" style={{ color: tc.secondary }}>
-                  {t('projects.tryAdjustingSearch')}
-                </p>
+            }
+            title={
+              <div className="flex items-center gap-1">
+                <SyntaxText type="keyword">const </SyntaxText>
+                <SyntaxText className="font-bold" type="variable">
+                  projects
+                </SyntaxText>
+                <SyntaxText type="punctuation"> = </SyntaxText>
+                <SyntaxText type="keyword">new </SyntaxText>
+                <SyntaxText className="font-bold" type="function">
+                  Portfolio
+                </SyntaxText>
+                <SyntaxText type="punctuation">(</SyntaxText>
+                <SyntaxText type="string">'showcase'</SyntaxText>
+                <SyntaxText type="punctuation">)</SyntaxText>
               </div>
-            )}
-          </div>
-
-          {/* Footer Status Bar */}
-          <div
-            className="flex flex-wrap items-center justify-between gap-2 px-4 py-1.5 border-t text-[10px] font-mono"
-            style={{ backgroundColor: tc.header, borderColor: tc.border, color: tc.muted }}
+            }
+            titleAlign="left"
+            touchBar={
+              <div className="flex items-center justify-between w-full">
+                <div className="truncate" style={{ color: tc.secondary }}>
+                  <span className="font-bold" style={{ color: tc.prompt }}>
+                    {siteOwner.terminalUsername}
+                  </span>
+                  <span className="mx-1" style={{ color: tc.border }}>
+                    ·
+                  </span>
+                  <span style={{ color: tc.highlight }}>{projects.length.toString()}</span>
+                  <span> {t('projects.projectsAcross')} </span>
+                  <span style={{ color: tc.prompt }}>
+                    {totalIndep.toString()} {t('projects.independentlyBuilt')}
+                  </span>
+                </div>
+                <div className="flex-shrink-0" style={{ color: tc.info }}>
+                  ~/projects/{activeTab === 'all' ? 'all' : activeTab}
+                </div>
+              </div>
+            }
           >
-            <div className="flex items-center gap-3">
-              <span>
-                {filtered.length.toString()}/{projects.length.toString()} {t('projects.shown')}
-              </span>
-              <div className="flex items-center gap-1 font-bold" style={{ color: tc.success }}>
-                <User className="w-[9px] h-[9px]" />
-                <span>
-                  {filteredIndep.toString()} {t('projects.independent')}
-                </span>
-              </div>
+            {/* Tab Bar */}
+            <div
+              className="flex overflow-x-auto border-b scrollbar-none"
+              style={{ backgroundColor: tc.tabBar, borderColor: tc.border }}
+            >
+              {tabs.map((tab) => {
+                const active = activeTab === tab.key
+                return (
+                  <MotionHover key={tab.key}>
+                    <button
+                      className={cn(
+                        'flex items-center gap-1.5 px-4 py-2 font-mono text-xs whitespace-nowrap border-b-2 transition-all duration-150 cursor-pointer',
+                        active ? 'font-bold' : 'font-normal hover:bg-white/[0.03]',
+                      )}
+                      onClick={() => setActiveTab(tab.key)}
+                      style={{
+                        backgroundColor: active ? tc.bg : 'transparent',
+                        borderBottomColor: active ? tab.color : 'transparent',
+                        color: active ? tab.color : tc.muted,
+                      }}
+                    >
+                      <div
+                        style={
+                          active && tab.key !== 'all'
+                            ? { animation: themes[tab.key].anim }
+                            : undefined
+                        }
+                      >
+                        {React.createElement(tab.icon as React.ElementType, {
+                          className: 'w-3 h-3',
+                        })}
+                      </div>
+                      <span>{tab.label}</span>
+                      <span className="opacity-70">({tab.count.toString()})</span>
+                    </button>
+                  </MotionHover>
+                )
+              })}
             </div>
-            <div className="flex items-center gap-1">
-              <span style={{ color: tc.prompt }}>
+
+            {/* Search Bar / Command Line */}
+            <div
+              className="flex items-center gap-2 px-4 py-2 border-b text-xs font-mono"
+              style={{ backgroundColor: tc.bg, borderColor: tc.border }}
+            >
+              <span className="flex-shrink-0" style={{ color: tc.prompt }}>
                 {siteOwner.terminalUsername}@projects:{promptPath}$
               </span>
-              <div className="w-1.5 h-3 animate-pulse" style={{ backgroundColor: tc.prompt }} />
+              <input
+                className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-xs font-mono placeholder:opacity-50"
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="grep -i '...'"
+                style={{ color: tc.text }}
+                type="text"
+                value={searchQuery}
+              />
             </div>
-          </div>
-        </TerminalShell>
+
+            {/* Projects Content Area */}
+            <div
+              className="overflow-y-auto max-h-[75vh] scrollbar-thin scrollbar-thumb-gray-500/50"
+              ref={parentRef}
+              style={{ backgroundColor: tc.bg, color: tc.text }}
+            >
+              <div className="px-3 md:px-4 lg:px-5 py-4">
+                <div
+                  style={{
+                    height: `${virtualizer.getTotalSize().toString()}px`,
+                    position: 'relative',
+                    width: '100%',
+                  }}
+                >
+                  {virtualizer.getVirtualItems().map((vItem) => {
+                    const item = virtualItems[vItem.index]
+                    return (
+                      <div
+                        data-index={vItem.index}
+                        key={vItem.key}
+                        ref={virtualizer.measureElement}
+                        style={{
+                          left: 0,
+                          position: 'absolute',
+                          top: 0,
+                          transform: `translateY(${vItem.start.toString()}px)`,
+                          width: '100%',
+                        }}
+                      >
+                        {item.type === 'header' ? (
+                          <div className="relative mb-2">
+                            <div className="flex items-center gap-2 pl-0.5">
+                              <span
+                                className="font-mono text-[10px] font-semibold tracking-wide"
+                                style={{ color: tc.highlight }}
+                              >
+                                {item.year}
+                              </span>
+                              <div
+                                className="flex-1 h-px opacity-30"
+                                style={{ backgroundColor: tc.border }}
+                              />
+                              <span className="font-mono text-[10px]" style={{ color: tc.muted }}>
+                                {item.count.toString()} {t('projects.projects')}
+                              </span>
+                            </div>
+                            {/* Vertical connector line (top part) */}
+                            <div
+                              className="absolute left-[7px] top-6 h-4 w-px opacity-30 z-0"
+                              style={{ backgroundColor: tc.border }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="relative">
+                            {/* Vertical connector line */}
+                            <div
+                              className="absolute left-[7px] top-0 bottom-0 w-px opacity-30 z-0"
+                              style={{ backgroundColor: tc.border }}
+                            />
+                            <FlowNode
+                              ct={themes[item.data.category]}
+                              hlc={hlc}
+                              isDark={isDark}
+                              isLast={false} // idx === group.items.length - 1
+                              item={item.data}
+                              onImageClick={onImgClick}
+                              tc={tc}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {filtered.length === 0 && (
+                <div className="px-4 py-8 text-center">
+                  <p className="text-sm" style={{ color: tc.highlight }}>
+                    {t('projects.noMatches')}
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: tc.secondary }}>
+                    {t('projects.tryAdjustingSearch')}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Footer Status Bar */}
+            <div
+              className="flex flex-wrap items-center justify-between gap-2 px-4 py-1.5 border-t text-[10px] font-mono"
+              style={{ backgroundColor: tc.header, borderColor: tc.border, color: tc.muted }}
+            >
+              <div className="flex items-center gap-3">
+                <span>
+                  {filtered.length.toString()}/{projects.length.toString()} {t('projects.shown')}
+                </span>
+                <div className="flex items-center gap-1 font-bold" style={{ color: tc.success }}>
+                  <User className="w-[9px] h-[9px]" />
+                  <span>
+                    {filteredIndep.toString()} {t('projects.independent')}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <span style={{ color: tc.prompt }}>
+                  {siteOwner.terminalUsername}@projects:{promptPath}$
+                </span>
+                <div className="w-1.5 h-3 animate-pulse" style={{ backgroundColor: tc.prompt }} />
+              </div>
+            </div>
+          </TerminalShell>
+        </TerminalEntrance>
       </div>
 
       {/* Image Preview Dialog */}

@@ -60,19 +60,10 @@ export interface TerminalColors {
 
 /**
  * The contract that every colour scheme must satisfy.
- *
- * To create a new theme:
- *   1. Duplicate `src/themes/nord.ts` and rename it (e.g. `dracula.ts`).
- *   2. Replace the colour values to match your palette.
- *   3. In `src/themes/index.ts`, swap the import to point at your new file.
- *
- * Nothing else needs to change — all components import through the adapter
- * in `src/config/theme.ts`, which always resolves to the active theme.
  */
 export interface ThemeDefinition {
   /**
    * Foreground / background colour pair for article category badges.
-   * Each resolver accepts a boolean `dark` flag.
    */
   articleCategoryColors: Record<
     ProjectItem['category'],
@@ -84,13 +75,11 @@ export interface ThemeDefinition {
 
   /**
    * Returns per-category visual themes for project cards.
-   * Call with `true` for dark, `false` for light.
    */
   categoryThemes: (dark: boolean) => Record<ProjectItem['category'], CatTheme>
 
   /**
    * CSS custom property values injected at runtime onto `document.documentElement`.
-   * Provide separate token sets for light and dark colour modes.
    */
   cssVars: {
     dark: CSSVarTokens
@@ -102,10 +91,10 @@ export interface ThemeDefinition {
 
   /**
    * Foreground / background colour pair + display label for publication
-   * venue type badges (conference, workshop, demo, preprint, journal …).
+   * venue type badges.
    */
   publicationVenueColors: Record<
-    string,
+    VenueType,
     {
       bg: (dark: boolean) => string
       fg: (dark: boolean) => string
@@ -127,3 +116,16 @@ export interface ThemeDefinition {
     rainbow: readonly string[]
   }
 }
+
+/**
+ * The contract that every colour scheme must satisfy.
+ *
+ * To create a new theme:
+ *   1. Duplicate `src/themes/nord.ts` and rename it (e.g. `dracula.ts`).
+ *   2. Replace the colour values to match your palette.
+ *   3. In `src/themes/index.ts`, swap the import to point at your new file.
+ *
+ * Nothing else needs to change — all components import through the adapter
+ * in `src/config/theme.ts`, which always resolves to the active theme.
+ */
+export type VenueType = 'conference' | 'default' | 'demo' | 'journal' | 'preprint' | 'workshop'

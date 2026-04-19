@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
   ].filter((link) => link.href)
 
   return (
-    <nav className="sticky top-0 w-full z-[1000] py-2 md:py-3 bg-[var(--bg-color)] border-b border-[var(--border-color)] transition-all duration-300">
+    <nav className="sticky top-0 w-full z-[1000] py-2 md:py-3 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--border-color)] transition-all duration-300">
       <div className="max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
           {/* Left: Logo & Mobile Toggle */}

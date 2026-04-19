@@ -183,6 +183,11 @@ export const oneDarkTheme: ThemeDefinition = {
       fg: (dk) => (dk ? oneDarkColors.blue : oneLightColors.blue),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk) => (dk ? 'rgba(144, 153, 171, 0.15)' : 'rgba(85, 101, 130, 0.1)'),
+      fg: (dk) => (dk ? oneDarkColors.comment : oneLightColors.comment),
+      label: 'PUBLICATION',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(209, 154, 102, 0.15)' : 'rgba(152, 104, 1, 0.1)'),
       fg: (dk) => (dk ? oneDarkColors.orange : oneLightColors.orange),

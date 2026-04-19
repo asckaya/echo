@@ -176,6 +176,11 @@ export const draculaTheme: ThemeDefinition = {
       fg: (dk) => (dk ? draculaColors.cyan : '#0097a7'),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk) => (dk ? 'rgba(144, 153, 171, 0.15)' : 'rgba(85, 101, 130, 0.1)'),
+      fg: (dk) => (dk ? draculaColors.comment : '#556582'),
+      label: 'PUBLICATION',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(255, 184, 108, 0.15)' : 'rgba(230, 81, 0, 0.1)'),
       fg: (dk) => (dk ? draculaColors.orange : '#e65100'),

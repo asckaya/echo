@@ -193,6 +193,11 @@ export const everforestTheme: ThemeDefinition = {
       fg: (dk) => (dk ? everforestDarkColors.blue : everforestLightColors.blue),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk) => (dk ? 'rgba(144, 153, 171, 0.15)' : 'rgba(85, 101, 130, 0.1)'),
+      fg: (dk) => (dk ? everforestDarkColors.grey1 : everforestLightColors.grey1),
+      label: 'PUBLICATION',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(230, 152, 117, 0.15)' : 'rgba(245, 125, 38, 0.1)'),
       fg: (dk) => (dk ? everforestDarkColors.orange : everforestLightColors.orange),

@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import type { SlotName } from '@/templates/slots'
 
+import { TerminalEntrance } from '@/components/animations/TerminalEntrance'
 import { Badge } from '@/components/ui/badge'
 import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
@@ -125,11 +126,13 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col gap-4 md:gap-6 lg:gap-8 w-full">
-        {sectionOrder.map((sectionId, index) => renderSection(sectionId, index))}
+    <TerminalEntrance path="home">
+      <div className="w-full">
+        <div className="flex flex-col gap-8 md:gap-12 lg:gap-16 w-full py-4 md:py-8">
+          {sectionOrder.map((sectionId, index) => renderSection(sectionId, index))}
+        </div>
       </div>
-    </div>
+    </TerminalEntrance>
   )
 }
 

@@ -16,8 +16,16 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   })
 
   const handleSetTheme = (key: ThemeKey) => {
-    setThemeKey(key)
-    localStorage.setItem('termhub-theme', key)
+    if (!('startViewTransition' in document)) {
+      setThemeKey(key)
+      localStorage.setItem('termhub-theme', key)
+      return
+    }
+
+    document.startViewTransition(() => {
+      setThemeKey(key)
+      localStorage.setItem('termhub-theme', key)
+    })
   }
 
   return (

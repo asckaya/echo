@@ -126,6 +126,11 @@ export const nordTheme: ThemeDefinition = {
       fg: (dk) => (dk ? '#88c0d0' : '#2a769c'),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk: boolean) => (dk ? 'rgba(144,153,171,0.15)' : 'rgba(85,101,130,0.1)'),
+      fg: (dk: boolean) => (dk ? '#9099ab' : '#556582'),
+      label: 'OTHER',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(208,135,112,0.15)' : 'rgba(179,90,46,0.1)'),
       fg: (dk) => (dk ? '#d08770' : '#b35a2e'),

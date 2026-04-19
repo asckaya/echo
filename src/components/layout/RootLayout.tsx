@@ -5,6 +5,7 @@ import React from 'react'
 import { Toaster } from 'sonner'
 
 import SplashScreen from '@/components/layout/SplashScreen'
+import { CommandPalette } from '@/components/ui/CommandPalette'
 import { useColorMode } from '@/hooks/useColorMode'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { getResolvedSlots, getTemplate, SlotProvider } from '@/templates'
@@ -42,6 +43,7 @@ export function RootLayout() {
           <TemplateLayout>
             <Outlet />
           </TemplateLayout>
+          <CommandPalette />
         </SlotProvider>
         {import.meta.env.DEV && <TanStackRouterDevtools />}
       </LazyMotion>

@@ -8,6 +8,7 @@ import { draculaTheme } from './dracula'
 import { everforestTheme } from './everforest'
 import { githubTheme } from './github'
 import { nordTheme } from './nord'
+import { obsidianTheme } from './obsidian'
 import { oneDarkTheme } from './onedark'
 
 export const themes = {
@@ -20,6 +21,7 @@ export const themes = {
   everforest: everforestTheme,
   github: githubTheme,
   nord: nordTheme,
+  obsidian: obsidianTheme,
   'one-dark': oneDarkTheme,
 }
 

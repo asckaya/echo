@@ -7,6 +7,7 @@ import { useColorMode } from '@/hooks/useColorMode'
 import { cn } from '@/lib/utils'
 
 import { RainbowBar } from './RainbowBar'
+import { TerminalStatusBar } from './TerminalStatusBar'
 
 interface TerminalShellProps {
   bodyClassName?: string
@@ -61,22 +62,22 @@ export const TerminalShell = memo<TerminalShellProps>(
     return (
       <div
         className={cn(
-          'flex flex-col rounded-md font-mono overflow-hidden w-full border transition-all duration-300',
+          'flex flex-col rounded-md font-mono overflow-hidden w-full border transition-all duration-300 backdrop-blur-md',
           className,
         )}
         style={{
-          backgroundColor: tc.bg,
+          backgroundColor: `${tc.bg}e6`, // 90% opacity
           borderColor: tc.border,
-          boxShadow: `0 8px 32px ${isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.12)'}`,
+          boxShadow: `0 8px 32px ${isDark ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.15)'}, inset 0 0 0 1px ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.2)'}`,
         }}
       >
         {/* macOS-style Title Bar */}
         <div
           className={cn(
-            'flex items-center justify-between px-4 py-2 text-xs font-medium border-b flex-shrink-0',
+            'flex items-center justify-between px-4 py-2 text-xs font-medium border-b flex-shrink-0 backdrop-blur-sm',
             headerClassName,
           )}
-          style={{ backgroundColor: tc.header, borderColor: tc.border }}
+          style={{ backgroundColor: `${tc.header}cc`, borderColor: tc.border }}
         >
           <div className="flex items-center gap-3 w-full">
             {/* Windows-style control buttons (left) */}
@@ -120,19 +121,16 @@ export const TerminalShell = memo<TerminalShellProps>(
         {/* Bottom Rainbow */}
         {rainbowPosition === 'bottom' && renderRainbow()}
 
-        {/* Bottom Status Bar */}
-        {statusBar && (
-          <div
-            className="px-4 py-1.5 text-[9px] md:text-[10px] border-t flex items-center justify-between"
-            style={{
-              backgroundColor: tc.header,
-              borderColor: tc.border,
-              color: tc.secondary,
-            }}
-          >
-            {statusBar}
-          </div>
-        )}
+        <div
+          className="px-4 py-1.5 text-[9px] md:text-[10px] border-t flex items-center justify-between"
+          style={{
+            backgroundColor: tc.header,
+            borderColor: tc.border,
+            color: tc.secondary,
+          }}
+        >
+          {statusBar ?? <TerminalStatusBar />}
+        </div>
       </div>
     )
   },

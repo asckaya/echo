@@ -241,6 +241,11 @@ export const githubTheme: ThemeDefinition = {
       fg: (dk) => (dk ? githubDarkColors.accent.fg : githubLightColors.accent.fg),
       label: 'CONFERENCE',
     },
+    default: {
+      bg: (dk) => (dk ? 'rgba(144, 153, 171, 0.15)' : 'rgba(85, 101, 130, 0.1)'),
+      fg: (dk) => (dk ? githubDarkColors.fg.muted : githubLightColors.fg.muted),
+      label: 'PUBLICATION',
+    },
     demo: {
       bg: (dk) => (dk ? 'rgba(210, 153, 34, 0.15)' : 'rgba(154, 103, 0, 0.1)'),
       fg: (dk) => (dk ? githubDarkColors.attention.fg : githubLightColors.attention.fg),

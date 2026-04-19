@@ -13,6 +13,7 @@ import { routeTree } from './routeTree.gen'
 const router = createRouter({
   basepath: import.meta.env.BASE_URL,
   defaultNotFoundComponent: () => <NotFound />,
+  defaultViewTransition: true,
   routeTree,
   scrollRestoration: true,
 })
